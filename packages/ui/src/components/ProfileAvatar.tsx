@@ -47,7 +47,7 @@ export function ProfileAvatar({
         showTierRing && 'ring-2',
         className
       )}
-      style={showTierRing ? { ringColor: tierColor } : undefined}
+      style={showTierRing ? { '--tw-ring-color': tierColor } as React.CSSProperties : undefined}
     >
       {profile?.avatar_url ? (
         <img
