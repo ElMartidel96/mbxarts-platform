@@ -1,0 +1,354 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Scrollbar hide utility for horizontal scroll on mobile */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+  
+  /* ===== SCROLL INDEPENDENCE UTILITIES 2025 - DEFINITIVO ===== */
+  /* Based on research: CSS overscroll-behavior + forced overflow technique */
+  
+  .overscroll-x-contain {
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .overscroll-contain {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+  
+  /* ===== ADVANCED SCROLL ISOLATION 2025 ===== */
+  .scroll-isolate {
+    overscroll-behavior: contain;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    scroll-behavior: smooth;
+    isolation: isolate;
+    contain: layout style size;
+    /* Force minimal overflow trick */
+    min-height: 100.1%;
+    padding-bottom: 1px;
+  }
+  
+  /* ===== TOUCH ACTION CONTROL ===== */
+  .touch-pan-only {
+    touch-action: pan-x pan-y;
+  }
+  
+  /* ===== 3D GALLERY ANIMATIONS ===== */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+      opacity: 0.2;
+    }
+    50% {
+      transform: translateY(-20px) translateX(10px);
+      opacity: 0.8;
+    }
+  }
+  
+  .animate-float {
+    animation: float 10s ease-in-out infinite;
+  }
+  
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+  
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+  
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  /* ===== SCROLL CONTAINER VARIANTS ===== */
+  .scroll-container-strict {
+    overscroll-behavior: none;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    isolation: isolate;
+    contain: layout style size paint;
+  }
+  
+  .scroll-container-contain {
+    overscroll-behavior: contain;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    isolation: isolate;
+    contain: layout style size;
+    /* Workaround for non-scrolling elements */
+    min-height: 100.1%;
+    padding-bottom: 1px;
+  }
+}
+
+:root {
+	line-height: 1.5;
+	font-weight: 400;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-family: 'Inter', sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	font-variation-settings: 'slnt' 0;
+}
+
+/* UNIVERSAL 90% ZOOM SYSTEM - Proper CSS zoom for optimal proportions */
+/* Uses CSS zoom property that doesn't break positioned elements like modals/panels */
+
+/* Mobile: 92% zoom for enhanced readability */
+@media (max-width: 414px) {
+	html {
+		zoom: 0.92;
+	}
+}
+
+/* Tablet/General: 90% zoom - primary fix for optimal proportions */ 
+@media (min-width: 415px) and (max-width: 1439px) {
+	html {
+		zoom: 0.9;
+	}
+}
+
+/* Desktop: 88% zoom for large screens */
+@media (min-width: 1440px) {
+	html {
+		zoom: 0.88;
+	}
+}
+
+:root {
+	/* LIGHT THEME - NFT-GRADE PROFESSIONAL */
+	--bg-primary: 255 255 255;          /* Blanco puro */
+	--bg-secondary: 249 250 251;        /* Gris muy claro */
+	--bg-card: 255 255 255;             /* Cards blancas */
+	--bg-input: 255 255 255;            /* Inputs blancos */
+	
+	--text-primary: 17 24 39;           /* Negro suave */
+	--text-secondary: 107 114 128;      /* Gris medio */
+	--text-muted: 156 163 175;          /* Gris claro */
+	
+	--border-primary: 229 231 235;      /* Gris claro */
+	--border-secondary: 243 244 246;    /* Gris muy claro */
+	
+	--accent-gold: 251 191 36;          /* Dorado elegante */
+	--accent-gold-light: 254 240 138;   /* Dorado claro */
+	
+	--shadow-light: 0 0 0 0.1;
+	--shadow-medium: 0 0 0 0.15;
+	--nft-mosaic-opacity: 0.05;
+	--glass-blur: 12px;
+}
+
+.dark {
+	/* DARK THEME - NFT MARKETPLACE GRADE */
+	--bg-primary: 10 14 21;             /* #0A0E15 - NFT dark */
+	--bg-secondary: 17 20 29;           /* #11141D - Slightly lighter */
+	--bg-card: 26 29 41;                /* #1A1D29 - Card background */
+	--bg-input: 31 35 49;               /* #1F2331 - Input background */
+	
+	--text-primary: 255 255 255;        /* Blanco puro */
+	--text-secondary: 180 182 199;      /* Gris claro */
+	--text-muted: 107 114 128;          /* Gris medio */
+	
+	--border-primary: 42 45 58;         /* #2A2D3A - Subtle borders */
+	--border-secondary: 55 58 71;       /* #373A47 - Lighter borders */
+	
+	--accent-silver: 148 163 184;       /* Plateado elegante */
+	--accent-silver-light: 203 213 225; /* Plateado claro */
+	
+	--shadow-light: 0 0 0 0.3;
+	--shadow-medium: 0 0 0 0.5;
+	--nft-mosaic-opacity: 0.08;
+	--glass-blur: 16px;
+}
+
+/* SMOOTH TRANSITIONS FOR ALL THEME CHANGES */
+* {
+	transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* GLASS MORPHISM EFFECT - UPDATED */
+.glass-panel {
+	background: rgba(255, 255, 255, 0.8);
+	backdrop-filter: blur(var(--glass-blur));
+	border: 1px solid rgb(var(--border-primary) / 0.5);
+}
+
+.dark .glass-panel {
+	background: rgba(26, 29, 41, 0.9);
+	border: 1px solid rgb(var(--border-primary) / 0.5);
+}
+
+/* GLASS CRYSTAL EFFECT - Premium Competition Style */
+.glass-crystal {
+	background: rgba(255, 255, 255, 0.05);
+	backdrop-filter: blur(16px) saturate(180%);
+	-webkit-backdrop-filter: blur(16px) saturate(180%);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .glass-crystal {
+	background: rgba(15, 18, 28, 0.7);
+	backdrop-filter: blur(20px) saturate(180%);
+	-webkit-backdrop-filter: blur(20px) saturate(180%);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* COMPLETE DARK MODE COVERAGE */
+@layer base {
+	/* BODY AND ROOT */
+	body {
+		background-color: rgb(var(--bg-primary));
+		color: rgb(var(--text-primary));
+	}
+	
+	/* CARDS AND PANELS */
+	.card,
+	.panel,
+	[class*="card"],
+	[class*="panel"] {
+		background-color: rgb(var(--bg-card));
+		border-color: rgb(var(--border-primary));
+	}
+	
+	/* INPUTS AND FORMS */
+	input,
+	textarea,
+	select,
+	[type="text"],
+	[type="email"],
+	[type="password"],
+	[type="number"] {
+		background-color: rgb(var(--bg-input));
+		border-color: rgb(var(--border-primary));
+		color: rgb(var(--text-primary));
+	}
+	
+	input:focus,
+	textarea:focus,
+	select:focus {
+		border-color: rgb(var(--accent-gold));
+	}
+	
+	.dark input:focus,
+	.dark textarea:focus,
+	.dark select:focus {
+		border-color: rgb(var(--accent-silver));
+	}
+	
+	/* BUTTONS */
+	button {
+		transition: all 0.3s ease;
+	}
+	
+	/* SHADOWS ENHANCED */
+	.shadow-sm {
+		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, var(--shadow-light));
+	}
+	
+	.shadow-lg {
+		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, var(--shadow-medium)), 
+		           0 4px 6px -2px rgba(0, 0, 0, var(--shadow-light));
+	}
+	
+	.shadow-xl {
+		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, var(--shadow-medium)), 
+		           0 10px 10px -5px rgba(0, 0, 0, var(--shadow-light));
+	}
+	
+	/* MODALS AND OVERLAYS */
+	.modal,
+	.overlay,
+	[role="dialog"] {
+		background-color: rgb(var(--bg-card));
+		border-color: rgb(var(--border-primary));
+	}
+	
+	/* NAVIGATION AND HEADERS */
+	nav,
+	header {
+		background-color: rgb(var(--bg-primary));
+		border-color: rgb(var(--border-primary));
+	}
+	
+	/* NATURAL ANIMATIONS FOR HERO SECTION */
+	@keyframes natural-bounce {
+		0%, 100% {
+			transform: translateY(0);
+			animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+		}
+		50% {
+			transform: translateY(-12px);
+			animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+		}
+	}
+	
+	@keyframes gentle-pulse {
+		0%, 100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		50% {
+			opacity: 0.6;
+			transform: scale(1.1);
+		}
+	}
+	
+	/* Apply natural animations - 1.2 bounces per second (zen timing) */
+	.animate-natural-bounce {
+		animation: natural-bounce 0.83s ease-in-out infinite;
+	}
+	
+	.animate-gentle-pulse {
+		animation: gentle-pulse 0.83s ease-in-out infinite;
+	}
+
+	/* R5: ACCESSIBILITY - Ensure text remains readable with WCAG AA compliance */
+	/* Apply to all screen sizes to ensure minimum font sizes */
+	body {
+		font-size: max(16px, 1rem); /* Ensure minimum 16px base */
+	}
+	
+	.text-sm {
+		font-size: max(14px, 0.875rem); /* Minimum 14px for small text */
+	}
+	
+	.text-xs {
+		font-size: max(12px, 0.75rem); /* Minimum 12px for extra small */
+	}
+}

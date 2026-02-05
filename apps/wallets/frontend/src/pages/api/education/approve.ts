@@ -1,0 +1,562 @@
+/**
+ * EDUCATION APPROVAL API - EIP-712 SIGNATURE
+ * Emits EIP-712 signatures for education completion
+ * Stateless approval without on-chain writes
+ * 
+ * @author mbxarts.com The Moon in a Box property
+ * @author Godez22 (Co-Author)
+ */
+
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { ethers } from 'ethers';
+import { validateRedisForCriticalOps } from '../../../lib/redisConfig';
+// AUDIT FIX #7: Removed unused @vercel/kv import - using unified redisConfig
+import { debugLogger } from '../../../lib/secureDebugLogger';
+import { secureLogger } from '../../../lib/secureLogger';
+import { getApproverWallet, validateApproverConfig, APPROVAL_GATE_ADDRESS } from '../../../lib/approverConfig';
+
+interface ApprovalRequest {
+  sessionToken: string;
+  tokenId: string;
+  claimer: string;
+  giftId: number;
+  email?: string; // FASE 1: Email del receptor (opcional)
+  questionsScore?: { correct: number; total: number }; // FASE 1: Education score for analytics
+  questionsAnswered?: Array<{
+    questionId: string;
+    questionText: string;
+    selectedAnswer: string;
+    correctAnswer: string;
+    isCorrect: boolean;
+    timeSpent: number;
+  }>; // FASE 2: Detailed answers array for in-depth analytics
+}
+
+interface ApprovalResponse {
+  success: boolean;
+  signature?: string;
+  deadline?: number;
+  gateData?: string; // Encoded signature + deadline for contract
+  message?: string;
+  error?: string;
+}
+
+// EIP-712 Domain Configuration
+// Use the constant from approverConfig to ensure consistency
+const EIP712_DOMAIN = {
+  name: 'SimpleApprovalGate',
+  version: '1',
+  chainId: 84532, // Base Sepolia
+  verifyingContract: APPROVAL_GATE_ADDRESS // Always use the deployed contract address
+};
+
+const EIP712_TYPES = {
+  EducationApproval: [
+    { name: 'claimer', type: 'address' },
+    { name: 'giftId', type: 'uint256' },
+    { name: 'requirementsVersion', type: 'uint16' },
+    { name: 'deadline', type: 'uint256' },
+    { name: 'chainId', type: 'uint256' },
+    { name: 'verifyingContract', type: 'address' }
+  ]
+};
+
+const REQUIREMENTS_VERSION = 1; // Must match contract
+const SIGNATURE_TTL = 3600; // 1 hour validity
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<ApprovalResponse>
+) {
+  // Only allow POST requests
+  if (req.method !== 'POST') {
+    return res.status(405).json({ 
+      success: false,
+      error: 'Method not allowed' 
+    });
+  }
+  
+  // SECURITY: Rate limiting for education approval endpoint  
+  // FIXED: Use req.socket.remoteAddress instead of deprecated req.connection
+  const clientIP = (req.headers['x-forwarded-for'] as string) || req.socket?.remoteAddress || 'unknown';
+  const userAgent = req.headers['user-agent'] || 'unknown';
+  const rateLimitKey = `rate_limit:education_approve:${clientIP}:${userAgent.slice(0, 50)}`;
+  
+  // UNIFIED REDIS: Rate limiting with redisConfig client
+  const redisRateLimit = validateRedisForCriticalOps('Rate limiting');
+  
+  if (redisRateLimit) {
+    try {
+      // Check current rate limit
+      const currentCount = await redisRateLimit.get(rateLimitKey);
+      const count = typeof currentCount === 'string' ? parseInt(currentCount) : (currentCount as number || 0);
+      
+      if ((count as number) >= 5) { // 5 attempts per minute
+        return res.status(429).json({ 
+          success: false,
+          error: 'Rate limit exceeded - max 5 education approvals per minute' 
+        });
+      }
+      
+      // Increment rate limit counter
+      await redisRateLimit.setex(rateLimitKey, 60, (count as number) + 1); // 60 seconds TTL
+      
+    } catch (rateLimitError) {
+      console.warn('⚠️ Rate limiting failed:', rateLimitError);
+      // Continue without rate limiting in case of Redis issues
+    }
+  } else {
+    console.warn('⚠️ Rate limiting disabled - Redis not available');
+  }
+  
+  try {
+    const {
+      sessionToken,
+      tokenId,
+      claimer,
+      email, // FASE 1: Recibir email del frontend
+      questionsScore, // FASE 1: Recibir score educativo del frontend
+      questionsAnswered // FASE 2: Recibir array detallado de respuestas
+    }: Omit<ApprovalRequest, 'giftId'> & {
+      giftId?: number;
+      email?: string;
+      questionsScore?: { correct: number; total: number };
+      questionsAnswered?: Array<{
+        questionId: string;
+        questionText: string;
+        selectedAnswer: string;
+        correctAnswer: string;
+        isCorrect: boolean;
+        timeSpent: number;
+      }>;
+    } = req.body;
+
+    // CRITICAL DEBUG: Log what frontend sent us
+    console.error('🔍 APPROVE ENDPOINT - REQUEST RECEIVED:', {
+      hasEmail: !!email,
+      emailValue: email || 'MISSING/UNDEFINED',
+      hasQuestionsScore: !!questionsScore,
+      questionsScore,
+      hasQuestionsAnswered: !!questionsAnswered,
+      answersCount: questionsAnswered?.length || 0,
+      tokenId,
+      timestamp: new Date().toISOString()
+    });
+    
+    // Validate required fields
+    if (!sessionToken || !tokenId || !claimer) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Missing required fields: sessionToken, tokenId, claimer' 
+      });
+    }
+    
+    // Validate claimer address
+    if (!ethers.isAddress(claimer)) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Invalid claimer address' 
+      });
+    }
+    
+    // UNIFIED REDIS: Get session data with proper JSON parsing
+    const redis = validateRedisForCriticalOps('Session retrieval');
+    
+    if (!redis) {
+      return res.status(503).json({
+        success: false,
+        error: 'Session storage not available'
+      });
+    }
+    
+    const sessionKey = `preclaim:session:${sessionToken}`;
+    
+    console.log(`🔍 Looking for session with key: ${sessionKey}`);
+    console.log(`Session token received: ${sessionToken}`);
+    
+    const sessionDataRaw = await redis.get(sessionKey);
+    
+    console.log(`📦 Raw session data retrieved:`, {
+      exists: !!sessionDataRaw,
+      type: typeof sessionDataRaw,
+      isString: typeof sessionDataRaw === 'string',
+      length: sessionDataRaw ? String(sessionDataRaw).length : 0
+    });
+    
+    let sessionData: {
+      tokenId: string;
+      giftId: number;
+      claimer: string;
+      passwordValidated: boolean;
+      requiresEducation: boolean;
+      modules: number[];
+      timestamp: number;
+    } | null = null;
+    
+    // Handle both string (JSON) and direct object formats from Redis
+    if (sessionDataRaw) {
+      if (typeof sessionDataRaw === 'string') {
+        try {
+          sessionData = JSON.parse(sessionDataRaw);
+          console.log(`✅ Session retrieved (from JSON) for ${sessionToken.slice(0, 10)}...`);
+        } catch (parseError) {
+          console.error(`❌ Invalid session JSON for ${sessionToken}:`, parseError);
+          return res.status(401).json({
+            success: false,
+            error: 'Invalid session data format'
+          });
+        }
+      } else if (typeof sessionDataRaw === 'object') {
+        // Redis/KV sometimes returns the object directly
+        sessionData = sessionDataRaw as any;
+        console.log(`✅ Session retrieved (direct object) for ${sessionToken.slice(0, 10)}...`);
+      }
+    }
+    
+    if (!sessionData) {
+      return res.status(401).json({ 
+        success: false,
+        error: 'Invalid or expired session' 
+      });
+    }
+    
+    // Use giftId from session data (authoritative source)
+    const giftId = sessionData.giftId;
+    
+    // Verify session matches request
+    if (sessionData.tokenId !== tokenId) {
+      return res.status(403).json({ 
+        success: false,
+        error: 'Session mismatch - tokenId' 
+      });
+    }
+    
+    // CRITICAL FIX: Handle session with placeholder claimer from password validation
+    // Session was created with placeholder during password validation (wallet not connected)
+    // Now we update it with the real wallet address for EIP-712 generation
+    
+    if (sessionData.claimer === 'pending_wallet_connection' || 
+        sessionData.claimer === 'pending' || 
+        sessionData.claimer === null ||
+        sessionData.claimer === undefined) {
+      
+      // Update session with real claimer address
+      sessionData.claimer = claimer;
+      
+      // Update stored session with real claimer
+      await redis.setex(
+        sessionKey,
+        3600, // Keep same TTL
+        JSON.stringify(sessionData)
+      );
+      
+      console.log(`✅ Session updated with real claimer: ${claimer.slice(0, 10)}... (was placeholder)`);
+    } else if (sessionData.claimer !== claimer) {
+      // If session already has a different claimer, that's an error
+      console.log(`❌ Session claimer mismatch: session=${sessionData.claimer} vs provided=${claimer}`);
+      return res.status(403).json({ 
+        success: false,
+        error: 'Identity mismatch - claimer address does not match session' 
+      });
+    }
+    
+    // Check if education is completed OR if this is a bypass request
+    const completionKey = `education:${claimer}:${giftId}`;
+    const approvalKey = `approval:${giftId}:${claimer}`;
+    
+    // Check completion and approval status with unified Redis
+    const [completionRaw, approvalRaw] = await Promise.all([
+      redis.get(completionKey),
+      redis.get(approvalKey)
+    ]);
+    
+    // Handle both string and boolean/object formats from Redis
+    const isCompleted = completionRaw === 'true' || completionRaw === true;
+    
+    let existingApproval: any = null;
+    if (approvalRaw) {
+      if (typeof approvalRaw === 'string') {
+        try {
+          existingApproval = JSON.parse(approvalRaw);
+        } catch (e) {
+          // If JSON parse fails, use as string
+          existingApproval = approvalRaw;
+        }
+      } else {
+        // Direct object or other type from Redis
+        existingApproval = approvalRaw;
+      }
+    }
+    
+    // BYPASS MODE: Allow approval if session is valid (simulates education completed)
+    const isBypassRequest = sessionData.passwordValidated && sessionData.requiresEducation;
+    
+    if (!isCompleted && !existingApproval && !isBypassRequest) {
+      return res.status(403).json({ 
+        success: false,
+        error: 'Education not completed and bypass not active' 
+      });
+    }
+    
+    // If this is a bypass request, mark education as completed
+    if (isBypassRequest && !isCompleted) {
+      try {
+        await redis.setex(completionKey, 86400 * 30, 'true'); // 30 days
+        debugLogger.operation('Education bypass activated', {
+          tokenId,
+          giftId,
+          claimer: claimer.slice(0, 10) + '...',
+          bypassMode: true
+        });
+      } catch (error) {
+        console.error('Failed to mark education as completed via bypass:', error);
+      }
+    }
+    
+    // Get the properly configured approver wallet
+    const approverWallet = getApproverWallet();
+    
+    if (!approverWallet) {
+      // Log the configuration issue
+      const configValidation = validateApproverConfig();
+      console.error('❌ CRITICAL: Approver wallet not properly configured');
+      console.error('Validation result:', configValidation);
+      
+      debugLogger.operation('Approval requested but approver not configured', {
+        tokenId,
+        giftId,
+        claimer: claimer.slice(0, 10) + '...',
+        error: configValidation.error || 'NO_VALID_APPROVER',
+        requiredApprover: '0x1dBa3F54F9ef623b94398D96323B6a27F2A7b37B'
+      });
+      
+      return res.status(500).json({
+        success: false,
+        error: 'Education approval system not configured correctly.',
+        message: 'The approver private key must match the deployed contract approver: 0x1dBa3F54F9ef623b94398D96323B6a27F2A7b37B'
+      });
+    }
+    
+    console.log('🔑 APPROVER CONFIGURATION:', {
+      approverAddress: approverWallet.address,
+      verifyingContract: EIP712_DOMAIN.verifyingContract,
+      chainId: EIP712_DOMAIN.chainId,
+      giftId: giftId,
+      requirementsVersion: REQUIREMENTS_VERSION
+    });
+    
+    // Calculate deadline (current time + TTL)
+    const deadline = Math.floor(Date.now() / 1000) + SIGNATURE_TTL;
+    
+    // Prepare EIP-712 message with strict validation
+    const message = {
+      claimer: ethers.getAddress(claimer), // Normalize address with checksum
+      giftId: BigInt(giftId),
+      requirementsVersion: REQUIREMENTS_VERSION,
+      deadline: BigInt(deadline),
+      chainId: BigInt(EIP712_DOMAIN.chainId),
+      verifyingContract: ethers.getAddress(EIP712_DOMAIN.verifyingContract) // Normalize with checksum
+    };
+    
+    // CRITICAL: Validate all EIP-712 parameters strictly
+    console.log('🔐 EIP-712 MESSAGE VALIDATION:', {
+      claimer: message.claimer,
+      giftId: giftId,
+      requirementsVersion: REQUIREMENTS_VERSION,
+      deadline: deadline,
+      chainId: EIP712_DOMAIN.chainId,
+      verifyingContract: message.verifyingContract
+    });
+    
+    // Sign the message
+    const signature = await approverWallet.signTypedData(
+      EIP712_DOMAIN,
+      EIP712_TYPES,
+      message
+    );
+    
+    // Encode gate data for contract (signature + deadline)
+    const gateData = ethers.concat([
+      signature,
+      ethers.AbiCoder.defaultAbiCoder().encode(['uint256'], [deadline])
+    ]);
+    
+    // Log approval (secure - no private data)
+    secureLogger.info('Education approval signature issued', {
+      tokenId,
+      giftId,
+      claimer: claimer.slice(0, 10) + '...',
+      deadline,
+      signatureHash: ethers.keccak256(signature).slice(0, 10) + '...',
+      approver: approverWallet.address
+    });
+    
+    debugLogger.operation('EIP-712 approval signature created', {
+      tokenId,
+      giftId,
+      requirementsVersion: REQUIREMENTS_VERSION,
+      deadline,
+      ttl: SIGNATURE_TTL,
+      chainId: EIP712_DOMAIN.chainId,
+      verifyingContract: EIP712_DOMAIN.verifyingContract
+    });
+
+    // FASE 1: Almacenar email encriptado y questionsScore en gift:detail si están disponibles
+    if ((email || questionsScore) && redis) {
+      try {
+        const giftDetailKey = `gift:detail:${giftId}`;
+        const updates: Record<string, any> = {};
+
+        // Encrypt and store email if provided
+        if (email) {
+          const { encryptEmail, safeEncryptEmail, isPIIEncryptionEnabled } = await import('../../../lib/piiEncryption');
+
+          // First check if PII encryption is configured
+          if (!isPIIEncryptionEnabled()) {
+            console.error('❌ PII ENCRYPTION NOT CONFIGURED:', {
+              giftId,
+              email: email.substring(0, 3) + '***',
+              error: 'Missing PII_ENCRYPTION_KEY or PII_HMAC_SECRET environment variables'
+            });
+            // Store plain email temporarily with warning flag
+            updates.email_plain = email;
+            updates.email_warning = 'STORED_UNENCRYPTED_PII_NOT_CONFIGURED';
+            updates.email_captured_at = Date.now();
+          } else {
+            const encryptedData = safeEncryptEmail(email);
+
+            if (encryptedData) {
+              updates.email_encrypted = encryptedData.encrypted;
+              updates.email_hmac = encryptedData.hmac;
+              updates.email_captured_at = Date.now();
+
+              console.log('📧 Email capturado y encriptado correctamente:', {
+                giftId,
+                hmac: encryptedData.hmac.substring(0, 16) + '...'
+              });
+            } else {
+              console.error('❌ EMAIL ENCRYPTION FAILED:', {
+                giftId,
+                email: email.substring(0, 3) + '***',
+                error: 'safeEncryptEmail returned undefined'
+              });
+              // Store plain email temporarily with error flag
+              updates.email_plain = email;
+              updates.email_warning = 'ENCRYPTION_FAILED';
+              updates.email_captured_at = Date.now();
+            }
+          }
+        }
+
+        // CRITICAL FIX: Always store tokenId to enable fallback search
+        updates.tokenId = tokenId;
+
+        // Store questionsScore if provided
+        if (questionsScore) {
+          updates.education_score_correct = questionsScore.correct;
+          updates.education_score_total = questionsScore.total;
+          updates.education_score_percentage = Math.round((questionsScore.correct / questionsScore.total) * 100);
+          updates.education_completed_at = Date.now();
+
+          console.log('📊 Education score captured:', {
+            giftId,
+            tokenId,
+            score: `${questionsScore.correct}/${questionsScore.total}`,
+            percentage: updates.education_score_percentage
+          });
+        }
+
+        // FASE 2: Store detailed answers array if provided
+        if (questionsAnswered && questionsAnswered.length > 0) {
+          updates.education_answers_detail = JSON.stringify(questionsAnswered);
+          updates.education_answers_count = questionsAnswered.length;
+
+          console.log('📝 Detailed answers captured:', {
+            giftId,
+            answersCount: questionsAnswered.length,
+            correctCount: questionsAnswered.filter(a => a.isCorrect).length
+          });
+        }
+
+        // Update gift detail with all captured data
+        if (Object.keys(updates).length > 0) {
+          console.error('🔍 ATTEMPTING REDIS HSET:', {
+            giftDetailKey,
+            updateKeys: Object.keys(updates),
+            updateCount: Object.keys(updates).length,
+            hasEmail: !!updates.email_encrypted,
+            hasScore: !!updates.education_score_percentage,
+            hasAnswers: !!updates.education_answers_detail,
+            redisConnected: !!redis
+          });
+
+          try {
+            // CANONICAL STORAGE: Store ONLY in gift:detail:{giftId} (SINGLE SOURCE OF TRUTH)
+            const result = await redis.hset(giftDetailKey, updates);
+            console.error('✅ CANONICAL STORAGE: Saved to', {
+              giftDetailKey,
+              result,
+              fieldsWritten: Object.keys(updates).length,
+              fields: Object.keys(updates)
+            });
+
+            // TELEMETRY: Alert if we would have written to tokenId key (regression detection)
+            if (tokenId && tokenId !== giftId.toString()) {
+              console.error('📊 TELEMETRY: Would have written to tokenId key in old code', {
+                wouldHaveWrittenTo: `gift:detail:${tokenId}`,
+                actuallyWroteTo: giftDetailKey,
+                prevention: 'GUARD_ACTIVE'
+              });
+            }
+          } catch (hsetError) {
+            console.error('❌ REDIS HSET FAILED:', {
+              giftDetailKey,
+              error: hsetError,
+              message: (hsetError as Error).message,
+              stack: (hsetError as Error).stack,
+              updateKeys: Object.keys(updates)
+            });
+            throw hsetError; // Re-throw to see if caught by outer catch
+          }
+        } else {
+          console.error('⚠️ NO UPDATES TO WRITE - updates object empty:', {
+            giftId,
+            hasEmail: !!email,
+            hasQuestionsScore: !!questionsScore,
+            hasQuestionsAnswered: !!questionsAnswered,
+            redisAvailable: !!redis
+          });
+        }
+      } catch (analyticsError) {
+        console.error('⚠️ Failed to store analytics data (non-critical):', {
+          error: analyticsError,
+          message: (analyticsError as Error).message,
+          stack: (analyticsError as Error).stack,
+          giftId,
+          giftDetailKey: `gift:detail:${giftId}`
+        });
+        // No fallar la aprobación si los analytics fallan
+      }
+    }
+
+    return res.status(200).json({
+      success: true,
+      signature,
+      deadline,
+      gateData: gateData,
+      message: `Approval signature valid until ${new Date(deadline * 1000).toISOString()}`
+    });
+    
+  } catch (error: any) {
+    console.error('💥 APPROVAL SIGNATURE ERROR:', error);
+    debugLogger.operation('Approval signature error', {
+      error: error.message,
+      stack: error.stack
+    });
+    
+    return res.status(500).json({
+      success: false,
+      error: error.message || 'Internal server error'
+    });
+  }
+}

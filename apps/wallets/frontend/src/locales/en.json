@@ -1,0 +1,913 @@
+{
+  "navigation": {
+    "home": "Home",
+    "referrals": "Referrals",
+    "knowledge": "Knowledge",
+    "competitions": "Competitions",
+    "my-wallets": "My Wallets",
+    "nexuswallet": "NexusWallet"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "continue": "Continue",
+    "connect": "Connect",
+    "disconnect": "Disconnect",
+    "wallet": "Wallet"
+  },
+  "hero": {
+    "title": "Gift the future today",
+    "titlePart1": "Gift the",
+    "titlePart2": "Future",
+    "subtitle": "Gift the future. Create unique NFT-wallets with AI art and real cryptocurrencies.",
+    "subtitleLong": "Create unique NFT-wallets with AI art and real cryptocurrencies. The most emotional way to introduce your friends to the blockchain world.",
+    "createGift": "Create my First Gift",
+    "createGiftShort": "Create my Gift",
+    "benefits": "No fees • Free gas • 2 min",
+    "preview": {
+      "title": "Your Crypto Gift",
+      "balance": "Balance:"
+    },
+    "stats": {
+      "gifted": "Gifted",
+      "nftWallets": "NFT-Wallets",
+      "satisfaction": "Satisfaction"
+    },
+    "cta": {
+      "title": "Gift the future today",
+      "description": "Every gift is an invitation to the crypto ecosystem. Start now and earn commissions for every friend you invite."
+    }
+  },
+  "features": {
+    "title": "How does it work?",
+    "step1": {
+      "title": "Upload your Art",
+      "description": "Upload a personal photo and apply AI filters to create a unique NFT"
+    },
+    "step2": {
+      "title": "Deposit Crypto",
+      "description": "Add USDC that will be automatically stored in the NFT's wallet"
+    },
+    "step3": {
+      "title": "Share the Gift",
+      "description": "Send the link or QR to your friend so they can claim their NFT-wallet"
+    },
+    "gasSponsored": {
+      "title": "Gas Sponsored",
+      "description": "Zero-cost transactions for end users"
+    },
+    "personalizedArt": {
+      "title": "Personalized AI Art",
+      "description": "Create unique NFTs with artificial intelligence"
+    },
+    "socialRecovery": {
+      "title": "Social Recovery",
+      "description": "Secure wallet recovery system"
+    },
+    "integratedSwap": {
+      "title": "Integrated Swap",
+      "description": "Exchange tokens directly in the wallet"
+    },
+    "totalTransparency": {
+      "title": "Total Transparency",
+      "description": "All transactions verifiable on blockchain"
+    }
+  },
+  "featureSection": {
+    "title": "Why CryptoGift Wallets?",
+    "subtitle": "We combine art, technology and emotions to create the most human crypto gift experience in the world.",
+    "viewMore": "View more details",
+    "viewLess": "View less",
+    "comparison": {
+      "title": "Vs. Traditional Methods",
+      "traditional": {
+        "title": "Traditional Methods",
+        "point1": "Complicated and intimidating exchanges",
+        "point2": "High fees and unpredictable gas",
+        "point3": "Risk of losing private keys",
+        "point4": "Cold and technical experience"
+      },
+      "cryptogift": {
+        "title": "CryptoGift Wallets",
+        "point1": "Simple interface, like sending an email",
+        "point2": "Zero fees, sponsored gas",
+        "point3": "Social recovery with guardians",
+        "point4": "Emotional and personal experience"
+      }
+    },
+    "cards": {
+      "aiArt": {
+        "title": "Personalized AI Art",
+        "description": "Turn any photo into unique art with professional artificial intelligence filters.",
+        "subtitle": "PhotoRoom AI Technology + Professional Filters",
+        "feature1": "Over 15 professional artistic filters",
+        "feature2": "Real-time AI processing",
+        "feature3": "Automatic optimization for NFTs",
+        "feature4": "4K resolution for premium quality",
+        "highlight": "Each image is processed with cutting-edge algorithms to guarantee unique and unrepeatable works, perfect for high-quality NFTs."
+      },
+      "nftWallet": {
+        "title": "NFT = Real Wallet",
+        "description": "Each NFT is a functional wallet that stores real cryptocurrencies using ERC-6551 technology.",
+        "subtitle": "ERC-6551 Token Bound Accounts Technology",
+        "feature1": "Fully functional wallet inside the NFT",
+        "feature2": "Compatible with all ERC-20 tokens",
+        "feature3": "Native integration with DeFi protocols",
+        "feature4": "Automatic inheritance of the NFT",
+        "highlight": "We revolutionize the concept of NFT: it's not just digital art, it's a complete wallet that can receive, send and manage real cryptocurrencies."
+      },
+      "gasSponsored": {
+        "title": "Gas Sponsored",
+        "description": "All transactions are free for the end user. We pay the gas.",
+        "subtitle": "Biconomy Paymaster + Gas Optimization",
+        "feature1": "100% free transactions for users",
+        "feature2": "Intelligent route optimization",
+        "feature3": "Full coverage on Base Network",
+        "feature4": "No daily transaction limits",
+        "highlight": "We eliminate the biggest barrier to crypto entry: gas. Users never need to worry about ETH or fees."
+      },
+      "socialRecovery": {
+        "title": "Social Recovery",
+        "description": "Guardian system to recover access without depending on complicated seed phrases.",
+        "subtitle": "Guardians MultiSig + Cryptographic Verification",
+        "feature1": "2-of-3 trusted guardians system",
+        "feature2": "Robust cryptographic verification",
+        "feature3": "Security waiting period (72h)",
+        "feature4": "Complete audit of all actions",
+        "highlight": "Forget about seed phrases. If you lose access, your trusted guardians can help you recover it securely and verifiably."
+      },
+      "integratedSwap": {
+        "title": "Integrated Swap",
+        "description": "Switch between different cryptocurrencies directly from the NFT wallet with one click.",
+        "subtitle": "0x Protocol + Smart Liquidity Aggregation",
+        "feature1": "Best prices aggregating multiple DEXs",
+        "feature2": "Minimal slippage and smart execution",
+        "feature3": "Support for 50+ main tokens",
+        "feature4": "Simplified one-click interface",
+        "highlight": "Direct swap from your NFT-wallet without leaving the platform. Get the best market prices with the convenience of a button."
+      },
+      "transparency": {
+        "title": "Total Transparency",
+        "description": "Open source and developer community. Public dashboard with real-time statistics.",
+        "subtitle": "Open Source + Continuous Public Audit",
+        "feature1": "100% open code on GitHub",
+        "feature2": "Quarterly independent audits",
+        "feature3": "Real-time reserves dashboard",
+        "feature4": "Active developer community",
+        "highlight": "Total transparency: all our code is public, reserves are auditable on-chain and the community can verify every line of code."
+      }
+    }
+  },
+  "footer": {
+    "brand": {
+      "name": "CryptoGift",
+      "tagline": "Wallets",
+      "description": "Gift the future. Create unique NFT-wallets with AI art and real cryptocurrencies."
+    },
+    "product": {
+      "title": "Product",
+      "createGift": "Create Gift",
+      "createFirstGift": "Create my First Gift",
+      "competitions": "Competitions",
+      "referralProgram": "Referral Program",
+      "academy": "Academy",
+      "verifyBlockchain": "Verify on Blockchain"
+    },
+    "resources": {
+      "title": "Resources",
+      "documentation": "Documentation",
+      "whitepaper": "Whitepaper",
+      "tokenomics": "Tokenomics",
+      "sourceCode": "Source Code",
+      "blog": "Blog",
+      "helpCenter": "Help Center",
+      "support": "Support"
+    },
+    "company": {
+      "title": "Company",
+      "contact": "Contact",
+      "openSource": "Open Source",
+      "dao": "CryptoGift DAO",
+      "community": "Community"
+    },
+    "stats": {
+      "totalGifted": "Total Gifted",
+      "nftWallets": "NFT-Wallets",
+      "claimRate": "Claim Rate",
+      "network": "Base L2",
+      "satisfaction": "Satisfaction",
+      "gasSaved": "Gas Saved"
+    },
+    "bottom": {
+      "copyright": "© 2025 The Moon in a Box, CryptoGift Wallets. All rights reserved.",
+      "builtOn": "Built on",
+      "chain": "Base"
+    }
+  },
+  "analytics": {
+    "title": "Gift Analytics Dashboard",
+    "subtitle": "Complete tracking of campaigns and gifts",
+    "nav": {
+      "live": "Live",
+      "manual": "Manual",
+      "filters": "Filters",
+      "refresh": "Refresh",
+      "export": "Export CSV"
+    },
+    "kpis": {
+      "totalGifts": "Total Gifts",
+      "claimed": "Claimed",
+      "totalValue": "Total Value",
+      "avgTime": "Average Time",
+      "conversion": "conversion",
+      "vs": "vs previous period"
+    },
+    "charts": {
+      "conversionFunnel": "Conversion Funnel",
+      "statusDistribution": "Status Distribution",
+      "timeEvolution": "Time Evolution",
+      "campaignDetails": "Campaign Details"
+    },
+    "stages": {
+      "created": "Created",
+      "viewed": "Viewed",
+      "preClaim": "Pre-Claim",
+      "education": "Education",
+      "claimed": "Claimed",
+      "expired": "Expired",
+      "returned": "Returned",
+      "pending": "Pending",
+      "inProgress": "In Progress"
+    },
+    "filters": {
+      "title": "Advanced Filters",
+      "campaigns": "Campaigns",
+      "allCampaigns": "All campaigns",
+      "status": "Status",
+      "allStatus": "All statuses",
+      "groupBy": "Group by",
+      "day": "Day",
+      "week": "Week",
+      "month": "Month",
+      "chartType": "Chart type",
+      "area": "Area",
+      "bar": "Bar",
+      "line": "Line",
+      "pie": "Pie"
+    },
+    "table": {
+      "campaign": "Campaign",
+      "total": "Total",
+      "claimed": "Claimed",
+      "conversion": "Conversion",
+      "value": "Value",
+      "topReferrer": "Top Referrer",
+      "actions": "Actions",
+      "viewDetails": "View details",
+      "refs": "refs"
+    },
+    "notifications": {
+      "dataUpdated": "Data updated",
+      "dataUpdatedMessage": "Statistics have been updated successfully",
+      "exportComplete": "Export complete",
+      "exportCompleteMessage": "Data has been exported successfully",
+      "errorLoading": "Error loading data",
+      "errorLoadingMessage": "Could not load statistics"
+    },
+    "auth": {
+      "connectWallet": "Connect your wallet",
+      "connectMessage": "You need to connect your wallet to view analytics"
+    },
+    "gifts": {
+      "title": "Individual Gifts",
+      "total": "Total",
+      "gifts": "gifts",
+      "addReference": "Add reference...",
+      "viewDetails": "View Details",
+      "noGifts": "No individual gifts created yet.",
+      "showing": "Showing",
+      "of": "of",
+      "columns": {
+        "id": "Gift ID",
+        "reference": "Reference/Name",
+        "status": "Status",
+        "created": "Created",
+        "claimedBy": "Claimed By",
+        "education": "Education",
+        "value": "Value",
+        "actions": "Actions"
+      },
+      "status": {
+        "created": "Created",
+        "viewed": "Viewed",
+        "claimed": "Claimed",
+        "expired": "Expired",
+        "educationCompleted": "Education Done"
+      }
+    }
+  },
+  "modelos": {
+    "hero": {
+      "title": "Use Cases",
+      "subtitle": "Explore the infinite possibilities of CryptoGift.",
+      "subtitleModels": "models",
+      "subtitleEnd": "to transform the way you gift, share, and build value."
+    },
+    "stats": {
+      "models": "Models",
+      "categories": "Categories",
+      "deployed": "Deployed",
+      "ready": "Ready"
+    },
+    "search": {
+      "placeholder": "Search models...",
+      "showing": "Showing",
+      "of": "of",
+      "models": "models"
+    },
+    "filters": {
+      "button": "Filters",
+      "status": "Status:",
+      "complexity": "Complexity:",
+      "all": "All",
+      "clear": "Clear filters"
+    },
+    "complexity": {
+      "1": "1 - Very easy",
+      "2": "2 - Easy",
+      "3": "3 - Intermediate",
+      "4": "4 - Advanced",
+      "5": "5 - Expert"
+    },
+    "status": {
+      "deployed": "Deployed",
+      "ready": "Ready",
+      "building": "Building",
+      "planned": "Planned"
+    },
+    "categories": {
+      "all": "All",
+      "allDescription": "View all models",
+      "onboarding": "Crypto Onboarding",
+      "campaigns": "Marketing Campaigns",
+      "competitions": "Competitions",
+      "governance": "DAO Governance",
+      "finance": "Finance",
+      "gaming": "Gaming",
+      "social": "Social",
+      "enterprise": "Enterprise"
+    },
+    "card": {
+      "view": "View"
+    },
+    "modal": {
+      "complexity": "Complexity:",
+      "processFlow": "Process Flow",
+      "requiredIntegrations": "Required Integrations",
+      "useCases": "Use Cases",
+      "launchCompetition": "Launch Competition",
+      "goToMode": "Go to Mode",
+      "comingSoon": "Coming Soon",
+      "inConstruction": "In Construction",
+      "close": "Close"
+    },
+    "tooltip": {
+      "clickToView": "Click to view"
+    },
+    "competitionPanel": {
+      "header": "Create New Competition",
+      "headerDescription": "Unified panel to create P2P bets, tournaments and prediction markets",
+      "dividerLabel": "Available Competition Models"
+    }
+  },
+  "competition": {
+    "title": "Create Competition",
+    "subtitle": "Configure your competition - all fields have default values",
+    "newCompetition": "New Competition",
+    "participants": "participants",
+    "quickCreate": "Quick Create",
+    "verifying": "Verifying...",
+    "signing": "Signing...",
+    "creating": "Creating...",
+    "adaptiveMode": {
+      "title": "Adaptive Mode:",
+      "description": "Anyone can join as participant or judge. When you click \"Start\", the system determines the format (1v1, bracket, etc.) based on participants."
+    },
+    "form": {
+      "titleLabel": "Competition title",
+      "optional": "(optional)",
+      "titlePlaceholder": "Auto-generated if left empty",
+      "titleHint": "If you don't add a title, it will be auto-generated with code and date",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Add details, specific rules, etc."
+    },
+    "sections": {
+      "format": "Format",
+      "entry": "Entry",
+      "stake": "Stake & Prize",
+      "resolution": "Resolution",
+      "timing": "Timing",
+      "matchType": "Match Type",
+      "creation": "Creation"
+    },
+    "format": {
+      "adaptive": "Adaptive",
+      "adaptiveSub": "System decides",
+      "1v1": "1 vs 1",
+      "1v1Sub": "Direct duel",
+      "teams": "Teams",
+      "teamsSub": "2v2, 3v3...",
+      "freeForAll": "Free for All",
+      "freeForAllSub": "Battle Royale",
+      "bracket": "Bracket",
+      "bracketSub": "Eliminations",
+      "league": "League",
+      "leagueSub": "Round Robin",
+      "pool": "Pool",
+      "poolSub": "Betting pool",
+      "teamSize": "Team size"
+    },
+    "entry": {
+      "open": "Open",
+      "openSub": "Anyone joins",
+      "invite": "By invitation",
+      "inviteSub": "Link only",
+      "fixed": "Fixed spots",
+      "fixedSub": "Closes when full",
+      "requirements": "With requirements",
+      "requirementsSub": "Tokens, whitelist...",
+      "maxParticipants": "Maximum participants"
+    },
+    "stake": {
+      "equal": "Equal",
+      "equalSub": "Everyone stakes the same",
+      "flexible": "Flexible",
+      "flexibleSub": "Each one decides",
+      "prizeOnly": "Prize only",
+      "prizeOnlySub": "Organizer provides",
+      "totalPrize": "Total prize",
+      "amountPerPerson": "Amount per person",
+      "prizeDistribution": "Prize distribution",
+      "winnerTakesAll": "Winner takes all",
+      "winnerTakesAllSub": "All to winner",
+      "top3": "Top 3",
+      "top3Sub": "60% / 30% / 10%",
+      "proportional": "Proportional",
+      "proportionalSub": "Based on hits",
+      "custom": "Custom",
+      "customSub": "Define your %"
+    },
+    "resolution": {
+      "singleArbiter": "Single arbiter",
+      "singleArbiterSub": "One person decides",
+      "panel": "Panel",
+      "panelSub": "Multiple arbiters vote",
+      "autoReport": "Self-report",
+      "autoReportSub": "Participants report",
+      "oracle": "Oracle",
+      "oracleSub": "Automatic data",
+      "voting": "Voting",
+      "votingSub": "Everyone votes",
+      "arbiter": "Arbiter",
+      "arbiters": "Arbiters (one per line)",
+      "arbiterPlaceholder": "Wallet address or ENS...",
+      "arbiterHint": "Leave empty to assign later or let participants decide"
+    },
+    "timing": {
+      "fixedDate": "Fixed date",
+      "fixedDateSub": "Scheduled close",
+      "whenFull": "When full",
+      "whenFullSub": "When completed",
+      "manual": "Manual",
+      "manualSub": "Organizer closes",
+      "closingDate": "Closing date"
+    },
+    "match": {
+      "bo1": "Best of 1",
+      "bo1Sub": "One game",
+      "bo3": "Best of 3",
+      "bo3Sub": "First to 2",
+      "bo5": "Best of 5",
+      "bo5Sub": "First to 3",
+      "points": "Points",
+      "pointsSub": "Accumulate more",
+      "custom": "Custom",
+      "customSub": "Define rules"
+    },
+    "sharing": {
+      "shareable": "Shareable",
+      "onlyYou": "Only you",
+      "forSharing": "For sharing",
+      "forSharingDesc": "Anyone with the link can activate this competition. If you activate it, you only need to click on the shared link.",
+      "onlyYouDesc": "Only you can activate this competition from your connected wallet."
+    },
+    "wallet": {
+      "connectTitle": "Connect your wallet to create competitions",
+      "connectHint": "Use the wallet button in the top corner to connect",
+      "verifyIdentity": "Verify identity",
+      "createButton": "Create Competition",
+      "creatingButton": "Creating competition...",
+      "wallet": "Wallet",
+      "verified": "Verified",
+      "connectToContinue": "Connect your wallet to continue",
+      "connectNeeded": "You need a connected wallet to create competitions and manage funds securely.",
+      "connectButton": "Connect Wallet",
+      "configPending": "Wallet configuration pending. Reload the page."
+    },
+    "errors": {
+      "connectFirst": "Connect your wallet first",
+      "authError": "Authentication error",
+      "signToVerify": "Sign with your wallet to verify your identity",
+      "accountError": "Error: Could not get account. Try again.",
+      "createError": "Error creating competition"
+    }
+  },
+  "filterSelector": {
+    "title": "Choose your Style",
+    "subtitle": "Apply cutting-edge AI filters to give your gift a unique touch",
+    "original": {
+      "title": "Original",
+      "description": "No filters"
+    },
+    "freeFilters": {
+      "title": "Free Filters",
+      "badge": "Available now"
+    },
+    "premiumFilters": {
+      "title": "Premium Filters",
+      "badge": "Coming soon",
+      "comingSoon": "Coming soon"
+    },
+    "aiGenerator": {
+      "title": "Don't have a photo?",
+      "description": "Generate unique AI art based on a 1:1 description to get the best NFT quality",
+      "recommendation": "Temporary recommendation:",
+      "recommendationText": "Use your favorite AI provider (ChatGPT, Midjourney, DALL-E) with these specs:",
+      "aspectRatio": "Aspect ratio: 1:1 (square)",
+      "resolution": "Resolution: 1024x1024 or higher",
+      "format": "Format: JPG or PNG",
+      "comingSoon": "Coming soon - Integrated AI Generation"
+    },
+    "buttons": {
+      "back": "Back",
+      "continueWith": "Continue with",
+      "selectFilter": "Select a filter"
+    },
+    "preview": {
+      "title": "Preview:",
+      "originalDescription": "Preview of your original image. Final NFT format for blockchain.",
+      "filteredDescription": "Preview with filter {filter}. Your final NFT on blockchain.",
+      "filterApplied": "Applied Filter",
+      "status": "Status",
+      "statusPreview": "Preview",
+      "nftQuality": "NFT Quality",
+      "blockchainReady": "Blockchain Ready"
+    }
+  },
+  "imageUpload": {
+    "title": "Upload your Art",
+    "subtitle": "Upload a personal photo that will become a unique NFT",
+    "dropzone": {
+      "dragActive": "Drop the image here...",
+      "dragInactive": "Drag an image here",
+      "clickToSelect": "or click to select",
+      "formats": "PNG, JPG, GIF up to 10MB"
+    },
+    "validation": {
+      "invalidType": "Please select a valid image file",
+      "tooLarge": "File is too large. Maximum 10MB.",
+      "uploadError": "Error uploading image. Please try again."
+    },
+    "tips": {
+      "title": "Tips for best results:",
+      "tip1": "Use photos with good lighting",
+      "tip2": "Avoid pixelated images",
+      "tip3": "Vertical photos work better",
+      "tip4": "Faces and landscapes are perfect!"
+    },
+    "buttons": {
+      "back": "Back",
+      "uploading": "Uploading...",
+      "continue": "Continue"
+    }
+  },
+  "giftWizard": {
+    "title": "Create Crypto Gift",
+    "stepProgress": "Step {step} of 7",
+    "connect": {
+      "title": "Connect and Authenticate your Wallet",
+      "description": "We need to connect your wallet and authenticate you securely to create the gift NFT-wallet",
+      "securityNote": "Your wallet will connect securely using the SIWE (Sign-In With Ethereum) standard",
+      "privacyNote": "All data remains private and secure"
+    },
+    "minting": {
+      "title": "Creating your Gift...",
+      "warning": "This may take a few seconds. Don't close this window!",
+      "gaslessAttempt": "Attempting gasless transaction",
+      "gaslessFree": "(free)",
+      "paymasterProcessing": "Biconomy paymaster processing...",
+      "gasFallback": "If it fails → we'll ask you to pay gas (~$0.01)"
+    },
+    "progress": {
+      "connect": "Connect",
+      "filters": "Filters",
+      "ready": "Ready"
+    },
+    "defaults": {
+      "giftMessage": "A unique crypto gift created with love"
+    }
+  },
+  "amountSelector": {
+    "title": "Initial Balance",
+    "subtitle": "Choose how much USDC you want to gift",
+    "customAmount": "Custom Amount",
+    "placeholder": "Enter amount",
+    "minMax": "Minimum ${min} - Maximum ${max}",
+    "fees": {
+      "title": "Cost Breakdown",
+      "baseAmount": "Base amount:",
+      "creationFee": "Creation fee (4%):",
+      "forReferrer": "For referrer:",
+      "forPlatform": "For platform:",
+      "friendReceives": "Your friend will receive:"
+    },
+    "whyFee": {
+      "title": "Why do we charge a fee?",
+      "point1": "Free gas for all transactions",
+      "point2": "Server and AI API maintenance",
+      "point3": "Referral commissions (virality)",
+      "point4": "Continuous development of new features"
+    },
+    "popularChoice": "Most popular choice",
+    "buttons": {
+      "back": "Back",
+      "continue": "Continue"
+    }
+  },
+  "giftSummary": {
+    "title": "Gift Summary",
+    "subtitle": "Review the details before creating your NFT-wallet",
+    "error": {
+      "title": "Error creating gift",
+      "message": "An error occurred while creating your gift"
+    },
+    "preview": {
+      "title": "Your Crypto Gift",
+      "filterApplied": "Applied filter:",
+      "initialBalance": "Initial balance:",
+      "fileSize": "File size:",
+      "original": "Original"
+    },
+    "costs": {
+      "title": "Cost Breakdown",
+      "deposited": "Deposited amount:",
+      "creationFee": "Creation fee (4%):",
+      "forReferrer": "For referrer:",
+      "forPlatform": "For platform:",
+      "friendReceives": "Your friend will receive:"
+    },
+    "nextSteps": {
+      "title": "What happens next?",
+      "step1": "Your unique NFT is created with the selected image and filter",
+      "step2": "An ERC-6551 wallet is automatically generated connected to the NFT",
+      "step3": "The USDC is deposited directly into that wallet",
+      "step4": "You receive a link and QR to share with your friend",
+      "step5": "Your friend can claim the NFT and use the wallet immediately!"
+    },
+    "important": {
+      "title": "Important:",
+      "point1": "This transaction cannot be undone",
+      "point2": "Gas is sponsored (free for you)",
+      "point3": "The NFT will be created on Base blockchain",
+      "point4": "Your friend will need to connect a wallet to claim it"
+    },
+    "buttons": {
+      "back": "Back",
+      "creating": "Creating Gift...",
+      "create": "Create My NFT Gift"
+    }
+  },
+  "qrShare": {
+    "shareMessage": {
+      "line1": "I've sent you a special crypto gift!",
+      "line2": "It's a unique NFT that contains real cryptocurrencies. You just need to:",
+      "step1": "Click on the link",
+      "step2": "Connect your wallet (or create a new one)",
+      "step3": "Claim your gift!",
+      "closing": "Welcome to the future of gifting"
+    },
+    "directMint": {
+      "title": "NFT Created Directly!",
+      "subtitle": "Your NFT-wallet #{tokenId} was minted directly to your wallet",
+      "escrowSkipped": "Escrow Skipped",
+      "defaultMessage": "NFT minted directly to your wallet. Token ID: {tokenId}",
+      "whatMeans": "What does this mean?",
+      "point1": "The NFT is directly in your wallet",
+      "point2": "No waiting period or password",
+      "point3": "You can use it immediately",
+      "point4": "No need to \"claim\" anything"
+    },
+    "success": {
+      "title": "Gift Created!",
+      "subtitle": "Your NFT-wallet #{tokenId} is ready to be shared"
+    },
+    "qrCode": {
+      "title": "Scan to Claim",
+      "subtitle": "Your friend can scan this QR code with their phone"
+    },
+    "giftLink": {
+      "title": "Gift Link",
+      "copied": "Copied!"
+    },
+    "shareMessageSection": {
+      "title": "Complete Message",
+      "copyButton": "Copy Message"
+    },
+    "socialShare": {
+      "title": "Share on Social Media"
+    },
+    "nftDetails": {
+      "title": "NFT Details",
+      "tokenId": "Token ID:",
+      "blockchain": "Blockchain:",
+      "blockchainValue": "Base Sepolia",
+      "standard": "Standard:",
+      "standardValue": "ERC-6551 (Token Bound Account)",
+      "status": "Status:",
+      "statusValue": "Already in your wallet",
+      "walletIntegrated": "Integrated wallet:",
+      "walletReady": "Ready to use",
+      "gasless": "GASLESS transaction (free)",
+      "gasPaid": "Gas paid (~$0.01)"
+    },
+    "nextSteps": {
+      "title": "Next Steps",
+      "step1": "Share the link or QR with your friend",
+      "step2": "Your friend connects their wallet and claims the NFT",
+      "step3": "They can use the wallet immediately!",
+      "step4": "You can track progress on the blockchain explorer"
+    },
+    "buttons": {
+      "viewBaseScan": "View on BaseScan",
+      "perfect": "Perfect!"
+    },
+    "referral": {
+      "title": "Did you know you can earn money?",
+      "description": "For every friend who creates a gift using your referral link, you'll earn 20% of the generated profits.",
+      "link": "View my referrals panel →"
+    },
+    "fallbackCopy": "Copy manually:"
+  },
+  "connectAuth": {
+    "configPending": "Wallet configuration pending. Please contact administrator.",
+    "connectModal": {
+      "title": "Connect Wallet",
+      "welcome": "CryptoGift Wallets",
+      "subtitle": "Connect your wallet to get started"
+    },
+    "switchNetwork": "Switch Network",
+    "noWalletConnected": "No wallet connected",
+    "securitySignature": {
+      "title": "Security Signature Required",
+      "description": "Generate your temporary authentication token to protect your transactions"
+    },
+    "authenticate": {
+      "button": "Sign Authentication Message",
+      "authenticating": "Authenticating... (a few seconds)"
+    },
+    "tokenActivation": {
+      "title": "Your Security Token is being Activated",
+      "description": "We are creating an authentication token that will expire in 30 minutes to protect all your transactions.",
+      "benefit1": "Prevents malicious attacks",
+      "benefit2": "Protects your funds",
+      "benefit3": "Expires automatically for security",
+      "mobileTitle": "On mobile:",
+      "mobileHint": "If it doesn't appear automatically, open your wallet app and look for the pending signature message.",
+      "desktopHint": "Please sign the message in your wallet when it appears."
+    },
+    "whySign": {
+      "title": "Why do we need this signature?",
+      "description": "This signature generates a temporary security token that acts as an additional layer of protection against threats.",
+      "tokenInfo": "Temporary Token: Expires in 30 minutes",
+      "securityInfo": "Maximum Security: Protects against malicious attacks",
+      "standardInfo": "SIWE Standard: Certified Sign-In With Ethereum",
+      "transactionInfo": "Secure Transactions: All operations will be signed with this token",
+      "footer": "This advanced security measure ensures maximum protection of your funds."
+    },
+    "authenticated": {
+      "authenticating": "Authenticating...",
+      "authenticated": "Authenticated",
+      "success": "Authentication Successful!",
+      "continue": "You can continue with your operation"
+    },
+    "tokenStatus": {
+      "title": "Your Security Token is Active",
+      "description": "Your temporary token is protecting all transactions. It will automatically expire in 30 minutes for security."
+    },
+    "securityInfo": {
+      "siwe": "Your wallet will connect securely using the SIWE standard (Sign-In With Ethereum)",
+      "privacy": "All data remains private and secure"
+    },
+    "walletUnavailable": "Wallet unavailable",
+    "reAuth": "Re-authenticate"
+  },
+  "errorModal": {
+    "titles": {
+      "network": "Connection Error",
+      "validation": "Invalid Data",
+      "rateLimit": "Too Many Requests",
+      "apiKey": "Configuration Error",
+      "contract": "Blockchain Error",
+      "unknown": "Unexpected Error"
+    },
+    "howToFix": "How to fix it:",
+    "solutions": {
+      "network": {
+        "step1": "Check your internet connection",
+        "step2": "Refresh the page",
+        "step3": "Disable VPN if you have one active",
+        "step4": "Try again in a few minutes"
+      },
+      "validation": {
+        "step1": "Verify that all fields are filled",
+        "step2": "Make sure the file is an image (JPG, PNG)",
+        "step3": "Confirm the file is less than 10MB",
+        "step4": "Try with a different image"
+      },
+      "rateLimit": {
+        "step1": "Wait 1-2 minutes before trying again",
+        "step2": "Don't make multiple quick attempts",
+        "step3": "Check your internet connection",
+        "step4": "If it persists, contact support"
+      },
+      "apiKey": {
+        "step1": "This is a technical server error",
+        "step2": "Refresh the page",
+        "step3": "If it persists, contact technical support",
+        "step4": "Mention the error code when contacting"
+      },
+      "contract": {
+        "step1": "Verify that your wallet is connected",
+        "step2": "Make sure you're on the Base Sepolia network",
+        "step3": "Confirm you have enough balance",
+        "step4": "Try reducing the gift amount"
+      },
+      "unknown": {
+        "step1": "Refresh the page and try again",
+        "step2": "Check your internet connection",
+        "step3": "Clear the browser cache",
+        "step4": "If it persists, contact support"
+      }
+    },
+    "technicalDetails": "Technical details (development only):",
+    "errorCode": "Error code:",
+    "mentionCode": "Mention this code when contacting support",
+    "buttons": {
+      "retry": "Retry",
+      "close": "Close"
+    },
+    "needHelp": "Need additional help?",
+    "contactSupport": "Contact support"
+  },
+  "gasModal": {
+    "title": "Gas Required",
+    "gaslessFailed": "Gasless failed. You'll pay a small gas fee (~$0.04).",
+    "network": "Network:",
+    "cost": "Cost:",
+    "whatHappens": {
+      "title": "What happens:",
+      "point1": "NFT minted + TBA wallet created",
+      "point2": "Metadata stored on IPFS",
+      "point3": "Shareable link generated"
+    },
+    "warning": "Real blockchain transaction. You need testnet ETH. Cannot be reversed.",
+    "understand": "I understand this executes a real transaction and I will pay gas fees.",
+    "buttons": {
+      "cancel": "Cancel",
+      "confirm": "Confirm & Pay"
+    }
+  },
+  "deviceLimitModal": {
+    "title": "Device Limit Reached",
+    "description": "This device already has the maximum allowed 2 registered users.",
+    "options": "Available options:",
+    "newDevice": {
+      "title": "Use a new device",
+      "description": "To create a new account, use another device (phone, tablet, computer)."
+    },
+    "existingAccount": {
+      "title": "Connect existing account",
+      "description": "Select one of the accounts already registered on this device:",
+      "user": "User"
+    },
+    "whyLimit": {
+      "title": "Why this limit?",
+      "description": "We limit to 2 users per device as a security measure to prevent fraud and ensure each account maintains its unique identity."
+    },
+    "understood": "Understood"
+  }
+}
