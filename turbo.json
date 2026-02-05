@@ -1,0 +1,72 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "NODE_ENV"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "env": [
+        "NEXT_PUBLIC_*"
+      ]
+    },
+    "build#@mbxarts/dao": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "NEXT_PUBLIC_*",
+        "ARAGON_*",
+        "DAO_*",
+        "CGC_*",
+        "EAS_*",
+        "DISCORD_*",
+        "SUPABASE_*",
+        "SENTRY_*",
+        "PRIVATE_KEY_*",
+        "TELEGRAM_*",
+        "REDIS_*"
+      ]
+    },
+    "build#@mbxarts/wallets": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "NEXT_PUBLIC_*",
+        "BICONOMY_*",
+        "PINATA_*",
+        "NFT_STORAGE_*",
+        "PHOTOROOM_*",
+        "KV_*",
+        "REDIS_*",
+        "RESEND_*",
+        "SUPABASE_*",
+        "TW_*",
+        "ADMIN_*",
+        "JWT_*",
+        "CRON_*",
+        "PUSH_*",
+        "TENDERLY_*",
+        "PRIVATE_KEY_*",
+        "APPROVER_*"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "type-check": {
+      "dependsOn": ["^type-check"]
+    },
+    "test": {
+      "dependsOn": ["^build"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}
