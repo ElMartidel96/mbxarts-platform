@@ -286,9 +286,9 @@ interface Metrics {
 }
 
 // Constants
-const GIFT_CLAIM_URL = process.env.NEXT_PUBLIC_SITE_URL 
+const GIFT_CLAIM_URL = process.env.NEXT_PUBLIC_SITE_URL
   ? `${process.env.NEXT_PUBLIC_SITE_URL}/gift/claim/demo-`
-  : 'https://cryptogift-wallets.vercel.app/gift/claim/demo-';
+  : 'https://gifts.mbxarts.com/gift/claim/demo-';
 
 const SALES_BLOCKS: SalesBlock[] = [
   {

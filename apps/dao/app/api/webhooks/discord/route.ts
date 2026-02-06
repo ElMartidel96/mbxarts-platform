@@ -152,7 +152,7 @@ async function handleTasksCommand(payload: DiscordWebhookPayload) {
             },
             {
               name: '🔗 Dashboard',
-              value: '[View Tasks](https://crypto-gift-wallets-dao.vercel.app/tasks)',
+              value: '[View Tasks](https://mbxarts.com/tasks)',
               inline: false
             }
           ],
@@ -214,7 +214,7 @@ async function handleProfileCommand(payload: DiscordWebhookPayload) {
             color: 0x10B981, // Green
             fields: [{
               name: '🔗 Dashboard',
-              value: '[Connect Wallet](https://crypto-gift-wallets-dao.vercel.app/tasks)',
+              value: '[Connect Wallet](https://mbxarts.com/tasks)',
               inline: false
             }]
           }]

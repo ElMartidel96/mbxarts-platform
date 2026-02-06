@@ -20,9 +20,10 @@ export function getAllowedOrigins(): string[] {
         'http://127.0.0.1:3000',
       ];
     }
-    // Production fallback - allow Vercel domains
+    // Production fallback - allow production domains
     return [
-      'https://crypto-gift-wallets-dao.vercel.app',
+      'https://mbxarts.com',
+      'https://gifts.mbxarts.com',
       '*.vercel.app'
     ];
   }

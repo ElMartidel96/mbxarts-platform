@@ -35,7 +35,7 @@ graph TD
 
 ## 🚀 Demo & Estado Actual
 
-- **Web App**: [https://cryptogift-wallets.vercel.app](https://cryptogift-wallets.vercel.app) ✅ **LIVE**
+- **Web App**: [https://gifts.mbxarts.com](https://gifts.mbxarts.com) ✅ **LIVE**
 - **Contratos**: Desplegados en Base Sepolia ✅ **OPERATIVOS** 
 - **Dashboard**: Panel de transparencia con estadísticas en vivo ✅ **FUNCIONAL**
 
@@ -128,10 +128,11 @@ graph TD
 - npm o yarn
 - Wallet con fondos en Base Sepolia
 
-### 1. Clonar el repositorio
+### 1. El repositorio
 ```bash
-git clone https://github.com/your-username/cryptogift-wallets.git
-cd cryptogift-wallets
+# This app is part of the mbxarts-platform monorepo
+# Clone from: https://github.com/ElMartidel96/mbxarts-platform
+cd apps/wallets
 ```
 
 ### 2. Instalar dependencias

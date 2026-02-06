@@ -505,7 +505,7 @@ The team combines expertise in Web3 development, community building, and busines
 **Developed by**: The Moon in a Box Inc.
 **Project**: CryptoGift Wallets DAO
 **Website**: https://mbxarts.com
-**GitHub**: https://github.com/CryptoGift-Wallets-DAO/CryptoGift-Wallets-DAO
+**GitHub**: https://github.com/ElMartidel96/mbxarts-platform
 
 ### Legal Structure
 
@@ -541,7 +541,7 @@ The team combines expertise in Web3 development, community building, and busines
 
 - **Website**: https://mbxarts.com
 - **Documentation**: https://mbxarts.com/docs
-- **GitHub**: https://github.com/CryptoGift-Wallets-DAO/CryptoGift-Wallets-DAO
+- **GitHub**: https://github.com/ElMartidel96/mbxarts-platform
 - **BaseScan**: https://basescan.org/address/0x5e3a61b550328f3D8C44f60b3e10a49D3d806175
 
 ### Social Media

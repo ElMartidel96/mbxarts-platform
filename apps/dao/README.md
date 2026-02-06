@@ -41,9 +41,9 @@ node scripts/emergency-toolkit.js status
 ### Instalación
 
 ```bash
-# Clonar repositorio
-git clone https://github.com/CryptoGift-Wallets-DAO/CryptoGift-Wallets-DAO.git
-cd CryptoGift-Wallets-DAO
+# This app is part of the mbxarts-platform monorepo
+# Clone from: https://github.com/ElMartidel96/mbxarts-platform
+cd apps/dao
 
 # 🟢 IMPORTANTE: Este proyecto usa PNPM
 pnpm install

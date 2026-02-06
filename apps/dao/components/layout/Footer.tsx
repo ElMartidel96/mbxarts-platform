@@ -95,7 +95,7 @@ export const Footer: React.FC = () => {
               </a>
               {/* GitHub */}
               <a
-                href="https://github.com/CryptoGift-Wallets-DAO"
+                href="https://github.com/ElMartidel96/mbxarts-platform"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
@@ -198,7 +198,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="https://github.com/CryptoGift-Wallets-DAO"
+                  href="https://github.com/ElMartidel96/mbxarts-platform"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
@@ -223,7 +223,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="https://github.com/CryptoGift-Wallets-DAO"
+                  href="https://github.com/ElMartidel96/mbxarts-platform"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
@@ -243,7 +243,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="https://cryptogift-wallets.vercel.app"
+                  href="https://gifts.mbxarts.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"

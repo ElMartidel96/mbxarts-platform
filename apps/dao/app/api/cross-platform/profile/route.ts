@@ -19,8 +19,8 @@ import {
 
 // Allowed origins for CORS
 const ALLOWED_ORIGINS = [
+  'https://mbxarts.com',
   'https://gifts.mbxarts.com',
-  'https://cryptogift-wallets.vercel.app',
   'http://localhost:3000',
   'http://localhost:3001',
 ];

@@ -655,7 +655,7 @@ export async function setupRecovery(
       const resend = new Resend(apiKey);
 
       const fromEmail = process.env.RESEND_DAO_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || 'CryptoGift DAO <onboarding@resend.dev>';
-      const verifyUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://crypto-gift-wallets-dao.vercel.app'}/api/profile/verify?token=${verificationToken}`;
+      const verifyUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://mbxarts.com'}/api/profile/verify?token=${verificationToken}`;
 
       await resend.emails.send({
         from: fromEmail,
@@ -830,7 +830,7 @@ export async function requestPasswordReset(
       const resend = new Resend(apiKey);
 
       const fromEmail = process.env.RESEND_DAO_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || 'CryptoGift DAO <onboarding@resend.dev>';
-      const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://crypto-gift-wallets-dao.vercel.app'}/api/profile/reset-password?token=${resetToken}`;
+      const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://mbxarts.com'}/api/profile/reset-password?token=${resetToken}`;
 
       await resend.emails.send({
         from: fromEmail,

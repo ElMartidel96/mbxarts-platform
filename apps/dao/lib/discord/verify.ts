@@ -232,7 +232,7 @@ export async function notifyNewTask(
       },
       {
         name: '🔗 Claim Task',
-        value: '[View Tasks](https://crypto-gift-wallets-dao.vercel.app/tasks)',
+        value: '[View Tasks](https://mbxarts.com/tasks)',
         inline: false
       }
     ],

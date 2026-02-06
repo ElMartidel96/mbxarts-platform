@@ -31,7 +31,7 @@ Todos los requisitos técnicos y documentación para el listing en CoinGecko han
     "notes": "CGC uses milestone-based progressive emission. New tokens are minted only when DAO completes verified milestones."
   }
   ```
-- **URL en Producción**: `https://crypto-gift-wallets-dao.vercel.app/api/token/total-supply`
+- **URL en Producción**: `https://mbxarts.com/api/token/total-supply`
 - **Status**: ✅ Implementado y verificado
 - **Modelo**: Milestone-Based Progressive Emission (Initial: 2M CGC, Max: 22M CGC)
 
@@ -44,7 +44,7 @@ Todos los requisitos técnicos y documentación para el listing en CoinGecko han
     "circulating_supply": "2000000"
   }
   ```
-- **URL en Producción**: `https://crypto-gift-wallets-dao.vercel.app/api/token/circulating-supply`
+- **URL en Producción**: `https://mbxarts.com/api/token/circulating-supply`
 - **Status**: ✅ Implementado y verificado
 
 **Características**:
@@ -188,13 +188,13 @@ El whitepaper HTML está optimizado para:
 
 **URL del Whitepaper para CoinGecko**:
 ```
-https://crypto-gift-wallets-dao.vercel.app/CRYPTOGIFT_WHITEPAPER_v1.2.html
+https://mbxarts.com/CRYPTOGIFT_WHITEPAPER_v1.2.html
 ```
 
 ### Si necesitas PDF (opcional):
 
 1. **Abrir el HTML en navegador**:
-   - Ir a: https://crypto-gift-wallets-dao.vercel.app/CRYPTOGIFT_WHITEPAPER_v1.2.html
+   - Ir a: https://mbxarts.com/CRYPTOGIFT_WHITEPAPER_v1.2.html
 
 2. **Imprimir a PDF**:
    - Presionar: `Ctrl+P` (Windows) o `Cmd+P` (Mac)
@@ -241,10 +241,10 @@ https://crypto-gift-wallets-dao.vercel.app/CRYPTOGIFT_WHITEPAPER_v1.2.html
 ### APIs
 ```
 Total Supply API:
-https://crypto-gift-wallets-dao.vercel.app/api/token/total-supply
+https://mbxarts.com/api/token/total-supply
 
 Circulating Supply API:
-https://crypto-gift-wallets-dao.vercel.app/api/token/circulating-supply
+https://mbxarts.com/api/token/circulating-supply
 ```
 
 ### Contract
@@ -259,16 +259,16 @@ https://basescan.org/address/0x5e3a61b550328f3D8C44f60b3e10a49D3d806175
 ### Official Links
 ```
 Website:
-https://crypto-gift-wallets-dao.vercel.app
+https://mbxarts.com
 
 GitHub:
 https://github.com/mbxarts/cryptogift-wallets-DAO
 
 Documentation:
-https://crypto-gift-wallets-dao.vercel.app/docs
+https://mbxarts.com/docs
 
 Whitepaper (Online):
-https://crypto-gift-wallets-dao.vercel.app/CRYPTOGIFT_WHITEPAPER_v1.2.html
+https://mbxarts.com/CRYPTOGIFT_WHITEPAPER_v1.2.html
 
 Twitter/X:
 https://x.com/cryptogiftdao
@@ -280,10 +280,10 @@ https://discord.gg/cryptogift
 ### Logos
 ```
 Logo 32x32:
-https://crypto-gift-wallets-dao.vercel.app/metadata/cgc-logo-32x32.png
+https://mbxarts.com/metadata/cgc-logo-32x32.png
 
 Logo 200x200:
-https://crypto-gift-wallets-dao.vercel.app/metadata/cgc-logo-200x200.png
+https://mbxarts.com/metadata/cgc-logo-200x200.png
 ```
 
 ---
@@ -310,10 +310,10 @@ https://crypto-gift-wallets-dao.vercel.app/metadata/cgc-logo-200x200.png
 Todos los archivos ya están listos para deployment. Cuando hagas deploy a Vercel, los endpoints estarán disponibles automáticamente en:
 
 ```
-https://crypto-gift-wallets-dao.vercel.app/api/token/total-supply
-https://crypto-gift-wallets-dao.vercel.app/api/token/circulating-supply
-https://crypto-gift-wallets-dao.vercel.app/CRYPTOGIFT_WHITEPAPER_v1.2.html
-https://crypto-gift-wallets-dao.vercel.app/CRYPTOGIFT_WHITEPAPER_v1.2.pdf (cuando lo subas)
+https://mbxarts.com/api/token/total-supply
+https://mbxarts.com/api/token/circulating-supply
+https://mbxarts.com/CRYPTOGIFT_WHITEPAPER_v1.2.html
+https://mbxarts.com/CRYPTOGIFT_WHITEPAPER_v1.2.pdf (cuando lo subas)
 ```
 
 ---

@@ -144,8 +144,8 @@ export async function POST(req: NextRequest) {
     
     if (process.env.NODE_ENV === 'production') {
       const allowedDomains = [
-        'crypto-gift-wallets-dao.vercel.app',
-        'cryptogift-wallets-dao.vercel.app',
+        'mbxarts.com',
+        'gifts.mbxarts.com',
         'localhost:3000'
       ];
       
