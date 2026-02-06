@@ -49,3 +49,8 @@ typechain-types
 
 # Sentry
 .sentryclirc
+# Large video files
+apps/wallets/frontend/public/videos e informacion para las presentaciones/*.MOV
+apps/wallets/frontend/public/videos e informacion para las presentaciones/*.mov
+*.MOV
+*.mov
