@@ -3,7 +3,7 @@ import { createThirdwebClient, getContract, prepareContractCall, sendTransaction
 import { baseSepolia } from "thirdweb/chains";
 import { privateKeyToAccount } from "thirdweb/wallets";
 import { uploadMetadata } from "../../lib/ipfs";
-import { addMintLog } from "./debug/mint-logs";
+import { addMintLog } from "../../lib/mintLogger";
 import { ethers } from "ethers";
 
 // Real NFT Minting API - Production Ready

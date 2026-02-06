@@ -1861,7 +1861,7 @@ async function mintNFTEscrowGasPaid(
       
       // 🔥 FASE 7D: Add debug logging for this critical fix
       try {
-        const { addMintLog } = await import('./debug/mint-logs');
+        const { addMintLog } = await import('../../lib/mintLogger');
         await addMintLog('INFO', 'FASE_7D_SEMANTIC_FIX', {
           message: 'Extracting image CID from metadata (not using tokenURI as image)',
           tokenURI: tokenURI.substring(0, 50) + '...',
@@ -1912,7 +1912,7 @@ async function mintNFTEscrowGasPaid(
         
         // 🔥 FASE 7D: Log successful extraction for debugging
         try {
-          const { addMintLog } = await import('./debug/mint-logs');
+          const { addMintLog } = await import('../../lib/mintLogger');
           await addMintLog('SUCCESS', 'FASE_7D_IMAGE_CID_EXTRACTED', {
             message: 'Successfully extracted correct image CID from metadata JSON',
             extractedImageCid: actualImageCid.substring(0, 30) + '...',

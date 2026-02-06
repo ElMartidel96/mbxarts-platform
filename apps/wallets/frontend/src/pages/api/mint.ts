@@ -3,7 +3,7 @@ import { createThirdwebClient, getContract, prepareContractCall, sendTransaction
 import { baseSepolia } from "thirdweb/chains";
 import { privateKeyToAccount } from "thirdweb/wallets";
 import { createBiconomySmartAccount, sendGaslessTransaction, validateBiconomyConfig, isGaslessAvailable } from "../../lib/biconomy";
-import { addMintLog } from "./debug/mint-logs";
+import { addMintLog } from "../../lib/mintLogger";
 import { uploadMetadata } from "../../lib/ipfs";
 import { ethers } from "ethers";
 import { storeNFTMetadata, createNFTMetadata, getNFTMetadata } from "../../lib/nftMetadataStore";

@@ -3,7 +3,7 @@ import formidable from "formidable";
 import { promises as fs } from "fs";
 import { upload } from "thirdweb/storage";
 import { uploadToIPFS, uploadMetadata, validateIPFSConfig } from "../../lib/ipfs";
-import { addMintLog } from "./debug/mint-logs";
+import { addMintLog } from "../../lib/mintLogger";
 import { convertIPFSToHTTPS, validateMultiGatewayAccess } from "../../utils/ipfs";
 import { getPublicBaseUrl } from "../../lib/publicBaseUrl";
 
