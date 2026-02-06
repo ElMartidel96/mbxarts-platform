@@ -29,6 +29,7 @@ build
 *.jpeg
 *.gif
 *.ico
+!app/favicon.ico
 !app/icon.png
 !public/favicon.ico
 !public/apeX.png
