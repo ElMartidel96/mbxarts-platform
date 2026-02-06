@@ -1,7 +1,7 @@
 {
   "framework": "nextjs",
-  "buildCommand": "pnpm run build",
-  "installCommand": "cd .. && pnpm install --frozen-lockfile",
+  "buildCommand": "cd ../../.. && pnpm turbo run build --filter=@mbxarts/wallets",
+  "installCommand": "cd ../../.. && pnpm install",
   "devCommand": "pnpm run dev",
   "outputDirectory": ".next",
   "functions": {

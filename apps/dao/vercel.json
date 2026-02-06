@@ -1,7 +1,7 @@
 {
-  "buildCommand": "pnpm run build",
+  "buildCommand": "cd ../.. && pnpm turbo run build --filter=@mbxarts/dao",
   "framework": "nextjs",
-  "installCommand": "pnpm install",
+  "installCommand": "cd ../.. && pnpm install",
   "devCommand": "pnpm run dev",
   "crons": [
     {
