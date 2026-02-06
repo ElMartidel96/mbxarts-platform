@@ -3682,8 +3682,8 @@ const SuccessBlock: React.FC<{
                 transition={{ delay: 1.8 }}
                 className="text-center bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl p-6 border border-blue-500/20"
               >
-                <img 
-                  src="/Apex.PNG" 
+                <img
+                  src="/apeX.png"
                   alt="Apex AI Assistant" 
                   className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-blue-500/50 shadow-lg"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
@@ -3699,8 +3699,8 @@ const SuccessBlock: React.FC<{
                 transition={{ delay: 2.0 }}
                 className="text-center bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-2xl p-6 border border-emerald-500/20"
               >
-                <img 
-                  src="/Godez22.png" 
+                <img
+                  src="/team-rafael.png"
                   alt="Godez22 Developer" 
                   className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-emerald-500/50 shadow-lg"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
@@ -3716,8 +3716,8 @@ const SuccessBlock: React.FC<{
                 transition={{ delay: 2.2 }}
                 className="text-center bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-2xl p-6 border border-orange-500/20"
               >
-                <img 
-                  src="/RLGra95.PNG" 
+                <img
+                  src="/team-roberto.png"
                   alt="RLGra95 Developer" 
                   className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-orange-500/50 shadow-lg"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}

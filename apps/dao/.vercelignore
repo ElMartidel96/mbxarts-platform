@@ -1,110 +1,62 @@
-# Vercel Ignore - Prevent large files from being included in serverless functions
+# Vercel Ignore - Optimized for Next.js deployment
+# Strategy: Allow all public/ assets, exclude only dev/build artifacts
 
-# Package manager stores (CRITICAL - these are huge!)
+# ============================================
+# PACKAGE MANAGER & NODE_MODULES
+# ============================================
 .pnpm-store
 node_modules/.pnpm
 node_modules/.cache
 
-# Development directories
+# ============================================
+# DEVELOPMENT DIRECTORIES (NOT NEEDED IN PROD)
+# ============================================
 .git
 .github
+.claude
 scripts
 test
 tests
-hardhat.config.js
-hardhat.config.production.js
+CAPTURAS
 
-# Build artifacts
+# ============================================
+# SMART CONTRACT ARTIFACTS (NOT NEEDED FOR FRONTEND)
+# ============================================
+/contracts
 artifacts
 cache
 coverage
 typechain-types
-dist
-build
-
-# Documentation (heavy images)
-*.PNG
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.ico
-!app/favicon.ico
-!app/icon.png
-!public/favicon.ico
-!public/apeX.png
-!public/apeX11.png
-!public/apeX22.PNG
-!public/apeX-aro.png
-!public/apeX-avatar.png
-# Farcaster Mini App Images (CRITICAL for Warpcast Hosted Manifest)
-!public/farcaster-icon-1024.png
-!public/farcaster-splash-200.png
-!public/farcaster-preview-1200x800.png
-!public/farcaster-hero-1200x630.png
-!public/farcaster-og-1200x630.png
-# Main site OG image (with crystal gift logo)
-!public/og-main-1200x630.png
-# Farcaster Screenshots (1284x2778 for Warpcast)
-!public/farcaster-screen-1.png
-!public/farcaster-screen-2.png
-!public/farcaster-screen-3.png
-# CGC Token Logos (CRITICAL for CoinGecko listing)
-!public/cgc-logo-32x32.png
-!public/cgc-logo-200x200.png
-!public/cgc-logo-512x512.png
-!public/metadata/cgc-logo-32x32.png
-!public/metadata/cgc-logo-200x200.png
-!public/metadata/cgc-logo-512x512.png
-!public/metadata/cgc-logo-64.png
-!public/metadata/cgc-logo-256.png
-!public/metadata/cgc-logo-512.png
-# Whitepaper (CRITICAL for CoinGecko listing)
-!public/CRYPTOGIFT_WHITEPAPER_v1.2.html
-!public/CRYPTOGIFT_WHITEPAPER_v1.2.pdf
-!public/metadata/*.pdf
-# SVG Logos (CRITICAL for BaseScan - they require SVG)
-!public/cgc-logo-32x32.svg
-!public/cgc-logo-200x200.svg
-!public/cgc-logo-512x512.svg
-# Team Photos (CRITICAL for BaseScan verification)
-!public/team/rafael-gonzalez.jpg
-!public/team/roberto-legra.jpg
-!public/team/leodanni-avila.jpg
-!public/team/C3C8D6AE-5738-4BF9-873C-39EE8847C3F2.png
-!public/team/IMG_6757.PNG
-!public/team/IMG_6773.PNG
-# Focus Areas Images (CRITICAL for About Us carousel)
-!public/focus-areas/corazon.png
-!public/focus-areas/emocional.jpg
-!public/focus-areas/galeria.jpg
-!public/focus-areas/community.jpg
-!public/focus-areas/laboratory.jpg
-!public/focus-areas/competitions.jpg
-# Focus area stickers (custom branded)
-!public/focus-areas/sticker-dao.png
-!public/focus-areas/sticker-lab.png
-!public/focus-areas/sticker-lab-new.png
-!public/focus-areas/sticker-comp.png
-
-# Contracts (not needed for runtime)
-/contracts
+hardhat.config.js
+hardhat.config.production.js
 deployments/*
 !deployments/deployment-base-latest.json
 
-# Backup files (prevent bundling in serverless functions)
-backups
-*.backup
-*.bak
-app/api/*/route.full.ts.backup
+# ============================================
+# BUILD ARTIFACTS
+# ============================================
+dist
+build
 
-# Frontend/Backend folders (if not needed)
+# ============================================
+# UNUSED SUBDIRECTORIES
+# ============================================
 frontend
 ranking-frontend
 ranking-backend
 bots
 
-# Config files
+# ============================================
+# BACKUP FILES
+# ============================================
+backups
+*.backup
+*.bak
+app/api/*/route.full.ts.backup
+
+# ============================================
+# CONFIG FILES (EXCEPT ESSENTIAL ONES)
+# ============================================
 *.config.js
 *.config.ts
 !next.config.js
@@ -115,14 +67,47 @@ bots
 !sentry.server.config.js
 !sentry.edge.config.js
 
-# Misc
+# ============================================
+# LOGS AND LOCKS
+# ============================================
 *.log
 *.lock
 !pnpm-lock.yaml
+
+# ============================================
+# ENVIRONMENT FILES (SECURITY)
+# ============================================
 .env*
 !.env.production
+.env.local
+.env.dao
+.env.deployment
+.env.sentry-build-plugin
+
+# ============================================
+# MARKDOWN (EXCEPT ESSENTIAL ONES)
+# ============================================
 *.md
 !CLAUDE.md
 !README.md
 !docs/PLAN_DESARROLLO_COMPLETO.md
 !public/GRANT_APPLICATION_GUIDE.md
+!public/CRYPTOGIFT_WHITEPAPER_v1.2.md
+
+# ============================================
+# VIDEO FILES (TOO LARGE FOR SERVERLESS)
+# ============================================
+*.mov
+*.MOV
+*.mp4
+*.MP4
+*.avi
+*.webm
+public/team/*.mov
+public/team/*.MOV
+
+# ============================================
+# NOTE: public/ IMAGES ARE NOW ALLOWED
+# All PNG, JPG, ICO files in public/ will be deployed
+# This ensures all assets work correctly
+# ============================================
