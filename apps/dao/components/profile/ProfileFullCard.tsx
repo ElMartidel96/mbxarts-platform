@@ -155,7 +155,7 @@ function SocialSlot({ network, handle, t }: SocialSlotProps) {
 
 export function ProfileFullCard() {
   const { profile, currentLevel, closeLevel, isOwnProfile, thumbnailRef, isStandalone } = useProfileCard();
-  const t = useTranslations('profile');
+  const t = useTranslations('profileCard');
 
   const [mounted, setMounted] = useState(false);
   const [copied, setCopied] = useState(false);

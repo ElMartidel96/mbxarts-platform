@@ -93,7 +93,7 @@ export function ProfileMiniCard({
     goToLevel,
     isStandalone: contextStandalone,
   } = useProfileCard();
-  const t = useTranslations('profile');
+  const t = useTranslations('profileCard');
 
   // Check standalone mode from prop or context
   const isStandaloneMode = standalone || contextStandalone;

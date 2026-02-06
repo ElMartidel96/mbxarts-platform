@@ -51,7 +51,10 @@ const config: Config = {
         'sun-rotate': 'rotate 20s linear infinite',
         'moon-glow': 'glow 2s ease-in-out infinite alternate',
         'panel-slide': 'slide-down 0.2s ease-out',
-        'spin-slow': 'spin 6s linear infinite'
+        'spin-slow': 'spin 6s linear infinite',
+        apexFloat: 'apexFloat 4s ease-in-out infinite',
+        expandIn: 'expandIn 0.2s ease-out',
+        slideInRight: 'slideInRight 0.25s ease-out',
       },
       keyframes: {
         'fade-in': {
@@ -73,7 +76,19 @@ const config: Config = {
         'slide-down': {
           '0%': { opacity: '0', transform: 'translateY(-10px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' }
-        }
+        },
+        apexFloat: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-6px)' },
+        },
+        expandIn: {
+          '0%': { opacity: '0', transform: 'scale(0.5)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        slideInRight: {
+          '0%': { opacity: '0', transform: 'translateX(20px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

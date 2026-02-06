@@ -37,7 +37,7 @@ interface ShareButtonProps {
 }
 
 export function ShareButton({ walletAddress, className = '' }: ShareButtonProps) {
-  const t = useTranslations('profile.share');
+  const t = useTranslations('profileCard.share');
   const { address } = useAccount();
 
   // Get current user's referral code to include in shared links

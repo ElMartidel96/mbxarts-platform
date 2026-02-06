@@ -909,5 +909,39 @@
       "description": "We limit to 2 users per device as a security measure to prevent fraud and ensure each account maintains its unique identity."
     },
     "understood": "Understood"
+  },
+  "profileCard": {
+    "viewFullProfile": "View full profile",
+    "sendMessage": "Send Message",
+    "copyWallet": "Copy wallet address",
+    "copied": "Copied!",
+    "about": "About",
+    "networks": "Networks",
+    "wallet": "Wallet",
+    "tier": "Tier",
+    "clickToExpand": "Click to view full profile",
+    "notLinked": "not linked",
+    "stats": {
+      "reputation": "Reputation",
+      "respect": "Respect",
+      "tasks": "Tasks",
+      "contributions": "Contributions",
+      "referrals": "Referrals",
+      "earned": "CGC Earned"
+    },
+    "share": {
+      "button": "Share Profile",
+      "copied": "Link copied!",
+      "copyLink": "Copy Link",
+      "qrTitle": "Profile QR Code",
+      "qrDescription": "Scan to view this profile",
+      "downloadQR": "Download",
+      "shareButton": "Share",
+      "shareMessage": "Check out my CryptoGift DAO profile!",
+      "nfcReady": "Tap phones to share",
+      "nfcNotSupported": "NFC not available",
+      "nfcError": "NFC error - try again",
+      "activateNfc": "Tap to activate NFC"
+    }
   }
 }

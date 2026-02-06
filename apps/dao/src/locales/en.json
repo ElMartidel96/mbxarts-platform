@@ -2489,7 +2489,7 @@
       "uploadFailed": "Upload failed. Please try again."
     }
   },
-  "profile": {
+  "profileCard": {
     "viewFullProfile": "View full profile",
     "sendMessage": "Send Message",
     "copyWallet": "Copy wallet address",
