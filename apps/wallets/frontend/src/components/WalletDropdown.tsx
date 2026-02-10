@@ -25,15 +25,13 @@ import {
   Check,
   LogOut,
   Wallet,
-  User,
 } from 'lucide-react';
 
 interface WalletDropdownProps {
   fullWidth?: boolean;
-  className?: string;
 }
 
-export function WalletDropdown({ fullWidth = false, className = '' }: WalletDropdownProps) {
+export function WalletDropdown({ fullWidth = false }: WalletDropdownProps) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -88,9 +86,9 @@ export function WalletDropdown({ fullWidth = false, className = '' }: WalletDrop
 
   return (
     <div className={`relative ${fullWidth ? 'w-full' : ''}`}>
-      {/* Main Wallet Bar - className (scale-90) applied here, not on root */}
+      {/* Main Wallet Bar */}
       <div
-        className={`${className} flex items-center space-x-2 bg-bg-card rounded-lg border border-border-primary px-3 py-2
+        className={`flex items-center space-x-2 bg-bg-card rounded-lg border border-border-primary px-3 py-2
                  hover:border-accent-gold dark:hover:border-accent-silver transition-all duration-300 ${fullWidth ? 'w-full' : ''}`}
       >
         {/* ProfileCard Avatar */}
@@ -170,18 +168,6 @@ export function WalletDropdown({ fullWidth = false, className = '' }: WalletDrop
 
               {/* Actions */}
               <div className="space-y-2">
-                {/* Profile */}
-                <Link
-                  href="/profile"
-                  className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors text-left"
-                  onClick={() => setShowDropdown(false)}
-                >
-                  <div className="w-4 h-4 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0">
-                    <User className="w-2.5 h-2.5 text-white" />
-                  </div>
-                  <span className="text-sm text-text-secondary font-medium">Profile</span>
-                </Link>
-
                 {/* Copy Address */}
                 <button
                   onClick={handleCopy}

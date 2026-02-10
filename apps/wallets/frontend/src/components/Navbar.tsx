@@ -96,9 +96,9 @@ export const Navbar: React.FC = () => {
             
             {mounted && (
               account ? (
-                <WalletDropdown className="scale-90" />
+                <WalletDropdown />
               ) : (
-                <ConnectAndAuthButton className="scale-90" />
+                <ConnectAndAuthButton />
               )
             )}
           </div>

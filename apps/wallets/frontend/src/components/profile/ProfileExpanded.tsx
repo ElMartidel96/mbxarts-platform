@@ -60,6 +60,14 @@ const UnknownNetworkIndicator = ({ size = 20 }: { size?: number }) => (
 
 const CORNER_OFFSET = 4;
 
+// CSS zoom on <html> causes getBoundingClientRect() to return zoomed coordinates,
+// but position:fixed values get zoomed AGAIN. Dividing by zoom compensates.
+function getHtmlZoom(): number {
+  if (typeof window === 'undefined') return 1;
+  const zoom = window.getComputedStyle(document.documentElement).zoom;
+  return zoom ? parseFloat(zoom) : 1;
+}
+
 export function ProfileExpanded() {
   const {
     profile,
@@ -81,18 +89,20 @@ export function ProfileExpanded() {
   useEffect(() => {
     if (currentLevel !== 2 || !thumbnailRef.current) return;
 
+    const zoom = getHtmlZoom();
     const rect = thumbnailRef.current.getBoundingClientRect();
     setPosition({
-      top: rect.top - CORNER_OFFSET,
-      left: rect.left - CORNER_OFFSET,
+      top: rect.top / zoom - CORNER_OFFSET,
+      left: rect.left / zoom - CORNER_OFFSET,
     });
 
     const handleResize = () => {
+      const z = getHtmlZoom();
       const newRect = thumbnailRef.current?.getBoundingClientRect();
       if (newRect) {
         setPosition({
-          top: newRect.top - CORNER_OFFSET,
-          left: newRect.left - CORNER_OFFSET,
+          top: newRect.top / z - CORNER_OFFSET,
+          left: newRect.left / z - CORNER_OFFSET,
         });
       }
     };
