@@ -1,5 +1,9 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
 import {withSentryConfig} from '@sentry/nextjs';
 import createNextIntlPlugin from 'next-intl/plugin';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -54,7 +58,8 @@ const nextConfig = {
   // Optimize for deployment success with detailed error reporting
   experimental: {
     workerThreads: false,
-    cpus: 1
+    cpus: 1,
+    outputFileTracingRoot: path.join(__dirname, '../../..'),
   },
   // Exclude debug files from output tracing
   outputFileTracingExcludes: {
