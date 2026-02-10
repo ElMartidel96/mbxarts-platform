@@ -59,6 +59,7 @@ const UnknownNetworkIndicator = ({ size = 20 }: { size?: number }) => (
 );
 
 const CORNER_OFFSET = 4;
+const EXPANDED_SIZE = 168;
 
 export function ProfileExpanded() {
   const {
@@ -81,19 +82,26 @@ export function ProfileExpanded() {
   useEffect(() => {
     if (currentLevel !== 2 || !thumbnailRef.current) return;
 
+    const calcPosition = (rect: DOMRect) => {
+      let left = rect.left - CORNER_OFFSET;
+      const top = rect.top - CORNER_OFFSET;
+
+      // Prevent L2 from extending beyond the right edge of the viewport
+      const maxLeft = window.innerWidth - EXPANDED_SIZE - 8;
+      if (left > maxLeft) {
+        left = maxLeft;
+      }
+
+      return { top, left };
+    };
+
     const rect = thumbnailRef.current.getBoundingClientRect();
-    setPosition({
-      top: rect.top - CORNER_OFFSET,
-      left: rect.left - CORNER_OFFSET,
-    });
+    setPosition(calcPosition(rect));
 
     const handleResize = () => {
       const newRect = thumbnailRef.current?.getBoundingClientRect();
       if (newRect) {
-        setPosition({
-          top: newRect.top - CORNER_OFFSET,
-          left: newRect.left - CORNER_OFFSET,
-        });
+        setPosition(calcPosition(newRect));
       }
     };
 

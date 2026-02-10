@@ -102,11 +102,12 @@ export function WalletDropdown({ fullWidth = false, className = '' }: WalletDrop
 
   return (
     <>
-      <div className={`relative ${fullWidth ? 'w-full' : ''} ${className}`}>
-        {/* Main Wallet Bar */}
+      <div className={`relative ${fullWidth ? 'w-full' : ''}`}>
+        {/* Main Wallet Bar - className (e.g. scale-90) applied here, NOT on root,
+            to avoid CSS transform creating a containing block that breaks fixed positioning */}
         <div
           className={`flex items-center space-x-2 bg-bg-card rounded-lg border border-border-primary px-3 py-2
-                   hover:border-accent-gold dark:hover:border-accent-silver transition-all duration-300 ${fullWidth ? 'w-full' : ''}`}
+                   hover:border-accent-gold dark:hover:border-accent-silver transition-all duration-300 ${fullWidth ? 'w-full' : ''} ${className}`}
         >
           {/* ProfileCard Avatar */}
           <div onClick={(e) => e.stopPropagation()} className="flex-shrink-0">
@@ -156,19 +157,17 @@ export function WalletDropdown({ fullWidth = false, className = '' }: WalletDrop
           <>
             {/* Backdrop */}
             <div
-              className="fixed inset-0 z-10"
+              className="fixed inset-0 z-[9999]"
               onClick={() => setShowDropdown(false)}
             />
 
             {/* Dropdown Content */}
-            <div className={`${fullWidth ? 'relative' : 'absolute top-full right-0 min-w-[280px]'} mt-2 bg-bg-card rounded-lg shadow-xl border border-border-primary z-20`}>
+            <div className={`${fullWidth ? 'relative' : 'absolute top-full right-0 min-w-[280px]'} mt-2 bg-bg-card rounded-lg shadow-xl border border-border-primary z-[10001]`}>
               <div className="p-4">
                 {/* Header: ProfileCard + Address + Chain */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
-                    <div onClick={(e) => e.stopPropagation()}>
-                      <ProfileCard size="md" />
-                    </div>
+                    <ProfileCard size="md" />
                     <div>
                       <div className="font-medium text-text-primary">{displayAddress}</div>
                       <div className="text-xs text-text-secondary flex items-center gap-1">
@@ -186,57 +185,6 @@ export function WalletDropdown({ fullWidth = false, className = '' }: WalletDrop
                     {cgcBalance} <span className="text-sm font-normal text-text-secondary">CGC</span>
                   </div>
                 </div>
-
-                {/* Wallet Switching Section */}
-                {/* Current EOA Wallet */}
-                <button
-                  onClick={() => setShowDropdown(false)}
-                  className={`w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-bg-secondary transition-colors ${
-                    walletType === 'EOA' ? 'bg-blue-50 dark:bg-accent-gold/20 border border-blue-200 dark:border-accent-gold/30' : ''
-                  }`}
-                >
-                  <div className="w-8 h-8 rounded-full bg-bg-secondary flex items-center justify-center">
-                    <Image
-                      src="/cg-wallet-logo.png"
-                      alt="CG Wallet"
-                      width={28}
-                      height={28}
-                      className="object-contain w-7 h-7"
-                    />
-                  </div>
-                  <div className="flex-1 text-left">
-                    <div className="font-medium text-text-primary text-sm">{displayAddress}</div>
-                    <div className="text-xs text-text-secondary">Regular Wallet</div>
-                  </div>
-                  {walletType === 'EOA' && (
-                    <div className="w-2 h-2 bg-blue-500 dark:bg-accent-gold rounded-full"></div>
-                  )}
-                </button>
-
-                {/* TBA Wallet (if available) */}
-                {hasActiveTBAWallet() && tbaWallet && (
-                  <button
-                    onClick={() => setShowDropdown(false)}
-                    className={`w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-bg-secondary transition-colors mt-1 ${
-                      walletType === 'TBA' ? 'bg-orange-50 dark:bg-accent-silver/20 border border-orange-200 dark:border-accent-silver/30' : ''
-                    }`}
-                  >
-                    <div className="w-8 h-8 rounded-full overflow-hidden border border-border-primary">
-                      <ImageDebugger
-                        nftContract={tbaWallet.nftContract}
-                        tokenId={tbaWallet.tokenId}
-                        className="w-full h-full"
-                      />
-                    </div>
-                    <div className="flex-1 text-left">
-                      <div className="font-medium text-text-primary text-sm">{tbaWallet.name}</div>
-                      <div className="text-xs text-text-secondary">CryptoGift Wallet</div>
-                    </div>
-                    {walletType === 'TBA' && (
-                      <div className="w-2 h-2 bg-orange-500 dark:bg-accent-silver rounded-full"></div>
-                    )}
-                  </button>
-                )}
 
                 <div className="border-t border-border-primary my-3"></div>
 
@@ -290,6 +238,55 @@ export function WalletDropdown({ fullWidth = false, className = '' }: WalletDrop
                     <Settings className="w-4 h-4 text-text-muted" />
                     <span className="text-sm text-text-secondary">Manage Wallets</span>
                   </Link>
+
+                  {/* Wallet Switching Section - below Manage Wallets */}
+                  {/* Current EOA Wallet - logo only, no circle */}
+                  <button
+                    onClick={() => setShowDropdown(false)}
+                    className={`w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-bg-secondary transition-colors ${
+                      walletType === 'EOA' ? 'bg-blue-50 dark:bg-accent-gold/20 border border-blue-200 dark:border-accent-gold/30' : ''
+                    }`}
+                  >
+                    <Image
+                      src="/cg-wallet-logo.png"
+                      alt="CG Wallet"
+                      width={28}
+                      height={28}
+                      className="object-contain w-7 h-7 flex-shrink-0"
+                    />
+                    <div className="flex-1 text-left">
+                      <div className="font-medium text-text-primary text-sm">{displayAddress}</div>
+                      <div className="text-xs text-text-secondary">Regular Wallet</div>
+                    </div>
+                    {walletType === 'EOA' && (
+                      <div className="w-2 h-2 bg-blue-500 dark:bg-accent-gold rounded-full"></div>
+                    )}
+                  </button>
+
+                  {/* TBA Wallet (if available) */}
+                  {hasActiveTBAWallet() && tbaWallet && (
+                    <button
+                      onClick={() => setShowDropdown(false)}
+                      className={`w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-bg-secondary transition-colors mt-1 ${
+                        walletType === 'TBA' ? 'bg-orange-50 dark:bg-accent-silver/20 border border-orange-200 dark:border-accent-silver/30' : ''
+                      }`}
+                    >
+                      <div className="w-8 h-8 rounded-full overflow-hidden border border-border-primary">
+                        <ImageDebugger
+                          nftContract={tbaWallet.nftContract}
+                          tokenId={tbaWallet.tokenId}
+                          className="w-full h-full"
+                        />
+                      </div>
+                      <div className="flex-1 text-left">
+                        <div className="font-medium text-text-primary text-sm">{tbaWallet.name}</div>
+                        <div className="text-xs text-text-secondary">CryptoGift Wallet</div>
+                      </div>
+                      {walletType === 'TBA' && (
+                        <div className="w-2 h-2 bg-orange-500 dark:bg-accent-silver rounded-full"></div>
+                      )}
+                    </button>
+                  )}
 
                   <div className="border-t border-border-primary my-2"></div>
 
