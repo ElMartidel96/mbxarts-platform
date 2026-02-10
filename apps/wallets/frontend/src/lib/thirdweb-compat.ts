@@ -11,6 +11,7 @@
 'use client';
 
 import { useActiveAccount, useActiveWalletChain } from 'thirdweb/react';
+export { useCGCBalance } from '@/hooks/useCGCBalance';
 
 /**
  * Get active wallet account (matches DAO signature)

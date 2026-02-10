@@ -13,8 +13,6 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 
-const DAO_URL = process.env.NEXT_PUBLIC_DAO_URL || 'https://mbxarts.com';
-
 export interface ProfileData {
   wallet_address: string;
   username: string | null;
@@ -42,7 +40,7 @@ interface ProfileHookResult {
 }
 
 async function fetchCrossPlatformProfile(wallet: string): Promise<ProfileData | null> {
-  const res = await fetch(`${DAO_URL}/api/cross-platform/profile?wallet=${wallet}`);
+  const res = await fetch(`/api/cross-platform/profile?wallet=${wallet}`);
   if (!res.ok) {
     throw new Error(`Failed to fetch profile: ${res.status}`);
   }

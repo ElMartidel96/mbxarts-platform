@@ -5,12 +5,11 @@ import Image from 'next/image';
 import { useActiveAccount } from 'thirdweb/react';
 import { useTranslations } from 'next-intl';
 import { Link } from '../i18n/routing';
-import { WalletSwitcher } from './WalletSwitcher';
 import { ConnectAndAuthButton } from './ConnectAndAuthButton';
+import { WalletDropdown } from './WalletDropdown';
 import { ThemeToggle } from './ui/ThemeToggle';
 import { LanguageToggle } from './ui/LanguageToggle';
 import { SmartIcon } from './ui/SmartIcon';
-import { ProfileCard } from './profile';
 
 export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -97,11 +96,7 @@ export const Navbar: React.FC = () => {
             
             {mounted && (
               account ? (
-                <div className="flex items-center space-x-2">
-                  <ProfileCard size="sm" />
-                  <div className="w-px h-6 bg-gradient-to-b from-transparent via-text-muted to-transparent opacity-40"></div>
-                  <WalletSwitcher className="min-w-[160px] scale-90" />
-                </div>
+                <WalletDropdown className="scale-90" />
               ) : (
                 <ConnectAndAuthButton className="scale-90" />
               )
@@ -175,14 +170,9 @@ export const Navbar: React.FC = () => {
                 {t('nexuswallet')}
               </Link>
               
-              <div className="pt-4 space-y-3">
-                {account && (
-                  <div className="flex items-center px-4">
-                    <ProfileCard size="sm" />
-                  </div>
-                )}
+              <div className="pt-4 space-y-3 px-4">
                 {account ? (
-                  <WalletSwitcher className="w-full" />
+                  <WalletDropdown fullWidth />
                 ) : (
                   <ConnectAndAuthButton className="w-full" />
                 )}
