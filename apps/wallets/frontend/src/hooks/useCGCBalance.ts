@@ -31,8 +31,7 @@ export function useCGCBalance() {
     : null;
 
   const { data: balance, isLoading } = useReadContract(balanceOf, {
-    // @ts-expect-error - contract is null during SSR, but query is disabled
-    contract: contract,
+    contract: contract!,
     address: account?.address || '0x0000000000000000000000000000000000000000',
     queryOptions: {
       enabled: !!client && !!account?.address && !!contract,

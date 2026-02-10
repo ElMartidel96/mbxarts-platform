@@ -238,7 +238,8 @@
     "network": "Network",
     "base": "Base",
     "unsupportedNetwork": "Unsupported Network",
-    "profile": "Profile"
+    "profile": "Profile",
+    "manageWallets": "Manage Wallets"
   },
   "dashboard": {
     "title": "CryptoGift DAO Dashboard",
@@ -2500,6 +2501,7 @@
     "tier": "Tier",
     "clickToExpand": "Click to view full profile",
     "notLinked": "not linked",
+    "manageWallets": "Manage Wallets",
     "stats": {
       "reputation": "Reputation",
       "respect": "Respect",

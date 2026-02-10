@@ -238,7 +238,8 @@
     "network": "Red",
     "base": "Base",
     "unsupportedNetwork": "Red No Soportada",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "manageWallets": "Gestionar Wallets"
   },
   "dashboard": {
     "title": "Panel de CryptoGift DAO",
@@ -2500,6 +2501,7 @@
     "tier": "Nivel",
     "clickToExpand": "Clic para ver perfil completo",
     "notLinked": "no vinculado",
+    "manageWallets": "Gestionar Wallets",
     "stats": {
       "reputation": "Reputación",
       "respect": "Respeto",

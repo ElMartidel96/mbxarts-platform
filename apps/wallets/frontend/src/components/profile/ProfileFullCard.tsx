@@ -4,18 +4,20 @@
  * ProfileFullCard - Level 4 of ProfileCard system (Full Modal)
  *
  * Main destination of the profile flow:
- * - Owner flow: L1 → L2 → L4
- * - Receiver flow (shared link): L3 → L4
+ * - Owner flow: L1 -> L2 -> L4
+ * - Receiver flow (shared link): L3 -> L4
  *
  * Complete profile view with:
  * - Header with gradient
  * - Large avatar (120px)
  * - Name, tier badge
- * - Stats grid (Reputation, Respect, Tasks, Contributions)
+ * - Stats grid (Reputation, Referrals, Tasks, CGC Earned)
  * - About section
- * - Social Networks with SocialSlot pattern + ShareButton
- * - Send Message button
+ * - Social Networks with SocialSlot pattern
+ * - Manage Wallets link (to /my-wallets)
  * - Copy wallet address
+ *
+ * Ported from DAO's ProfileFullCard - adapted for Wallets imports.
  *
  * Made by mbxarts.com The Moon in a Box property
  * Co-Author: Godez22
@@ -25,7 +27,8 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslations } from 'next-intl';
 import { useProfileCard } from './ProfileCardProvider';
-import { VideoAvatar } from '@/components/apex/VideoAvatar';
+import { VideoAvatar } from './VideoAvatar';
+import { Link } from '@/i18n/routing';
 import {
   X,
   Copy,
@@ -39,7 +42,6 @@ import {
   ExternalLink,
   Wallet,
 } from 'lucide-react';
-import { ShareButton } from './ShareButton';
 
 // =====================================================
 // SOCIAL SLOT COMPONENT
@@ -77,7 +79,7 @@ const SocialIcons = {
     color: '#5865F2',
     darkColor: '#5865F2',
     name: 'Discord',
-    urlBuilder: () => 'https://discord.gg/XzmKkrvhHc', // Community Discord
+    urlBuilder: () => 'https://discord.gg/XzmKkrvhHc',
   },
   website: {
     icon: <ExternalLink className="w-5 h-5" />,
@@ -165,8 +167,6 @@ export function ProfileFullCard() {
     setMounted(true);
   }, []);
 
-  // Handle escape key - only in non-standalone mode
-  // In standalone mode, user must click close button
   useEffect(() => {
     if (isStandalone) return;
     if (currentLevel !== 4) return;
@@ -181,8 +181,6 @@ export function ProfileFullCard() {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isStandalone, currentLevel, closeLevel]);
 
-  // Handle click outside - only in non-standalone mode
-  // In standalone mode, card stays open until user clicks close button
   useEffect(() => {
     if (isStandalone) return;
     if (currentLevel !== 4) return;
@@ -202,7 +200,6 @@ export function ProfileFullCard() {
       }
     };
 
-    // Delay to prevent immediate close from the opening click
     const timeoutId = setTimeout(() => {
       document.addEventListener('click', handleClickOutside);
     }, 100);
@@ -212,8 +209,6 @@ export function ProfileFullCard() {
       document.removeEventListener('click', handleClickOutside);
     };
   }, [isStandalone, currentLevel, closeLevel, thumbnailRef]);
-
-  // NOTE: No backdrop, no body scroll lock - page stays interactive
 
   if (!mounted || currentLevel !== 4 || !profile) return null;
 
@@ -225,13 +220,11 @@ export function ProfileFullCard() {
 
   const shortWallet = `${profile.wallet_address.slice(0, 6)}...${profile.wallet_address.slice(-4)}`;
 
-  // Message URL (Twitter DM or Discord)
   const messageUrl = profile.twitter_handle
     ? `https://x.com/messages/compose?recipient_id=${profile.twitter_handle}`
     : 'https://discord.gg/XzmKkrvhHc';
 
   const modalContent = (
-    // No backdrop - page stays fully interactive
     <div
       id="profile-full-card"
       className="fixed z-[99999] top-20 right-0 w-[420px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-100px)] overflow-y-auto bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-gray-200/50 dark:border-slate-700/50 animate-expandIn origin-top-right"
@@ -301,7 +294,7 @@ export function ProfileFullCard() {
           <div className="text-center p-2 rounded-lg bg-purple-500/10">
             <Zap className="w-4 h-4 mx-auto mb-1 text-purple-500" />
             <div className="text-lg font-bold text-gray-900 dark:text-white">
-              {profile.total_referrals}
+              {profile.total_referrals ?? 0}
             </div>
             <div className="text-[10px] text-gray-500 dark:text-gray-400">
               {t('stats.referrals')}
@@ -351,8 +344,6 @@ export function ProfileFullCard() {
               <SocialSlot network="telegram" handle={profile.telegram_handle} t={t} />
               <SocialSlot network="discord" handle={profile.discord_handle} t={t} />
               <SocialSlot network="website" handle={profile.website_url} t={t} />
-              {/* Share Profile Button - Copy link + QR + NFC */}
-              <ShareButton walletAddress={profile.wallet_address} />
             </div>
           </div>
 
@@ -389,20 +380,18 @@ export function ProfileFullCard() {
             </div>
           </button>
 
-          {/* Manage Wallets - External link to CryptoGift Wallets */}
+          {/* Manage Wallets - Link to /my-wallets */}
           {isOwnProfile && (
-            <a
-              href="https://gifts.mbxarts.com/my-wallets"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full p-3 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-500/20 dark:to-purple-500/20 border border-blue-200/50 dark:border-blue-700/30 hover:from-blue-500/20 hover:to-purple-500/20 dark:hover:from-blue-500/30 dark:hover:to-purple-500/30 transition-all"
+            <Link
+              href="/my-wallets"
+              onClick={() => closeLevel()}
+              className="flex items-center justify-center gap-2 w-full p-3 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-500/20 dark:to-purple-500/20 border border-blue-200/50 dark:border-blue-700/30 hover:from-blue-500/20 hover:to-purple-500/20 dark:hover:from-blue-500/30 dark:hover:to-purple-500/30 transition-all group/wallets"
             >
               <Wallet className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
                 {t('manageWallets')}
               </span>
-              <ExternalLink className="w-3 h-3 text-blue-400 dark:text-blue-500" />
-            </a>
+            </Link>
           )}
 
           <button
@@ -416,7 +405,7 @@ export function ProfileFullCard() {
       {/* Footer */}
       <div className="p-3 border-t border-gray-200/50 dark:border-slate-700/50 text-center">
         <p className="text-[10px] text-gray-400 dark:text-gray-500">
-          apeX Profile System &bull; CryptoGift DAO
+          apeX Profile System &bull; CryptoGift Wallets
         </p>
       </div>
     </div>

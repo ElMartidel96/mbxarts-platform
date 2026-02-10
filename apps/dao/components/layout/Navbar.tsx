@@ -459,6 +459,18 @@ function WalletDropdown({ fullWidth = false }: { fullWidth?: boolean }) {
                   <span className="text-sm text-gray-700 dark:text-gray-300">{tCommon('viewOnExplorer')}</span>
                 </a>
 
+                {/* Manage Wallets - External link to CryptoGift Wallets */}
+                <a
+                  href="https://gifts.mbxarts.com/my-wallets"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors text-left"
+                  onClick={() => setShowDropdown(false)}
+                >
+                  <Wallet className="w-4 h-4 text-blue-500" />
+                  <span className="text-sm text-gray-700 dark:text-gray-300">{tWallet('manageWallets')}</span>
+                </a>
+
                 <div className="border-t border-gray-200 dark:border-slate-600 my-2"></div>
 
                 <button
