@@ -25,6 +25,7 @@ import {
   Check,
   LogOut,
   Wallet,
+  User,
 } from 'lucide-react';
 
 interface WalletDropdownProps {
@@ -168,6 +169,18 @@ export function WalletDropdown({ fullWidth = false }: WalletDropdownProps) {
 
               {/* Actions */}
               <div className="space-y-2">
+                {/* Profile */}
+                <a
+                  href="https://www.mbxarts.com/profile"
+                  className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors text-left"
+                  onClick={() => setShowDropdown(false)}
+                >
+                  <div className="w-4 h-4 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0">
+                    <User className="w-2.5 h-2.5 text-white" />
+                  </div>
+                  <span className="text-sm text-text-secondary font-medium">Profile</span>
+                </a>
+
                 {/* Copy Address */}
                 <button
                   onClick={handleCopy}
