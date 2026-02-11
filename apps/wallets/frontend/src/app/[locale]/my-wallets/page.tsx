@@ -13,7 +13,6 @@ import { AdvancedSecurity } from '../../../components/Security/AdvancedSecurity'
 import { AccountManagement } from '../../../components/Account/AccountManagement';
 import { ExpiredGiftManager } from '../../../components/escrow/ExpiredGiftManager';
 import { ConnectAndAuthButton } from '../../../components/ConnectAndAuthButton';
-import { getAuthState, isAuthValid } from '../../../lib/siweClient';
 import { NFTImage } from '../../../components/NFTImage';
 import { NFTImageModal } from '../../../components/ui/NFTImageModal';
 import { DashboardGlassHeader } from '../../../components/ui/GlassPanelHeader';
@@ -185,7 +184,6 @@ export default function MyWalletsPage() {
   const [selectedWallet, setSelectedWallet] = useState<UserWallet | null>(null);
   const [showWalletInterface, setShowWalletInterface] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
   const [dashboardWallet, setDashboardWallet] = useState<UserWallet | null>(null);
   const [initialTab, setInitialTab] = useState<string | undefined>(undefined);
@@ -205,22 +203,6 @@ export default function MyWalletsPage() {
     setMounted(true);
   }, []);
 
-  // Check authentication status when account changes
-  useEffect(() => {
-    const checkAuth = () => {
-      const authState = getAuthState();
-      const isValid = isAuthValid();
-      const authenticated = authState.isAuthenticated && isValid && 
-                          authState.address?.toLowerCase() === account?.address?.toLowerCase();
-      setIsAuthenticated(authenticated);
-    };
-
-    if (account?.address) {
-      checkAuth();
-    } else {
-      setIsAuthenticated(false);
-    }
-  }, [account?.address]);
 
   const loadUserWallets = useCallback(async () => {
     if (!account?.address) return;
@@ -262,12 +244,12 @@ export default function MyWalletsPage() {
     }
   }, [account]);
 
-  // Load user's wallets only when authenticated
+  // Load user's wallets when account is connected
   useEffect(() => {
-    if (account?.address && isAuthenticated) {
+    if (account?.address) {
       loadUserWallets();
     }
-  }, [account, isAuthenticated, loadUserWallets]);
+  }, [account, loadUserWallets]);
 
   const handleWalletSelect = (wallet: UserWallet) => {
     // If dashboard is enabled, open it instead of the old interface
@@ -364,13 +346,12 @@ export default function MyWalletsPage() {
     return <div>Loading...</div>;
   }
 
-  console.log('🔍 MyWalletsPage: Mounted! Checking auth...', { account: !!account, isAuthenticated });
+  console.log('🔍 MyWalletsPage: Mounted!', { account: !!account });
 
-  // CRITICAL FIX: Handle authentication flow properly
-  if (!account || !isAuthenticated) {
-    console.log('🔍 MyWalletsPage: Showing auth flow...', { account: !!account, isAuthenticated });
+  // Show connect prompt if no wallet connected
+  if (!account) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50
                      dark:from-bg-primary dark:via-bg-secondary dark:to-bg-primary transition-all duration-500">
         <div className="text-center max-w-md mx-auto p-6">
           <div className="w-16 h-16 bg-gray-50 dark:bg-gray-800/50 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors duration-300">
@@ -384,20 +365,10 @@ export default function MyWalletsPage() {
           </div>
           <h1 className="text-2xl font-bold text-text-primary mb-2 transition-colors duration-300">Mis CryptoGift Wallets</h1>
           <p className="text-text-secondary mb-6 transition-colors duration-300">
-            {!account 
-              ? "Conecta tu wallet para ver y gestionar tus NFT-Wallets de CryptoGift"
-              : "Autentica tu wallet para acceder a tus NFT-Wallets de forma segura"
-            }
+            Conecta tu wallet para ver y gestionar tus NFT-Wallets de CryptoGift
           </p>
-          
-          {/* AUTHENTICATION FIX: Use proper auth component */}
-          <ConnectAndAuthButton 
-            onAuthChange={(authenticated, address) => {
-              console.log('🔐 Auth change in my-wallets:', { authenticated, address });
-              setIsAuthenticated(authenticated);
-            }}
-            showAuthStatus={true}
-          />
+
+          <ConnectAndAuthButton showAuthStatus={false} />
         </div>
       </div>
     );
