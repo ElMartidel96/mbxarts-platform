@@ -3,6 +3,7 @@
 import { ThirdwebProvider } from "thirdweb/react";
 import { useEffect, useState } from "react";
 import { getClient } from "../app/client";
+import { CrossDomainSync } from "./CrossDomainSync";
 
 interface ThirdwebWrapperProps {
   children: React.ReactNode;
@@ -50,6 +51,7 @@ export function ThirdwebWrapper({ children }: ThirdwebWrapperProps) {
 
   return (
     <ThirdwebProvider>
+      <CrossDomainSync />
       {children}
     </ThirdwebProvider>
   );

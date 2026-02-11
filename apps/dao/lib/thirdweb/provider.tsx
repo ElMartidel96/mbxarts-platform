@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThirdwebProvider } from 'thirdweb/react'
 import { WagmiProvider, createConfig, http } from 'wagmi'
 import { base } from 'wagmi/chains'
+import { CrossDomainSync } from '@/components/CrossDomainSync'
 
 // Wagmi configuration for Base Mainnet
 const wagmiConfig = createConfig({
@@ -59,7 +60,10 @@ export function Web3Provider({ children }: Web3ProviderProps) {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <ThirdwebProvider>{children}</ThirdwebProvider>
+        <ThirdwebProvider>
+          <CrossDomainSync />
+          {children}
+        </ThirdwebProvider>
       </QueryClientProvider>
     </WagmiProvider>
   )
