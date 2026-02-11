@@ -14,7 +14,9 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Navbar, NavbarSpacer } from '@/components/layout/Navbar';
+import { ConnectButtonDAO } from '@/components/thirdweb/ConnectButtonDAO';
 import { useAccount } from '@/lib/thirdweb';
+import Link from 'next/link';
 import { useProfileManager, useUsernameCheck } from '@/hooks/useProfile';
 import { SocialEngagementModal } from '@/components/social/SocialEngagementModal';
 import { SocialEngagementPlatform } from '@/lib/supabase/types';
@@ -174,42 +176,55 @@ export default function ProfilePage() {
 
   if (!isConnected || !address) {
     return (
-      <div className="min-h-screen theme-gradient-bg flex items-center justify-center p-4 relative overflow-hidden">
-        {/* Background Blobs */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-48 h-48 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-full blur-3xl" />
-          <div
-            className="absolute top-60 right-20 w-64 h-64 bg-purple-500/10 dark:bg-purple-500/15 rounded-full blur-3xl"
-            style={{ animation: 'float 8s ease-in-out infinite' }}
-          />
-        </div>
-
-        <div className="glass-crystal rounded-2xl p-8 max-w-md w-full text-center relative z-10 hover:scale-[1.02] transition-all">
-          {/* Holographic Icon */}
-          <div className="relative mx-auto mb-6 w-20 h-20">
+      <>
+        <Navbar />
+        <NavbarSpacer />
+        <div className="min-h-screen theme-gradient-bg flex items-center justify-center p-4 relative overflow-hidden">
+          {/* Background Blobs */}
+          <div className="fixed inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-20 left-10 w-48 h-48 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-full blur-3xl" />
             <div
-              className="absolute inset-0 rounded-full opacity-75"
-              style={{
-                background: 'linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6)',
-                backgroundSize: '300% 100%',
-                animation: 'holographic 4s ease infinite',
-                filter: 'blur(10px)',
-              }}
+              className="absolute top-60 right-20 w-64 h-64 bg-purple-500/10 dark:bg-purple-500/15 rounded-full blur-3xl"
+              style={{ animation: 'float 8s ease-in-out infinite' }}
             />
-            <div className="relative w-20 h-20 glass-crystal rounded-full flex items-center justify-center">
-              <User className="w-10 h-10 text-blue-500" />
+          </div>
+
+          <div className="glass-crystal rounded-2xl p-8 max-w-md w-full text-center relative z-10 hover:scale-[1.02] transition-all">
+            {/* Holographic Icon */}
+            <div className="relative mx-auto mb-6 w-20 h-20">
+              <div
+                className="absolute inset-0 rounded-full opacity-75"
+                style={{
+                  background: 'linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6)',
+                  backgroundSize: '300% 100%',
+                  animation: 'holographic 4s ease infinite',
+                  filter: 'blur(10px)',
+                }}
+              />
+              <div className="relative w-20 h-20 glass-crystal rounded-full flex items-center justify-center">
+                <User className="w-10 h-10 text-blue-500" />
+              </div>
+            </div>
+            <h2 className="text-xl font-bold mb-2">
+              <span className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                {tCommon('pleaseConnectWallet')}
+              </span>
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 mb-6">
+              Connect your wallet to view and manage your profile
+            </p>
+            <div className="flex flex-col items-center gap-3">
+              <ConnectButtonDAO />
+              <Link
+                href="/"
+                className="text-sm text-slate-500 dark:text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+              >
+                ← Back to Home
+              </Link>
             </div>
           </div>
-          <h2 className="text-xl font-bold mb-2">
-            <span className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-              {tCommon('pleaseConnectWallet')}
-            </span>
-          </h2>
-          <p className="text-slate-600 dark:text-slate-400">
-            Connect your wallet to view and manage your profile
-          </p>
         </div>
-      </div>
+      </>
     );
   }
 
