@@ -21,6 +21,7 @@ import {
 const ALLOWED_ORIGINS = [
   'https://mbxarts.com',
   'https://gifts.mbxarts.com',
+  'https://www.proyectopatria.org',
   'http://localhost:3000',
   'http://localhost:3001',
 ];

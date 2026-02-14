@@ -22,6 +22,11 @@ export const SERVICES = {
     url: process.env.NEXT_PUBLIC_WALLETS_API_URL || 'https://gifts.mbxarts.com',
     internalUrl: process.env.WALLETS_INTERNAL_URL || 'https://gifts.mbxarts.com',
   },
+  PATRIA: {
+    name: 'Proyecto Patria',
+    url: process.env.NEXT_PUBLIC_PATRIA_API_URL || 'https://www.proyectopatria.org',
+    internalUrl: process.env.PATRIA_INTERNAL_URL || 'https://www.proyectopatria.org',
+  },
 } as const;
 
 // =============================================================================
@@ -118,6 +123,13 @@ export const PLATFORM_LINKS = {
     gallery: 'https://gifts.mbxarts.com/gallery',
     nexus: 'https://gifts.mbxarts.com/nexuswallet',
     knowledge: 'https://gifts.mbxarts.com/knowledge',
+  },
+  patria: {
+    home: 'https://www.proyectopatria.org',
+    about: 'https://www.proyectopatria.org/about',
+    blog: 'https://www.proyectopatria.org/blog',
+    contact: 'https://www.proyectopatria.org/contacto',
+    collaborate: 'https://www.proyectopatria.org/colaboradores',
   },
 } as const;
 

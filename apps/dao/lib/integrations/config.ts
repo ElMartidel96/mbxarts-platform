@@ -69,6 +69,7 @@ export const CORS_CONFIG = {
     'https://www.mbxarts.com',
     'https://gifts.mbxarts.com',
     'https://app.mbxarts.com',
+    'https://www.proyectopatria.org',
     // Development
     ...(process.env.NODE_ENV === 'development' ? [
       'http://localhost:3000',

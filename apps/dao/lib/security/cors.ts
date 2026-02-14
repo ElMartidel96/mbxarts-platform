@@ -24,6 +24,7 @@ export function getAllowedOrigins(): string[] {
     return [
       'https://mbxarts.com',
       'https://gifts.mbxarts.com',
+      'https://www.proyectopatria.org',
       '*.vercel.app'
     ];
   }
