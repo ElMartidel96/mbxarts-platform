@@ -17,6 +17,10 @@
     {
       "path": "/api/cron/cleanup-transactions",
       "schedule": "0 */12 * * *"
+    },
+    {
+      "path": "/api/cron/lead-sequences",
+      "schedule": "0 * * * *"
     }
   ]
 }

@@ -1,174 +1,77 @@
 /**
  * SALES MASTERCLASS LEAD CAPTURE API
  * Captures and processes qualified leads from the Sales Masterclass
- * 
+ * Stores in Redis (primary) + Supabase (secondary), notifies on HOT leads
+ *
  * Made by mbxarts.com The Moon in a Box property
  * Co-Author: Godez22
  */
 
 import { NextApiRequest, NextApiResponse } from 'next';
-
-interface LeadData {
-  // Lead qualification
-  path: 'Quest Creator' | 'Integration Partner' | 'White-Label' | 'Investor';
-  availability: string;
-  contact: string;
-  questionsScore: {
-    correct: number;
-    total: number;
-  };
-  
-  // Metrics
-  metrics?: {
-    startTime: number;
-    blockTimes: Record<string, number>;
-    interactions: number;
-    claimSuccess: boolean;
-    leadSubmitted: boolean;
-    wowMoments: number;
-  };
-  
-  // User engagement
-  questionsCorrect?: number;
-  totalQuestions?: number;
-  answeredQuestions?: number[];
-  
-  // Metadata
-  timestamp: number;
-}
+import { ZodError } from 'zod';
+import { leadCaptureSchema } from '../../../lib/leads/schemas';
+import { leadService } from '../../../lib/leads/leadService';
+import { notifyNewLead } from '../../../lib/leads/leadNotifications';
+import type { LeadCaptureInput, LeadCaptureResponse } from '../../../lib/leads/types';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<LeadCaptureResponse | { error: string; details?: unknown }>
 ) {
-  // Only accept POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    const leadData = req.body as LeadData;
-    
-    // Validate required fields
-    if (!leadData.path || !leadData.contact || !leadData.availability) {
-      return res.status(400).json({ 
-        error: 'Missing required fields',
-        required: ['path', 'contact', 'availability'] 
+    // Zod validation
+    const validated = leadCaptureSchema.parse(req.body);
+
+    // IP hashing + rate limiting
+    const rawIP = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim()
+      || req.socket.remoteAddress
+      || 'unknown';
+    const ipHash = leadService.hashIP(rawIP);
+
+    const rateCheck = await leadService.checkRateLimit(ipHash);
+    if (!rateCheck.allowed) {
+      return res.status(429).json({
+        error: 'Too many requests',
+        details: { retryAfter: rateCheck.retryAfter },
       });
     }
-    
-    // Calculate lead score based on engagement
-    const engagementScore = calculateEngagementScore(leadData);
-    
-    // Determine lead quality
-    const leadQuality = determineLeadQuality(engagementScore, leadData);
-    
-    // Prepare lead for storage/notification
-    const processedLead = {
-      ...leadData,
-      engagementScore,
-      leadQuality,
-      capturedAt: new Date().toISOString(),
-      source: 'sales-masterclass',
-      // Add user agent for analytics
-      userAgent: req.headers['user-agent'] || 'unknown',
-      // Add IP for geo-targeting (in production, consider privacy)
-      ipAddress: req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown'
-    };
-    
-    // In production, you would:
-    // 1. Store in database
-    // await saveLeadToDatabase(processedLead);
-    
-    // 2. Send to CRM (HubSpot, Salesforce, etc.)
-    // await sendToCRM(processedLead);
-    
-    // 3. Trigger email notifications
-    // await sendNotificationEmail(processedLead);
-    
-    // 4. Add to email marketing list
-    // await addToEmailList(processedLead);
-    
-    // For now, log the lead
-    console.log('🎯 NEW QUALIFIED LEAD:', {
-      path: processedLead.path,
-      contact: processedLead.contact,
-      score: processedLead.engagementScore,
-      quality: processedLead.leadQuality,
-      questionsScore: `${leadData.questionsScore?.correct || 0}/${leadData.questionsScore?.total || 0}`
-    });
-    
-    // Send welcome message based on path
-    const welcomeMessage = getWelcomeMessage(leadData.path, leadQuality);
-    
+
+    // Capture lead (includes idempotency check, scoring, dual storage)
+    const userAgent = (req.headers['user-agent'] as string) || 'unknown';
+    const { lead, isExisting } = await leadService.captureLead(validated as LeadCaptureInput, ipHash, userAgent);
+
+    // Notify admin for HOT leads (async, non-blocking)
+    if (!isExisting && (lead.leadQuality === 'HOT' || lead.leadQuality === 'HOT_INVESTOR')) {
+      notifyNewLead(lead).catch((err) =>
+        console.warn('Notification error:', (err as Error).message)
+      );
+    }
+
+    // Preserve original response format for frontend compatibility
     return res.status(200).json({
       success: true,
-      message: welcomeMessage,
-      leadQuality,
-      engagementScore,
-      nextSteps: getNextSteps(leadData.path)
+      message: getWelcomeMessage(lead.path, lead.leadQuality),
+      leadQuality: lead.leadQuality,
+      engagementScore: lead.engagementScore,
+      nextSteps: getNextSteps(lead.path),
     });
-    
   } catch (error) {
+    if (error instanceof ZodError) {
+      return res.status(400).json({
+        error: 'Validation failed',
+        details: error.errors.map((e) => ({ field: e.path.join('.'), message: e.message })),
+      });
+    }
+
     console.error('Error capturing lead:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: 'Failed to capture lead',
-      message: 'Por favor intenta de nuevo o contáctanos directamente'
     });
   }
-}
-
-function calculateEngagementScore(leadData: LeadData): number {
-  let score = 0;
-  
-  // Questions score (max 40 points)
-  if (leadData.questionsScore) {
-    const questionRatio = leadData.questionsScore.correct / leadData.questionsScore.total;
-    score += Math.round(questionRatio * 40);
-  }
-  
-  // Metrics engagement (max 30 points)
-  if (leadData.metrics) {
-    // Completion bonus
-    if (leadData.metrics.leadSubmitted) score += 10;
-    
-    // Claim success bonus
-    if (leadData.metrics.claimSuccess) score += 10;
-    
-    // Wow moments bonus (max 10)
-    score += Math.min(leadData.metrics.wowMoments * 2, 10);
-  }
-  
-  // Time spent bonus (max 20 points)
-  if (leadData.metrics?.startTime) {
-    const timeSpent = (leadData.timestamp - leadData.metrics.startTime) / 1000; // seconds
-    if (timeSpent > 300) score += 10; // More than 5 minutes
-    if (timeSpent > 600) score += 10; // More than 10 minutes
-  }
-  
-  // Path selection bonus (max 10 points)
-  const pathScores: Record<string, number> = {
-    'Investor': 10,
-    'White-Label': 8,
-    'Integration Partner': 6,
-    'Quest Creator': 5
-  };
-  score += pathScores[leadData.path] || 0;
-  
-  return Math.min(score, 100); // Cap at 100
-}
-
-function determineLeadQuality(score: number, leadData: LeadData): string {
-  // Special qualification for investors
-  if (leadData.path === 'Investor' && score >= 60) {
-    return 'HOT_INVESTOR';
-  }
-  
-  // General qualification
-  if (score >= 80) return 'HOT';
-  if (score >= 60) return 'WARM';
-  if (score >= 40) return 'QUALIFIED';
-  return 'COLD';
 }
 
 function getWelcomeMessage(path: string, quality: string): string {
@@ -179,7 +82,7 @@ function getWelcomeMessage(path: string, quality: string): string {
     'QUALIFIED': '👍 ¡Gracias por tu interés! Te enviaremos información detallada por email.',
     'COLD': '📧 Gracias por registrarte. Te mantendremos informado sobre las novedades de CryptoGift.'
   };
-  
+
   if (quality === 'HOT_INVESTOR') return messages['HOT_INVESTOR'];
   return messages[quality] || messages['COLD'];
 }
@@ -211,6 +114,6 @@ function getNextSteps(path: string): string[] {
       '💰 Programa de revenue sharing'
     ]
   };
-  
+
   return steps[path] || ['📧 Te contactaremos pronto con más información'];
 }
