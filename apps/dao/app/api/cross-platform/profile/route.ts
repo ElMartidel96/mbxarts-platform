@@ -132,8 +132,21 @@ export async function GET(request: NextRequest) {
 /**
  * POST /api/cross-platform/profile
  *
- * Auto-create profile for new users from Wallets platform.
- * Creates a basic profile that can be expanded later.
+ * Auto-create profile for new users from external platforms.
+ * Accepts optional socialProfile data to auto-populate on first login.
+ *
+ * Body: {
+ *   wallet: "0x...",
+ *   socialProfile?: {
+ *     provider: "google" | "apple" | "discord" | ...,
+ *     display_name?: string,
+ *     avatar_url?: string,
+ *     email?: string,
+ *     discord_handle?: string,
+ *     telegram_handle?: string,
+ *     twitter_handle?: string,
+ *   }
+ * }
  */
 export async function POST(request: NextRequest) {
   const origin = request.headers.get('origin');
@@ -141,7 +154,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { wallet } = body;
+    const { wallet, socialProfile } = body;
 
     if (!wallet) {
       return NextResponse.json(
@@ -158,8 +171,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create or get profile
-    const profile = await getOrCreateProfile(wallet);
+    // Build social data init from socialProfile if provided
+    const socialData = socialProfile ? {
+      display_name: socialProfile.display_name || null,
+      avatar_url: socialProfile.avatar_url || null,
+      email: socialProfile.email || null,
+      discord_handle: socialProfile.discord_handle || null,
+      telegram_handle: socialProfile.telegram_handle || null,
+      twitter_handle: socialProfile.twitter_handle || null,
+      provider: socialProfile.provider || undefined,
+    } : undefined;
+
+    // Create or get profile, passing social data for auto-population
+    const profile = await getOrCreateProfile(wallet, socialData);
     const tier = calculateTier(profile.reputation_score);
 
     return NextResponse.json(

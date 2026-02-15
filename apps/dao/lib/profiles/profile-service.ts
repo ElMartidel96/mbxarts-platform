@@ -368,9 +368,27 @@ async function logActivity(
 // =====================================================
 
 /**
- * Get or create profile for wallet address
+ * Social profile data from OAuth providers (Google, Apple, Discord, etc.)
+ * Used to auto-populate profile on first login.
  */
-export async function getOrCreateProfile(walletAddress: string): Promise<UserProfile> {
+export interface SocialProfileInit {
+  display_name?: string | null;
+  avatar_url?: string | null;
+  email?: string | null;
+  discord_handle?: string | null;
+  telegram_handle?: string | null;
+  twitter_handle?: string | null;
+  provider?: string;
+}
+
+/**
+ * Get or create profile for wallet address.
+ * Accepts optional social data to auto-populate on first creation.
+ */
+export async function getOrCreateProfile(
+  walletAddress: string,
+  socialData?: SocialProfileInit
+): Promise<UserProfile> {
   if (!isValidWallet(walletAddress)) {
     throw new Error('Invalid wallet address format');
   }
@@ -386,23 +404,54 @@ export async function getOrCreateProfile(walletAddress: string): Promise<UserPro
 
   if (existing) {
     // Update login stats
+    const loginUpdate: Record<string, unknown> = {
+      last_login_at: new Date().toISOString(),
+      login_count: existing.login_count + 1,
+    };
+
+    // If existing profile has no display_name/avatar and social data provides them,
+    // auto-populate on subsequent login too (user may have logged in before social sync was added)
+    if (socialData) {
+      if (!existing.display_name && socialData.display_name) {
+        loginUpdate.display_name = socialData.display_name;
+      }
+      if (!existing.avatar_url && socialData.avatar_url) {
+        loginUpdate.avatar_url = socialData.avatar_url;
+      }
+      if (!existing.discord_handle && socialData.discord_handle) {
+        loginUpdate.discord_handle = socialData.discord_handle;
+      }
+      if (!existing.telegram_handle && socialData.telegram_handle) {
+        loginUpdate.telegram_handle = socialData.telegram_handle;
+      }
+      if (!existing.twitter_handle && socialData.twitter_handle) {
+        loginUpdate.twitter_handle = socialData.twitter_handle;
+      }
+    }
+
     await getSupabase()
       .from('user_profiles')
-      .update({
-        last_login_at: new Date().toISOString(),
-        login_count: existing.login_count + 1,
-      })
+      .update(loginUpdate)
       .eq('id', existing.id);
 
-    return existing;
+    // Return profile with any auto-populated fields applied
+    return { ...existing, ...loginUpdate, login_count: existing.login_count + 1 };
   }
 
-  // Create new profile
+  // Create new profile with social data if available
   const newProfile: UserProfileInsert = {
     wallet_address: normalizedWallet,
     last_login_at: new Date().toISOString(),
     login_count: 1,
   };
+
+  if (socialData) {
+    if (socialData.display_name) newProfile.display_name = socialData.display_name;
+    if (socialData.avatar_url) newProfile.avatar_url = socialData.avatar_url;
+    if (socialData.discord_handle) newProfile.discord_handle = socialData.discord_handle;
+    if (socialData.telegram_handle) newProfile.telegram_handle = socialData.telegram_handle;
+    if (socialData.twitter_handle) newProfile.twitter_handle = socialData.twitter_handle;
+  }
 
   const { data: created, error: createError } = await getSupabase()
     .from('user_profiles')
@@ -414,7 +463,8 @@ export async function getOrCreateProfile(walletAddress: string): Promise<UserPro
     throw new Error(`Failed to create profile: ${createError?.message}`);
   }
 
-  await logActivity(created.id, 'profile_created', 'New profile created');
+  const socialInfo = socialData?.provider ? ` via ${socialData.provider}` : '';
+  await logActivity(created.id, 'profile_created', `New profile created${socialInfo}`);
 
   return created;
 }
