@@ -134,6 +134,58 @@ export const PLATFORM_LINKS = {
 } as const;
 
 // =============================================================================
+// PROFILE WIDGET - Cross-platform sticky navbar widget configuration
+// Source of truth for L1→L2→L3→L4 level system positioning and navigation.
+// Any platform integrating the profile widget must follow these specs.
+// =============================================================================
+
+export const PROFILE_WIDGET = {
+  /** L1: Avatar thumbnail in navbar */
+  l1: {
+    size: 36,
+  },
+  /** L2: Expanded avatar on HOVER over L1. Corner-to-corner alignment. */
+  l2: {
+    size: 140,
+    borderRadius: '22%',
+    cornerOffset: 4,
+    animation: 'expandIn',
+    animationDuration: '0.2s',
+    animationOrigin: 'top-left',
+    position: 'fixed' as const,
+    zIndex: 99999,
+  },
+  /** L3: Dropdown menu on CLICK on wallet/chevron area */
+  l3: {
+    width: 280,
+    zIndex: 9999,
+  },
+  /** L4: Full profile panel. Opens from L2 click. Below navbar. */
+  l4: {
+    width: 380,
+    topOffset: 80,
+    rightOffset: 16,
+    animation: 'slideInRight',
+    animationDuration: '0.3s',
+    animationOrigin: 'top-right',
+    position: 'fixed' as const,
+    zIndex: 99999,
+  },
+  /**
+   * Navigation links for the widget dropdown (L3).
+   * These are NOT landing page links. They belong exclusively
+   * in the sticky profile widget. The landing page stays clean.
+   */
+  navLinks: [
+    { key: 'dashboard', label: 'Dashboard', href: '/dashboard', icon: 'LayoutDashboard' },
+    { key: 'referrals', label: 'Referidos', href: '/dashboard/referrals', icon: 'Users' },
+    { key: 'rewards', label: 'Recompensas', href: '/dashboard/rewards', icon: 'Gift' },
+    { key: 'tasks', label: 'Tareas', href: '/dashboard/tasks', icon: 'ClipboardList' },
+    { key: 'messages', label: 'Mensaje Secreto', href: '/dashboard/messages', icon: 'Lock' },
+  ],
+} as const;
+
+// =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
 
