@@ -177,6 +177,7 @@ export const PROFILE_WIDGET = {
    * in the sticky profile widget. The landing page stays clean.
    */
   navLinks: [
+    { key: 'profile', label: 'Mi Perfil', href: '/profile', icon: 'User' },
     { key: 'dashboard', label: 'Dashboard', href: '/dashboard', icon: 'LayoutDashboard' },
     { key: 'referrals', label: 'Referidos', href: '/dashboard/referrals', icon: 'Users' },
     { key: 'rewards', label: 'Recompensas', href: '/dashboard/rewards', icon: 'Gift' },
