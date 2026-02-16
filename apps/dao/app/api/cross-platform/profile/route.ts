@@ -116,6 +116,7 @@ export async function GET(request: NextRequest) {
           reputation_score: profile.reputation_score,
           twitter_handle: profile.twitter_handle,
           discord_handle: profile.discord_handle,
+          telegram_handle: profile.telegram_handle,
         },
       },
       { headers }
