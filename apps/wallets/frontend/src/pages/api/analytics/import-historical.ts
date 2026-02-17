@@ -13,6 +13,7 @@ import { ethers } from 'ethers';
 import { recordGiftEvent, initializeCampaign } from '../../../lib/giftAnalytics';
 import { verifyJWT, extractTokenFromHeaders } from '../../../lib/siweAuth';
 import { debugLogger } from '../../../lib/secureDebugLogger';
+import { withAdminAuth } from '../../../lib/adminAuth';
 
 // Initialize ThirdWeb client
 const client = createThirdwebClient({
@@ -49,7 +50,7 @@ interface ImportRequest {
   toBlock?: number | 'latest'; // Optional: end block or 'latest'
 }
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -321,6 +322,8 @@ export default async function handler(
     });
   }
 }
+
+export default withAdminAuth(handler);
 
 // Helper to get latest block number
 async function getLatestBlockNumber(): Promise<number> {

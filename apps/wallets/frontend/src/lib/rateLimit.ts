@@ -44,11 +44,11 @@ export async function rateLimit(
     
   } catch (error) {
     console.error('Rate limit error:', error);
-    
-    // In case of Redis error, allow the request but log it
+
+    // Fail closed: deny request when Redis is unavailable
     return {
-      allowed: true,
-      count: 0,
+      allowed: false,
+      count: config.maxRequests,
       resetTime: now + config.windowMs,
     };
   }

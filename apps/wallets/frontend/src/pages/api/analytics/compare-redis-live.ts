@@ -5,8 +5,9 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Redis } from '@upstash/redis';
+import { withAdminAuth } from '../../../lib/adminAuth';
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -16,22 +17,21 @@ export default async function handler(
       instances: {}
     };
 
-    console.log('🔍 Comparing BOTH Redis instances...');
-
-    // Test Instance 1: exotic-alien (current production config)
-    console.log('1. Testing exotic-alien-13383...');
+    // Test Instance 1: production Redis (from env vars)
     try {
+      if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+        throw new Error('Production Redis env vars not configured');
+      }
       const redis1 = new Redis({
-        url: 'https://exotic-alien-13383.upstash.io',
-        token: 'ATRHAAIncDE4Y2IyNzI0MmExMzY0Zjc2YTc1ZThkYjhkZDQ0ZjAzZXAxMTMzODM'
+        url: process.env.UPSTASH_REDIS_REST_URL,
+        token: process.env.UPSTASH_REDIS_REST_TOKEN
       });
 
       const xlen1 = await redis1.xlen('ga:v1:events');
       const recent1 = await redis1.xrevrange('ga:v1:events', '+', '-', 3);
 
-      results.instances.exotic_alien = {
-        url: 'https://exotic-alien-13383.upstash.io',
-        name: 'exotic-alien-13383 (VERCEL CONFIG)',
+      results.instances.production = {
+        name: 'Production Redis',
         status: 'connected',
         metrics: {
           xlen_ga_v1_events: xlen1,
@@ -47,31 +47,29 @@ export default async function handler(
             : []
         }
       };
-      console.log(`   ✅ exotic-alien: XLEN = ${xlen1}`);
     } catch (error: any) {
-      results.instances.exotic_alien = {
-        url: 'https://exotic-alien-13383.upstash.io',
-        name: 'exotic-alien-13383 (VERCEL CONFIG)',
+      results.instances.production = {
+        name: 'Production Redis',
         status: 'error',
         error: error.message
       };
-      console.error('   ❌ exotic-alien error:', error.message);
     }
 
-    // Test Instance 2: fit-mole (local config)
-    console.log('2. Testing fit-mole-59344...');
+    // Test Instance 2: secondary Redis (if configured)
     try {
+      if (!process.env.UPSTASH_REDIS_SECONDARY_URL || !process.env.UPSTASH_REDIS_SECONDARY_TOKEN) {
+        throw new Error('Secondary Redis env vars not configured');
+      }
       const redis2 = new Redis({
-        url: 'https://fit-mole-59344.upstash.io',
-        token: 'AefQAAIjcDE4ZjY1NjEwYWZjZDY0MTgzOWFkZjY2ZTA4MjJlNzg0OHAxMA'
+        url: process.env.UPSTASH_REDIS_SECONDARY_URL,
+        token: process.env.UPSTASH_REDIS_SECONDARY_TOKEN
       });
 
       const xlen2 = await redis2.xlen('ga:v1:events');
       const recent2 = await redis2.xrevrange('ga:v1:events', '+', '-', 3);
 
-      results.instances.fit_mole = {
-        url: 'https://fit-mole-59344.upstash.io',
-        name: 'fit-mole-59344 (LOCAL CONFIG)',
+      results.instances.secondary = {
+        name: 'Secondary Redis',
         status: 'connected',
         metrics: {
           xlen_ga_v1_events: xlen2,
@@ -87,55 +85,44 @@ export default async function handler(
             : []
         }
       };
-      console.log(`   ✅ fit-mole: XLEN = ${xlen2}`);
     } catch (error: any) {
-      results.instances.fit_mole = {
-        url: 'https://fit-mole-59344.upstash.io',
-        name: 'fit-mole-59344 (LOCAL CONFIG)',
+      results.instances.secondary = {
+        name: 'Secondary Redis',
         status: 'error',
         error: error.message
       };
-      console.error('   ❌ fit-mole error:', error.message);
     }
 
     // Analysis
-    const exotic_xlen = results.instances.exotic_alien?.metrics?.xlen_ga_v1_events || 0;
-    const fit_mole_xlen = results.instances.fit_mole?.metrics?.xlen_ga_v1_events || 0;
+    const prod_xlen = results.instances.production?.metrics?.xlen_ga_v1_events || 0;
+    const secondary_xlen = results.instances.secondary?.metrics?.xlen_ga_v1_events || 0;
 
     results.analysis = {
-      exotic_alien_events: exotic_xlen,
-      fit_mole_events: fit_mole_xlen,
-      conclusion: exotic_xlen > 0
-        ? fit_mole_xlen > 0
+      production_events: prod_xlen,
+      secondary_events: secondary_xlen,
+      conclusion: prod_xlen > 0
+        ? secondary_xlen > 0
           ? 'BOTH instances have events - DUAL WRITE or MIGRATION in progress'
-          : 'exotic-alien is PRIMARY (has events, fit-mole empty)'
-        : fit_mole_xlen > 0
-        ? 'fit-mole is PRIMARY (has events, exotic-alien empty)'
+          : 'Production is PRIMARY (has events, secondary empty)'
+        : secondary_xlen > 0
+        ? 'Secondary is PRIMARY (has events, production empty)'
         : 'NO EVENTS in either instance - tracking NOT writing',
-      recommendation: exotic_xlen > fit_mole_xlen
-        ? 'Use exotic-alien-13383 (more events)'
-        : fit_mole_xlen > exotic_xlen
-        ? 'Use fit-mole-59344 (more events)'
+      recommendation: prod_xlen > secondary_xlen
+        ? 'Use production Redis (more events)'
+        : secondary_xlen > prod_xlen
+        ? 'Use secondary Redis (more events)'
         : 'CRITICAL: No data in either instance'
     };
-
-    console.log('📊 ANALYSIS:', results.analysis.conclusion);
-
-    results.next_steps = [
-      '1. Note the XLEN numbers above',
-      '2. Create a NEW gift (e.g., #314) and complete the full flow',
-      '3. Call this endpoint again',
-      '4. The instance whose XLEN increased is the one receiving writes'
-    ];
 
     return res.status(200).json(results);
 
   } catch (error: any) {
-    console.error('💥 Live comparison failed:', error);
+    console.error('Live comparison failed:', error);
     return res.status(500).json({
       error: 'Comparison failed',
-      message: error.message,
-      stack: error.stack
+      message: error.message
     });
   }
 }
+
+export default withAdminAuth(handler);

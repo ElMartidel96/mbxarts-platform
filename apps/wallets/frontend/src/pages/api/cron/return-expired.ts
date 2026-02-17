@@ -14,6 +14,7 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { returnExpiredGifts } from '../../../lib/escrowUtils';
+import { safeCompare } from '../../../lib/adminAuth';
 
 interface CronResponse {
   success: boolean;
@@ -34,7 +35,7 @@ function authenticateCron(req: NextApiRequest): boolean {
     return false;
   }
   
-  if (cronSecret !== expectedSecret) {
+  if (typeof cronSecret !== 'string' || !safeCompare(cronSecret, expectedSecret)) {
     console.error('❌ Invalid CRON_SECRET provided');
     return false;
   }

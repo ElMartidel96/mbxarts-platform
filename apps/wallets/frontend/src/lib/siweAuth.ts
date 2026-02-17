@@ -5,7 +5,7 @@
  */
 
 import { ethers } from 'ethers';
-import { createHmac } from 'crypto';
+import { createHmac, timingSafeEqual } from 'crypto';
 
 // Challenge configuration
 export const CHALLENGE_EXPIRY = 10 * 60 * 1000; // 10 minutes
@@ -205,7 +205,9 @@ export function verifyJWT(token: string): AuthToken | null {
       .update(`${header}.${payload}`)
       .digest('base64url');
       
-    if (signature !== expectedSignature) {
+    const sigBuf = Buffer.from(signature);
+    const expBuf = Buffer.from(expectedSignature);
+    if (sigBuf.length !== expBuf.length || !timingSafeEqual(sigBuf, expBuf)) {
       return null;
     }
 

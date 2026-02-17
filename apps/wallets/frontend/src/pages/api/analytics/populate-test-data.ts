@@ -6,8 +6,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { recordGiftEvent, initializeCampaign } from '../../../lib/giftAnalytics';
 import { validateRedisForCriticalOps } from '../../../lib/redisConfig';
+import { withAdminAuth } from '../../../lib/adminAuth';
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -133,8 +134,9 @@ export default async function handler(
     return res.status(500).json({
       success: false,
       error: 'Failed to populate test data',
-      message: error.message || 'Unknown error',
-      stack: error.stack
+      message: error.message || 'Unknown error'
     });
   }
 }
+
+export default withAdminAuth(handler);

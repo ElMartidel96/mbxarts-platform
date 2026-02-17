@@ -2,35 +2,12 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { createThirdwebClient, getContract, readContract } from "thirdweb";
 import { baseSepolia } from "thirdweb/chains";
 import { storeNFTMetadata, getNFTMetadata, getAllStoredMetadata, createNFTMetadata } from "../../../lib/nftMetadataStore";
+import { withAdminAuth } from '../../../lib/adminAuth';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-
-  // Admin Authentication - MANDATORY for all admin endpoints
-  const adminToken = process.env.ADMIN_API_TOKEN;
-  const providedToken = req.headers['x-admin-token'] || req.body.adminToken;
-  
-  // CRITICAL SECURITY: ADMIN_API_TOKEN must be configured
-  if (!adminToken) {
-    console.error('🚨 SECURITY: ADMIN_API_TOKEN not configured - blocking admin endpoint access');
-    return res.status(500).json({ 
-      error: 'Server configuration error',
-      message: 'Admin token required. Contact administrator.'
-    });
-  }
-  
-  // CRITICAL SECURITY: Token must match exactly
-  if (providedToken !== adminToken) {
-    console.error('🚨 SECURITY: Invalid admin token provided');
-    return res.status(401).json({ 
-      error: 'Unauthorized',
-      message: 'Valid admin token required. Provide via X-Admin-Token header or adminToken body field.'
-    });
-  }
-  
-  console.log('✅ SECURITY: Admin token validated successfully');
 
   const { action, contractAddress, dryRun = true } = req.body;
 
@@ -266,3 +243,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 }
+
+export default withAdminAuth(handler);

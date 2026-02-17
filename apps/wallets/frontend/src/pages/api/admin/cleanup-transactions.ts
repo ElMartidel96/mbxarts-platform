@@ -7,6 +7,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Redis } from '@upstash/redis';
 import { cleanupOldTransactions } from '../../../lib/gaslessValidation';
+import { withAdminAuth } from '../../../lib/adminAuth';
 
 // Types
 interface CleanupResponse {
@@ -29,24 +30,6 @@ try {
   }
 } catch (error) {
   console.error('❌ Redis initialization failed for cleanup:', error);
-}
-
-// Authenticate admin requests
-function authenticateAdmin(req: NextApiRequest): boolean {
-  const authHeader = req.headers.authorization;
-  const expectedToken = process.env.ADMIN_API_TOKEN;
-  
-  if (!expectedToken) {
-    console.error('❌ ADMIN_API_TOKEN not configured');
-    return false;
-  }
-  
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return false;
-  }
-  
-  const token = authHeader.replace('Bearer ', '');
-  return token === expectedToken;
 }
 
 // Manual cleanup for expired Redis keys
@@ -107,28 +90,19 @@ async function performRedisCleanup(): Promise<{ cleaned: number; message: string
   }
 }
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse<CleanupResponse>
 ) {
-  // Only allow POST requests
   if (req.method !== 'POST') {
-    return res.status(405).json({ 
-      success: false, 
-      message: 'Method not allowed' 
+    return res.status(405).json({
+      success: false,
+      message: 'Method not allowed'
     });
   }
-  
+
   try {
-    // Authenticate admin request
-    if (!authenticateAdmin(req)) {
-      return res.status(401).json({
-        success: false,
-        message: 'Unauthorized. Admin token required.'
-      });
-    }
-    
-    console.log('🧹 ADMIN CLEANUP: Starting transaction cleanup...');
+    console.log('ADMIN CLEANUP: Starting transaction cleanup...');
     
     // Check Redis availability
     if (!redis) {
@@ -161,3 +135,5 @@ export default async function handler(
     });
   }
 }
+
+export default withAdminAuth(handler);

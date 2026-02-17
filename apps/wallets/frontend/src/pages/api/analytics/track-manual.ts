@@ -6,8 +6,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { recordGiftEvent, initializeCampaign } from '../../../lib/giftAnalytics';
 import { trackGiftCreated, trackGiftViewed, trackGiftClaimed, trackEducationCompleted } from '../../../lib/analyticsIntegration';
+import { withAdminAuth } from '../../../lib/adminAuth';
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -116,3 +117,5 @@ export default async function handler(
     });
   }
 }
+
+export default withAdminAuth(handler);

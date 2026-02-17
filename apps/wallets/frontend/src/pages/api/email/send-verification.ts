@@ -51,9 +51,10 @@ const RATE_LIMIT = 3;
 const RATE_WINDOW = 10 * 60 * 1000; // 10 minutes
 const CODE_EXPIRY = 10 * 60 * 1000; // 10 minutes
 
-// Generate 6-digit OTP
+// Generate 6-digit OTP using cryptographically secure random
 function generateOTP(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  const { randomInt } = require('crypto');
+  return randomInt(100000, 999999).toString();
 }
 
 // Email validation

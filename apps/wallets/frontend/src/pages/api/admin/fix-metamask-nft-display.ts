@@ -8,6 +8,7 @@ import { baseSepolia } from 'thirdweb/chains';
 import { privateKeyToAccount } from 'thirdweb/wallets';
 import { getAllStoredMetadata } from '../../../lib/nftMetadataStore';
 import { getPublicBaseUrl } from '../../../lib/publicBaseUrl';
+import { withAdminAuth } from '../../../lib/adminAuth';
 
 const client = createThirdwebClient({
   clientId: process.env.NEXT_PUBLIC_TW_CLIENT_ID!,
@@ -22,15 +23,9 @@ interface MigrationResult {
   newTokenURI?: string;
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  // Admin access control
-  const { adminKey } = req.body;
-  if (adminKey !== process.env.API_ACCESS_TOKEN) {
-    return res.status(401).json({ error: 'Unauthorized' });
   }
 
   const contractAddress = process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!;
@@ -192,3 +187,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 }
+
+export default withAdminAuth(handler);

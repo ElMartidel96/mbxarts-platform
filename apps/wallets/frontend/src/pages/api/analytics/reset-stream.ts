@@ -5,8 +5,9 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Redis } from '@upstash/redis';
+import { withAdminAuth } from '../../../lib/adminAuth';
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -95,8 +96,9 @@ export default async function handler(
     console.error('💥 Reset stream failed:', error);
     return res.status(500).json({
       error: 'Reset failed',
-      message: error.message,
-      stack: error.stack
+      message: error.message
     });
   }
 }
+
+export default withAdminAuth(handler);

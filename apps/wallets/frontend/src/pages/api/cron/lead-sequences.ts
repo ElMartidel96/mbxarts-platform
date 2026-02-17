@@ -11,6 +11,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { leadService } from '../../../lib/leads/leadService';
 import { getPendingSequences, sendSequenceEmail } from '../../../lib/leads/leadSequences';
+import { safeCompare } from '../../../lib/adminAuth';
 
 function authenticateCron(req: NextApiRequest): boolean {
   const vercelCron = req.headers['x-vercel-cron'];
@@ -20,11 +21,11 @@ function authenticateCron(req: NextApiRequest): boolean {
   if (!cronSecret) return false;
 
   const xCronSecret = req.headers['x-cron-secret'];
-  if (xCronSecret === cronSecret) return true;
+  if (typeof xCronSecret === 'string' && safeCompare(xCronSecret, cronSecret)) return true;
 
   const authHeader = req.headers.authorization;
   if (authHeader?.startsWith('Bearer ')) {
-    return authHeader.replace('Bearer ', '') === cronSecret;
+    return safeCompare(authHeader.replace('Bearer ', ''), cronSecret);
   }
 
   return false;

@@ -6,6 +6,7 @@ import { uploadToIPFS, uploadMetadata, validateIPFSConfig } from "../../lib/ipfs
 import { addMintLog } from "../../lib/mintLogger";
 import { convertIPFSToHTTPS, validateMultiGatewayAccess } from "../../utils/ipfs";
 import { getPublicBaseUrl } from "../../lib/publicBaseUrl";
+import { verifyJWT, extractTokenFromHeaders } from "../../lib/siweAuth";
 
 // Disable the default body parser
 export const config = {
@@ -38,8 +39,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // SIWE authentication: only authenticated users can upload
+  const authHeader = req.headers.authorization;
+  const token = extractTokenFromHeaders(authHeader);
+  if (!token) {
+    return res.status(401).json({ error: 'Authentication required' });
+  }
+  const authData = verifyJWT(token);
+  if (!authData) {
+    return res.status(401).json({ error: 'Invalid or expired token' });
+  }
+
   try {
-    addMintLog('INFO', 'UPLOAD_API_START', { timestamp: new Date().toISOString() });
+    addMintLog('INFO', 'UPLOAD_API_START', { timestamp: new Date().toISOString(), address: authData.address });
     
     // Check IPFS configuration
     const ipfsConfig = validateIPFSConfig();

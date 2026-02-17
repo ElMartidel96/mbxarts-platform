@@ -21,19 +21,14 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { validateRedisForCriticalOps } from '../../../lib/redisConfig';
+import { withAdminAuth } from '../../../lib/adminAuth';
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  // Simple authentication check
-  const { adminKey } = req.body;
-  if (adminKey !== process.env.ADMIN_KEY && adminKey !== 'emergency_fix_2025') {
-    return res.status(401).json({ error: 'Unauthorized' });
   }
 
   try {
@@ -226,3 +221,5 @@ export default async function handler(
     });
   }
 }
+
+export default withAdminAuth(handler);

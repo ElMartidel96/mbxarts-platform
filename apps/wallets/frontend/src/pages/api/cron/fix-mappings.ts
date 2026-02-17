@@ -10,6 +10,7 @@ import { readContract } from 'thirdweb';
 import { getEscrowContract } from '../../../lib/escrowUtils';
 import { storeGiftMapping, getGiftIdFromMapping } from '../../../lib/giftMappingStore';
 import { validateMappingWithRetry, findCorrectGiftId } from '../../../lib/mappingValidator';
+import { safeCompare } from '../../../lib/adminAuth';
 
 interface FixMappingResult {
   success: boolean;
@@ -183,7 +184,7 @@ export default async function handler(
 ) {
   // Verify CRON authentication
   const cronSecret = req.headers['x-cron-secret'];
-  if (!cronSecret || cronSecret !== process.env.CRON_SECRET) {
+  if (!cronSecret || typeof cronSecret !== 'string' || !safeCompare(cronSecret, process.env.CRON_SECRET || '')) {
     return res.status(401).json({ 
       success: false, 
       error: 'Unauthorized - Invalid CRON secret' 

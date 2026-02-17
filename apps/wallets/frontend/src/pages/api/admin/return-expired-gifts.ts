@@ -6,6 +6,7 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { returnExpiredGifts } from '../../../lib/escrowUtils';
+import { withAdminAuth } from '../../../lib/adminAuth';
 
 interface ReturnExpiredResponse {
   success: boolean;
@@ -14,44 +15,17 @@ interface ReturnExpiredResponse {
   message?: string;
 }
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ReturnExpiredResponse>
 ) {
-  // Only allow POST requests
   if (req.method !== 'POST') {
-    return res.status(405).json({ 
-      success: false, 
-      returned: 0,
-      message: 'Method not allowed' 
-    });
-  }
-
-  // Admin Authentication - MANDATORY for all admin endpoints
-  const adminToken = process.env.ADMIN_API_TOKEN;
-  const providedToken = req.headers['x-admin-token'] || req.body.adminToken;
-  
-  // CRITICAL SECURITY: ADMIN_API_TOKEN must be configured
-  if (!adminToken) {
-    console.error('🚨 SECURITY: ADMIN_API_TOKEN not configured - blocking admin endpoint access');
-    return res.status(500).json({ 
+    return res.status(405).json({
       success: false,
       returned: 0,
-      message: 'Server configuration error - Admin token required. Contact administrator.'
+      message: 'Method not allowed'
     });
   }
-  
-  // CRITICAL SECURITY: Token must match exactly
-  if (providedToken !== adminToken) {
-    console.error('🚨 SECURITY: Invalid admin token provided');
-    return res.status(401).json({ 
-      success: false,
-      returned: 0,
-      message: 'Unauthorized - Valid admin token required. Provide via X-Admin-Token header or adminToken body field.'
-    });
-  }
-  
-  console.log('✅ SECURITY: Admin token validated successfully');
 
   try {
     console.log('🔄 ADMIN: Starting expired gifts return process...');
@@ -90,3 +64,5 @@ export default async function handler(
     });
   }
 }
+
+export default withAdminAuth(handler);

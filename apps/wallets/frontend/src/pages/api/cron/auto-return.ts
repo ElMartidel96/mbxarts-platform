@@ -18,6 +18,7 @@ import {
   getGiftIdFromTokenId
 } from '../../../lib/escrowUtils';
 import { ESCROW_ABI, ESCROW_CONTRACT_ADDRESS, type EscrowGift } from '../../../lib/escrowABI';
+import { safeCompare } from '../../../lib/adminAuth';
 
 // Types
 interface AutoReturnResponse {
@@ -56,7 +57,7 @@ function authenticateCron(req: NextApiRequest): boolean {
 
   // Check x-cron-secret header (for GitHub Actions and manual triggers)
   const xCronSecret = req.headers['x-cron-secret'];
-  if (xCronSecret === cronSecret) {
+  if (typeof xCronSecret === 'string' && safeCompare(xCronSecret, cronSecret)) {
     return true;
   }
 
@@ -64,7 +65,7 @@ function authenticateCron(req: NextApiRequest): boolean {
   const authHeader = req.headers.authorization;
   if (authHeader?.startsWith('Bearer ')) {
     const token = authHeader.replace('Bearer ', '');
-    if (token === cronSecret) {
+    if (safeCompare(token, cronSecret)) {
       return true;
     }
   }

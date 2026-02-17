@@ -7,6 +7,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Redis } from '@upstash/redis';
 import { cleanupOldTransactions } from '../../../lib/gaslessValidation';
+import { safeCompare } from '../../../lib/adminAuth';
 
 // Types
 interface CronCleanupResponse {
@@ -48,7 +49,7 @@ function authenticateCron(req: NextApiRequest): boolean {
 
   // Check x-cron-secret header (for GitHub Actions and manual triggers)
   const xCronSecret = req.headers['x-cron-secret'];
-  if (xCronSecret === cronSecret) {
+  if (typeof xCronSecret === 'string' && safeCompare(xCronSecret, cronSecret)) {
     return true;
   }
 
@@ -56,7 +57,7 @@ function authenticateCron(req: NextApiRequest): boolean {
   const authHeader = req.headers.authorization;
   if (authHeader?.startsWith('Bearer ')) {
     const token = authHeader.replace('Bearer ', '');
-    if (token === cronSecret) {
+    if (safeCompare(token, cronSecret)) {
       return true;
     }
   }

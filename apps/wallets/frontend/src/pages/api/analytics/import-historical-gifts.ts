@@ -7,12 +7,13 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { createThirdwebClient, getContract, readContract } from 'thirdweb';
 import { baseSepolia } from 'thirdweb/chains';
 import { recordGiftEvent, initializeCampaign } from '../../../lib/giftAnalytics';
+import { withAdminAuth } from '../../../lib/adminAuth';
 
 // Contract addresses from Base Sepolia
 const NFT_CONTRACT = "0xeFCba1D72B8f053d93BA44b7b15a1BeED515C89b";
 const ESCROW_CONTRACT = "0x46175CfC233500DA803841DEef7f2816e7A129E0";
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -208,3 +209,5 @@ export default async function handler(
     });
   }
 }
+
+export default withAdminAuth(handler);

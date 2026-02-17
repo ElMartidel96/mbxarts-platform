@@ -71,13 +71,12 @@ export async function checkRateLimit(userAddress: string): Promise<{
     };
     
   } catch (error) {
-    console.error('❌ CRITICAL: Rate limiting Redis error:', error);
-    
-    // FALLBACK: Allow request but log the failure
-    // This prevents Redis issues from breaking authentication
+    console.error('CRITICAL: Rate limiting Redis error:', error);
+
+    // Fail closed: deny request when Redis is unavailable to prevent brute-force
     return {
-      allowed: true,
-      remaining: maxRequests - 1,
+      allowed: false,
+      remaining: 0,
       resetTime: now + windowMs
     };
   }

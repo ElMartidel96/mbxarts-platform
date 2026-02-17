@@ -4,8 +4,9 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Redis } from '@upstash/redis';
+import { withAdminAuth } from '../../../lib/adminAuth';
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -58,3 +59,4 @@ export default async function handler(
     });
   }
 }
+export default withAdminAuth(handler);

@@ -12,11 +12,12 @@ import { Redis } from '@upstash/redis';
 import { ethers } from 'ethers';
 import { processBlockchainEvent } from '../../../lib/analytics/canonicalEvents';
 import { storeGiftMapping } from '../../../lib/giftMappingStore';
+import { withAdminAuth } from '../../../lib/adminAuth';
 
 const ESCROW_CONTRACT = "0x46175CfC233500DA803841DEef7f2816e7A129E0";
 const NFT_CONTRACT = "0xeFCba1D72B8f053d93BA44b7b15a1BeED515C89b";
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -179,8 +180,9 @@ export default async function handler(
     console.error('Reconciliation error:', error);
     return res.status(500).json({
       error: 'Reconciliation failed',
-      message: error.message,
-      stack: error.stack
+      message: error.message
     });
   }
 }
+
+export default withAdminAuth(handler);

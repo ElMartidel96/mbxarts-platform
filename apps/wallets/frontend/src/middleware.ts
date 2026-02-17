@@ -12,6 +12,53 @@ import { routing } from './i18n/routing';
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = process.env.NODE_ENV === 'production';
 
+// CORS whitelist: configurable via ALLOWED_ORIGINS env var
+function getAllowedOrigins(): string[] {
+  const envOrigins = process.env.ALLOWED_ORIGINS;
+  if (envOrigins) {
+    return envOrigins.split(',').map(o => o.trim());
+  }
+  // Default production origins
+  return [
+    'https://cryptogift-wallets.vercel.app',
+    'https://www.cryptogift-wallets.vercel.app',
+  ];
+}
+
+function getCorsOrigin(request: NextRequest): string | null {
+  const origin = request.headers.get('origin');
+
+  // In development, allow localhost
+  if (isDevelopment) {
+    return origin || '*';
+  }
+
+  // NFT metadata endpoints need open CORS for wallets/explorers/marketplaces
+  const pathname = request.nextUrl.pathname;
+  if (pathname.startsWith('/api/metadata/') || pathname.startsWith('/api/nft-metadata/')) {
+    return origin || '*';
+  }
+
+  // Check against whitelist
+  if (origin && getAllowedOrigins().includes(origin)) {
+    return origin;
+  }
+
+  // No match — do not set Access-Control-Allow-Origin
+  return null;
+}
+
+function setCorsHeaders(response: NextResponse, corsOrigin: string | null) {
+  if (corsOrigin) {
+    response.headers.set('Access-Control-Allow-Origin', corsOrigin);
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-admin-token, x-cron-secret');
+    if (corsOrigin !== '*') {
+      response.headers.set('Vary', 'Origin');
+    }
+  }
+}
+
 // Intl middleware using centralized routing config
 const intlMiddleware = createIntlMiddleware(routing);
 
@@ -270,12 +317,11 @@ export function middleware(request: NextRequest) {
     // Static files
     request.nextUrl.pathname.includes('.')
   ) {
-    // For API routes, add CORS headers
+    // For API routes, add CORS headers with whitelist
     const response = NextResponse.next();
     if (request.nextUrl.pathname.startsWith('/api/')) {
-      response.headers.set('Access-Control-Allow-Origin', '*');
-      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      const corsOrigin = getCorsOrigin(request);
+      setCorsHeaders(response, corsOrigin);
     }
     return response;
   }
@@ -292,8 +338,9 @@ export function middleware(request: NextRequest) {
   
   // In development, skip most security headers to avoid issues
   if (isDevelopment) {
-    response.headers.set('Access-Control-Allow-Origin', '*');
-    response.headers.set('X-Frame-Options', 'SAMEORIGIN'); // Allow same-origin framing
+    const corsOrigin = getCorsOrigin(request);
+    setCorsHeaders(response, corsOrigin);
+    response.headers.set('X-Frame-Options', 'SAMEORIGIN');
     return response;
   }
   
