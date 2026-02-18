@@ -1,0 +1,43 @@
+MBXarts Platform
+Copyright (c) 2024-2026 MBXarts - The Moon in a Box. All rights reserved.
+
+Co-Author: Godez22
+
+This product is licensed under the PolyForm Noncommercial License 1.0.0.
+See the LICENSE file for the full license text.
+See COMMERCIAL.md for commercial licensing information.
+
+---
+
+Third-Party Notices:
+
+This software includes the following third-party open source components,
+which are subject to their own license terms:
+
+- OpenZeppelin Contracts (MIT License)
+  https://github.com/OpenZeppelin/openzeppelin-contracts
+
+- forge-std (MIT License / Apache License 2.0)
+  https://github.com/foundry-rs/forge-std
+
+- halmos-cheatcodes (MIT License)
+  https://github.com/a16z/halmos-cheatcodes
+
+- ERC-4626 Tests (GNU AGPL v3)
+  https://github.com/a16z/erc4626-tests
+
+All other code in this repository is proprietary and subject to the
+PolyForm Noncommercial License 1.0.0 unless otherwise noted.
+
+---
+
+Blockchain Deployments:
+
+Smart contracts are deployed on Base Mainnet (Chain ID: 8453) and
+Base Sepolia (Chain ID: 84532). Verified contract source code on
+block explorers is provided for transparency and does not constitute
+a license grant for commercial use.
+
+---
+
+Made by mbxarts.com - The Moon in a Box property
