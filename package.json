@@ -2,6 +2,7 @@
   "name": "mbxarts-platform",
   "version": "1.0.0",
   "private": true,
+  "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
