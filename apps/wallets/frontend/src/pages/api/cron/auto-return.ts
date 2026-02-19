@@ -7,7 +7,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ethers } from 'ethers';
 import { createThirdwebClient, readContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { privateKeyToAccount } from 'thirdweb/wallets';
 import { sendTransaction, waitForReceipt } from 'thirdweb/transaction';
 import { 
@@ -174,7 +174,7 @@ async function returnSingleGift(tokenId: string): Promise<{
     
     const receipt = await waitForReceipt({
       client,
-      chain: baseSepolia,
+      chain: base,
       transactionHash: result.transactionHash
     });
     

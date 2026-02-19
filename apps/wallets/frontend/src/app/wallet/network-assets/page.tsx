@@ -64,7 +64,7 @@ export default function NetworkAssetsPage() {
 
       {/* Network Asset Manager */}
       <div className="mb-8">
-        <NetworkAssetManager requiredChainId={84532} />
+        <NetworkAssetManager requiredChainId={8453} />
       </div>
 
       {/* Feature Grid */}
@@ -80,16 +80,8 @@ export default function NetworkAssetsPage() {
               <span><strong>Base Mainnet:</strong> Production network (Chain ID: 8453)</span>
             </li>
             <li className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-400"></span>
-              <span><strong>Base Sepolia:</strong> Test network (Chain ID: 84532)</span>
-            </li>
-            <li className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-gray-400"></span>
               <span><strong>Ethereum:</strong> Reference only (Chain ID: 1)</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-gray-300"></span>
-              <span><strong>Sepolia:</strong> Ethereum testnet (Chain ID: 11155111)</span>
             </li>
           </ul>
         </div>

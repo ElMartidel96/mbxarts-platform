@@ -48,7 +48,7 @@ const LAST_SCAN_KEY_PREFIX = 'approvals-last-scan';
 export function useApprovals() {
   const account = useActiveAccount();
   const chain = useActiveWalletChain();
-  const chainId = chain?.id || 84532;
+  const chainId = chain?.id || 8453;
   const owner = account?.address as Address;
   
   const [state, setState] = useState<ApprovalsState>({

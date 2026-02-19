@@ -257,7 +257,7 @@ export const modules: Module[] = [
                   'Confirmar recepción en wallet destino'
                 ],
                 icon: '🔺',
-                tags: ['transaction', 'testnet', 'quest', 'base-sepolia']
+                tags: ['transaction', 'testnet', 'quest', 'base']
               },
               {
                 id: 'M0.R1.U3.L3',
@@ -657,7 +657,7 @@ export const modules: Module[] = [
                   'Copiar tx hash del faucet'
                 ],
                 icon: '💧',
-                tags: ['quest', 'faucet', 'testnet', 'base-sepolia']
+                tags: ['quest', 'faucet', 'testnet', 'base']
               },
               {
                 id: 'M0.R3.U3.L3',
@@ -3767,7 +3767,7 @@ const M6_NFT_DIGITAL_MEDIA: Module = {
               questInstructions: '1) Upload image to IPFS, 2) Create metadata.json, 3) Upload metadata, 4) Mint with tokenURI',
               verificationSteps: ['Upload to IPFS', 'Create metadata JSON', 'Mint transaction', 'Verify in wallet/explorer'],
               icon: '🔵',
-              tags: ['mint', 'ipfs', 'base-sepolia']
+              tags: ['mint', 'ipfs', 'base']
             },
             {
               id: '6.1.2.2',

@@ -15,7 +15,7 @@ interface NetworkOptimizationPromptProps {
 // Safe network switching utility - user-initiated only
 const getSafeNetworkSwitchInstructions = (requiredChainId: number) => {
   const networks: Record<number, { name: string; chainId: string; rpcUrl: string; symbol: string; explorer: string }> = {
-    84532: {
+    8453: {
       name: 'Base Sepolia',
       chainId: '0x14a34',
       rpcUrl: 'https://sepolia.base.org',
@@ -31,7 +31,7 @@ const getSafeNetworkSwitchInstructions = (requiredChainId: number) => {
     }
   };
 
-  return networks[requiredChainId] || networks[84532];
+  return networks[requiredChainId] || networks[8453];
 };
 
 export const NetworkOptimizationPrompt: React.FC<NetworkOptimizationPromptProps> = ({

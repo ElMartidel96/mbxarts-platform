@@ -155,9 +155,9 @@ function generateCSP(): string {
       // 0x API
       'https://base.api.0x.org',
       'https://api.0x.org',
-      // Base Sepolia Explorer
-      'https://base-sepolia.blockscout.com',
-      'https://sepolia.basescan.org',
+      // Base Mainnet Explorer
+      'https://base.blockscout.com',
+      'https://basescan.org',
       // Mux video streaming
       'https://stream.mux.com',
       'https://*.mux.com',

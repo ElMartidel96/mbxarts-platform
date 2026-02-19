@@ -291,7 +291,7 @@ const BridgeAndBuyTab: React.FC<{ wallet: any }> = memo(({ wallet }) => {
         <NetworkAssetManager 
           className="w-full"
           compactMode={false}
-          requiredChainId={84532}
+          requiredChainId={8453}
         />
       </Suspense>
       <div className="p-6 rounded-2xl bg-gradient-to-br from-orange-500/10 to-red-500/10 

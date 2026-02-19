@@ -30,7 +30,7 @@ const CHAIN_OPTIONS = [
   { id: 1, name: 'Ethereum', icon: '🔷' },
   { id: 8453, name: 'Base', icon: '🔵' },
   { id: 11155111, name: 'Sepolia', icon: '🔷' },
-  { id: 84532, name: 'Base Sepolia', icon: '🔵' },
+  { id: 8453, name: 'Base Sepolia', icon: '🔵' },
 ];
 
 const TOKEN_OPTIONS = ['ETH', 'USDC'];

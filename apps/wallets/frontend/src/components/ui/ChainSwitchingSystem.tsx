@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useActiveAccount, useSwitchActiveWalletChain } from 'thirdweb/react';
-import { sepolia, baseSepolia } from 'thirdweb/chains';
+import { sepolia, base } from 'thirdweb/chains';
 import { isMobileDevice } from '../../lib/mobileRpcHandler';
 import { ThemeCard, ThemeButton } from './ThemeSystem';
 
@@ -35,17 +35,17 @@ const SUPPORTED_CHAINS = {
     color: 'blue',
     chain: sepolia
   },
-  84532: {
+  8453: {
     name: 'Base Sepolia',
     shortName: 'Base',
     icon: '🔵', 
     color: 'blue',
-    chain: baseSepolia
+    chain: base
   }
 } as const;
 
 export function ChainSwitchingSystem({
-  requiredChainId = 84532, // Default to Base Sepolia
+  requiredChainId = 8453, // Default to Base Sepolia
   onChainSwitched,
   showPersistentIndicator = true,
   autoPrompt = true,
@@ -315,7 +315,7 @@ interface QuickChainSwitchProps {
 }
 
 export function QuickChainSwitch({
-  requiredChainId = 84532,
+  requiredChainId = 8453,
   onChainSwitched,
   className = ''
 }: QuickChainSwitchProps) {

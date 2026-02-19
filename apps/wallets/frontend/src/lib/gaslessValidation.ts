@@ -6,7 +6,7 @@
 
 import { ethers } from 'ethers';
 import { createThirdwebClient } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 
 // Initialize ThirdWeb client lazily
 let client: ReturnType<typeof createThirdwebClient> | null = null;

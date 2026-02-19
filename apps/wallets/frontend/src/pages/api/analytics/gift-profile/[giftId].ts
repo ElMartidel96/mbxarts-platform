@@ -19,7 +19,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Redis } from '@upstash/redis';
 import { debugLogger } from '@/lib/secureDebugLogger';
 import { createThirdwebClient, getContract, readContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 
 const NFT_CONTRACT = "0xeFCba1D72B8f053d93BA44b7b15a1BeED515C89b";
 const ESCROW_CONTRACT = "0x46175CfC233500DA803841DEef7f2816e7A129E0";
@@ -854,7 +854,7 @@ export default async function handler(
 
       const nftContract = getContract({
         client,
-        chain: baseSepolia,
+        chain: base,
         address: NFT_CONTRACT,
       });
       console.error('✅ NFT contract created');

@@ -5,7 +5,7 @@
  */
 
 import { createThirdwebClient, prepareContractCall } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { privateKeyToAccount } from 'thirdweb/wallets';
 import { sendTransaction, waitForReceipt } from 'thirdweb/transaction';
 import { ethers } from 'ethers';
@@ -224,7 +224,7 @@ export async function executeGasPaidTransaction(
         // Wait for receipt
         const receipt = await waitForReceipt({
           client,
-          chain: baseSepolia,
+          chain: base,
           transactionHash: result.transactionHash
         });
         

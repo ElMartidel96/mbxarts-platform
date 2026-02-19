@@ -4,7 +4,7 @@
  */
 
 import { createPublicClient, http, PublicClient, Chain } from 'viem';
-import { mainnet, sepolia, base, baseSepolia } from 'viem/chains';
+import { mainnet, sepolia, base } from 'viem/chains';
 import { getMEVProtectedRPC, isMEVProtectionAvailable } from './config';
 
 // Chain configurations
@@ -12,15 +12,13 @@ const CHAIN_CONFIG: Record<number, Chain> = {
   1: mainnet,
   11155111: sepolia,
   8453: base,
-  84532: baseSepolia,
 };
 
 // Default RPC endpoints (fallback)
 const DEFAULT_RPC_ENDPOINTS: Record<number, string> = {
   1: 'https://eth.llamarpc.com',
   11155111: 'https://sepolia.gateway.tenderly.co',
-  8453: 'https://mainnet.base.org',
-  84532: process.env.NEXT_PUBLIC_RPC_URL || 'https://base-sepolia.g.alchemy.com/v2/GJfW9U_S-o-boMw93As3e',
+  8453: process.env.NEXT_PUBLIC_RPC_URL || 'https://mainnet.base.org',
 };
 
 // Health check cache

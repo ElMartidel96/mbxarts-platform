@@ -5,7 +5,7 @@
  */
 
 import { getContract, readContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { createThirdwebClient } from 'thirdweb';
 
 // Initialize client
@@ -45,7 +45,7 @@ export async function getGiftFromBlockchain(tokenId: string | number): Promise<{
 
     const escrowContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: escrowAddress as `0x${string}`
     });
 

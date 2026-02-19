@@ -22,7 +22,7 @@ export const chainIdSchema = z
   .int()
   .positive()
   .refine(
-    val => [1, 5, 10, 137, 8453, 84532, 11155111].includes(val),
+    val => [1, 5, 10, 137, 8453, 8453, 11155111].includes(val),
     'Unsupported chain ID'
   );
 

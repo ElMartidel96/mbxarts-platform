@@ -41,3 +41,8 @@ next-env.d.ts
 .env.sentry-build-plugin
 
 .env.local
+
+# Foundry
+cache/
+broadcast/
+out/

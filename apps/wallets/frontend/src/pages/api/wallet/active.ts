@@ -5,7 +5,7 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 import { createThirdwebClient, getContract, readContract } from "thirdweb";
-import { baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 
 interface ActiveWalletRequest {
   address: string;
@@ -53,7 +53,7 @@ async function getQuickBalances(client: any, address: string): Promise<{ eth: st
     try {
       const usdcContract = getContract({
         client,
-        chain: baseSepolia,
+        chain: base,
         address: process.env.NEXT_PUBLIC_USDC_ADDRESS!,
       });
       
@@ -94,7 +94,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return res.status(400).json({
           success: false,
           address: '',
-          chainId: 84532,
+          chainId: 8453,
           isActive: false,
         });
       }
@@ -105,7 +105,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       return res.status(200).json({
         success: true,
         address,
-        chainId: cachedData?.chainId || parseInt(chainId as string) || 84532,
+        chainId: cachedData?.chainId || parseInt(chainId as string) || 8453,
         isActive,
         lastSeen: cachedData?.lastSeen,
         metadata: isActive ? {
@@ -118,13 +118,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     
     if (req.method === 'POST') {
       // POST: Update active status with optional balance sync
-      const { address, chainId = 84532, syncBalances = false, syncTransactions = false }: ActiveWalletRequest = req.body;
+      const { address, chainId = 8453, syncBalances = false, syncTransactions = false }: ActiveWalletRequest = req.body;
       
       if (!address || typeof address !== 'string') {
         return res.status(400).json({
           success: false,
           address: '',
-          chainId: 84532,
+          chainId: 8453,
           isActive: false,
         });
       }
@@ -168,7 +168,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return res.status(405).json({
       success: false,
       address: '',
-      chainId: 84532,
+      chainId: 8453,
       isActive: false,
     });
     
@@ -177,7 +177,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return res.status(500).json({
       success: false,
       address: '',
-      chainId: 84532,
+      chainId: 8453,
       isActive: false,
     });
   }

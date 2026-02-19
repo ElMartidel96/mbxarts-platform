@@ -15,7 +15,7 @@ import { X } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useActiveAccount, ConnectButton } from 'thirdweb/react';
 import { client } from '../../app/client';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 
 // Import dinámico para evitar SSR issues con animaciones y confetti
 const SalesMasterclass = dynamic(
@@ -749,7 +749,7 @@ export const LessonModalWrapper: React.FC<LessonModalWrapperProps> = ({
                       <div className="flex justify-center">
                         <ConnectButton
                           client={client}
-                          chain={baseSepolia}
+                          chain={base}
                           connectModal={{
                             size: "wide",
                             titleIcon: "🔗",

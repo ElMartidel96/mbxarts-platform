@@ -14,7 +14,7 @@ interface RateLimitEntry {
 
 class RateLimiter {
   private limits: Map<string, RateLimitEntry> = new Map();
-  private config = getAAConfig(84532); // Default config
+  private config = getAAConfig(8453); // Default config
   
   /**
    * Check if operation is allowed

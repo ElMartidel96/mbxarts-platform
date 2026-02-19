@@ -444,7 +444,7 @@ export class VercelKVReferralDatabase {
     referral.lastActivity = new Date().toISOString();
     
     // Add gift record
-    const isTestnet = process.env.NEXT_PUBLIC_CHAIN_ID === '84532';
+    const isTestnet = process.env.NEXT_PUBLIC_CHAIN_ID === '8453';
     const giftRecord: GiftRecord = {
       id: `gift_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       tokenId: giftData.tokenId,

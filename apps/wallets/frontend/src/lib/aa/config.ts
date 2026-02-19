@@ -1,12 +1,12 @@
 /**
  * Account Abstraction Configuration
- * ERC-4337 with Pimlico for Base & Base Sepolia
+ * ERC-4337 with Pimlico for Base Mainnet
  */
 
 // Chain IDs
 export const CHAIN_IDS = {
   BASE: 8453,
-  BASE_SEPOLIA: 84532,
+  BASE_SEPOLIA: 84532, // Legacy testnet - keep for reference
 } as const;
 
 // AA Configuration

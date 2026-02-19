@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createThirdwebClient, getContract, prepareContractCall, sendTransaction } from "thirdweb";
-import { baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 import { privateKeyToAccount } from "thirdweb/wallets";
 import { uploadMetadata } from "../../lib/ipfs";
 import { ethers } from "ethers";
@@ -83,7 +83,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Custom chain con RPC
     const customChain = {
-      ...baseSepolia,
+      ...base,
       rpc: process.env.NEXT_PUBLIC_RPC_URL!
     };
 
@@ -107,7 +107,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         method: "function createAccount(address implementation, uint256 chainId, address tokenContract, uint256 tokenId, uint256 salt, bytes calldata initData) external returns (address)",
         params: [
           "0x2d25602551487c3f3354dd80d76d54383a243358", // Implementation ERC-6551
-          BigInt(84532), // Base Sepolia chain ID
+          BigInt(8453), // Base Sepolia chain ID
           process.env.NEXT_PUBLIC_FACTORY_6551_ADDRESS!, // Token contract (self-reference)
           BigInt(tokenId), // Unique token ID
           BigInt(0), // Salt
@@ -212,7 +212,7 @@ async function calculateTBAAddress(tokenId: string, nftContract: string): Promis
     // CRITICAL FIX: Use environment variables instead of hard-coded addresses
     const REGISTRY_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758";
     const IMPLEMENTATION_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358";
-    const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "84532");
+    const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "8453");
     
     // Generate salt
     const salt = ethers.solidityPackedKeccak256(

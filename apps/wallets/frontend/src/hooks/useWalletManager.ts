@@ -163,7 +163,7 @@ export function useWalletManager(requiredChainId?: number) {
    * Add Base Sepolia testnet
    */
   const addBaseSepolia = useCallback(async () => {
-    return addNetwork(84532);
+    return addNetwork(8453);
   }, [addNetwork]);
   
   /**

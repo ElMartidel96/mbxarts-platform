@@ -21,7 +21,7 @@ export function MEVProtectionToggle({
   showDetails = false 
 }: MEVProtectionToggleProps) {
   const chain = useActiveWalletChain();
-  const chainId = chain?.id || 84532;
+  const chainId = chain?.id || 8453;
   const chainName = getChainName(chainId);
   const [showTooltip, setShowTooltip] = useState(false);
   
@@ -244,7 +244,7 @@ export function MEVProtectionToggle({
       )}
 
       {/* Base Network Notice */}
-      {!isAvailable && (chainId === 8453 || chainId === 84532) && (
+      {!isAvailable && (chainId === 8453 || chainId === 8453) && (
         <div style={{
           padding: '12px',
           borderRadius: '8px',

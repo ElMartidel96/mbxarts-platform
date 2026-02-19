@@ -19,7 +19,7 @@ export function NetworkInfoCard() {
     },
     sepolia: {
       name: 'Base Sepolia Testnet',
-      chainId: '84532',
+      chainId: '8453',
       rpcUrl: 'https://sepolia.base.org',
       symbol: 'ETH',
       explorer: 'https://sepolia.basescan.org',

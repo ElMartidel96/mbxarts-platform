@@ -1,12 +1,12 @@
 // TODO: Restore when @biconomy/account installation completes
 // import { createSmartAccountClient, BiconomySmartAccountV2 } from "@biconomy/account";
 import { createWalletClient, http } from "viem";
-import { baseSepolia } from "viem/chains";
+import { base } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
 
 // Biconomy configuration for Base Sepolia - SERVER-SIDE ONLY
 export const biconomyConfig = {
-  chainId: 84532, // Base Sepolia
+  chainId: 8453, // Base Sepolia
   rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
   
   // MEE CONFIGURATION - SERVER ONLY (NEVER EXPOSE TO CLIENT)
@@ -49,7 +49,7 @@ export async function createBiconomySmartAccount(privateKey: string) {
     // Create wallet client
     const walletClient = createWalletClient({
       account,
-      chain: baseSepolia,
+      chain: base,
       transport: http(),
     });
 

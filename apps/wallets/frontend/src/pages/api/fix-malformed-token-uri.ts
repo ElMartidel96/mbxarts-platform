@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createThirdwebClient, getContract, prepareContractCall, sendTransaction, waitForReceipt, readContract } from 'thirdweb';
 import { privateKeyToAccount } from 'thirdweb/wallets';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log('🔧 FIX MALFORMED TOKEN URI API STARTED ===========================================');
@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Get contract
     const nftContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: contractAddress,
     });
 
@@ -117,7 +117,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Wait for confirmation
       const receipt = await waitForReceipt({
         client,
-        chain: baseSepolia,
+        chain: base,
         transactionHash: txResult.transactionHash
       });
 

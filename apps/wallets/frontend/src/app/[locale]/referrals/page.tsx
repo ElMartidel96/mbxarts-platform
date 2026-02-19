@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useActiveAccount, ConnectButton, TransactionButton } from 'thirdweb/react';
 import { prepareContractCall, getContract } from 'thirdweb';
-import { baseSepolia, base } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { client } from '../../client';
 import { BalanceHistoryPanel } from '../../../components/referrals/BalanceHistoryPanel';
 import { EarningsHistoryPanel } from '../../../components/referrals/EarningsHistoryPanel';
@@ -142,7 +142,7 @@ export default function ReferralsPage() {
   const handleWithdraw = () => {
     const contract = getContract({
       client,
-      chain: process.env.NEXT_PUBLIC_CHAIN_ID === '84532' ? baseSepolia : base,
+      chain: base,
       address: process.env.NEXT_PUBLIC_REF_TREASURY_ADDRESS!,
     });
 

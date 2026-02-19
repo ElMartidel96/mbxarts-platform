@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getContract, getContractEvents, prepareEvent } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { createThirdwebClient } from 'thirdweb';
 import { debugLogger } from '@/lib/secureDebugLogger';
 import { Redis } from '@upstash/redis';
@@ -134,13 +134,13 @@ export default async function handler(
     // Get contract instances
     const escrowContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: (process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS || '0x46175CfC233500DA803841DEef7f2816e7A129E0') as `0x${string}`
     });
 
     const nftContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: (process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS || '0xeFCba1D72B8f053d93BA44b7b15a1BeED515C89b') as `0x${string}`
     });
     

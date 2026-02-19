@@ -4,7 +4,7 @@
  */
 
 import { createPublicClient, http, type PublicClient, type Hash, parseAbiItem, decodeEventLog } from 'viem';
-import { mainnet, sepolia, base, baseSepolia } from 'viem/chains';
+import { mainnet, sepolia, base } from 'viem/chains';
 import { 
   UnifiedTransaction, 
   TransactionType, 
@@ -17,10 +17,6 @@ const CHAIN_CONFIGS = {
   1: { chain: mainnet, rpc: 'https://eth-mainnet.g.alchemy.com/v2/demo' },
   11155111: { chain: sepolia, rpc: 'https://eth-sepolia.g.alchemy.com/v2/demo' },
   8453: { chain: base, rpc: 'https://mainnet.base.org' },
-  84532: { 
-    chain: baseSepolia, 
-    rpc: process.env.NEXT_PUBLIC_RPC_URL || 'https://base-sepolia.g.alchemy.com/v2/GJfW9U_S-o-boMw93As3e',
-  },
 };
 
 // Event signatures

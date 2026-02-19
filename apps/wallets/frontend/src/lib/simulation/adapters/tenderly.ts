@@ -270,7 +270,6 @@ export class TenderlySimulationAdapter extends SimulationAdapter {
       1: '1',        // Ethereum Mainnet
       11155111: '11155111', // Sepolia
       8453: '8453',  // Base
-      84532: '84532', // Base Sepolia
     };
     
     const networkId = networks[chainId];

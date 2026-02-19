@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createThirdwebClient } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { getContract, readContract } from 'thirdweb';
 // No authentication needed for checking transaction status
 
@@ -10,7 +10,7 @@ const client = createThirdwebClient({
 
 const escrowContract = getContract({
   client,
-  chain: baseSepolia,
+  chain: base,
   address: process.env.NEXT_PUBLIC_CRYPTOGIFT_ESCROW_ADDRESS as `0x${string}`
 });
 

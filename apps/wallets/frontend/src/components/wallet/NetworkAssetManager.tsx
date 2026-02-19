@@ -33,7 +33,7 @@ interface NetworkAssetManagerProps {
 export function NetworkAssetManager({
   className = '',
   compactMode = false,
-  requiredChainId = 84532, // Base Sepolia default
+  requiredChainId = 8453, // Base Sepolia default
 }: NetworkAssetManagerProps) {
   const chain = useActiveWalletChain();
   const currentChainId = chain?.id;
@@ -233,13 +233,13 @@ export function NetworkAssetManager({
             {/* Base Sepolia */}
             <button
               onClick={addBaseSepolia}
-              disabled={pendingNetwork === 84532}
+              disabled={pendingNetwork === 8453}
               style={{
                 padding: '12px',
                 borderRadius: '6px',
                 border: '1px solid #e5e7eb',
-                backgroundColor: pendingNetwork === 84532 ? '#f3f4f6' : 'white',
-                cursor: pendingNetwork === 84532 ? 'not-allowed' : 'pointer',
+                backgroundColor: pendingNetwork === 8453 ? '#f3f4f6' : 'white',
+                cursor: pendingNetwork === 8453 ? 'not-allowed' : 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -267,9 +267,9 @@ export function NetworkAssetManager({
                   <p style={{ fontSize: '12px', color: '#6b7280' }}>Testnet</p>
                 </div>
               </div>
-              {pendingNetwork === 84532 ? (
+              {pendingNetwork === 8453 ? (
                 <Loader2 size={16} className="animate-spin" />
-              ) : currentChainId === 84532 ? (
+              ) : currentChainId === 8453 ? (
                 <Check size={16} color="#10b981" />
               ) : (
                 <Plus size={16} color="#6b7280" />

@@ -110,11 +110,14 @@ export const GiftEscrowConfig: React.FC<GiftEscrowConfigProps> = ({
   };
 
   const getTimeRemainingText = (timeframe: TimeframeOption) => {
-    const timeConstants = {
+    const timeConstants: Record<TimeframeOption, string> = {
       FIFTEEN_MINUTES: '15 minutes',
       SEVEN_DAYS: '7 days',
-      FIFTEEN_DAYS: '15 days', 
-      THIRTY_DAYS: '30 days'
+      FIFTEEN_DAYS: '15 days',
+      THIRTY_DAYS: '30 days',
+      NINETY_DAYS: '90 days',
+      ONE_YEAR: '1 year',
+      PERPETUAL: 'never (creator can cancel after 90 days)'
     };
     return timeConstants[timeframe];
   };
@@ -241,14 +244,13 @@ export const GiftEscrowConfig: React.FC<GiftEscrowConfigProps> = ({
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
               Claim Timeframe
             </label>
+            {/* Standard timeframes */}
             <div className="grid grid-cols-2 gap-3">
-              {Object.entries(TIMEFRAME_OPTIONS).map(([key, value]) => {
-                const timeframeKey = key as TimeframeOption;
+              {(['FIFTEEN_MINUTES', 'SEVEN_DAYS', 'FIFTEEN_DAYS', 'THIRTY_DAYS'] as TimeframeOption[]).map((timeframeKey) => {
                 const isSelected = config.timeframe === timeframeKey;
-                
                 return (
                   <button
-                    key={key}
+                    key={timeframeKey}
                     onClick={() => setConfig(prev => ({ ...prev, timeframe: timeframeKey }))}
                     className={`p-3 rounded-lg border-2 text-left transition-all ${
                       isSelected
@@ -267,8 +269,44 @@ export const GiftEscrowConfig: React.FC<GiftEscrowConfigProps> = ({
                 );
               })}
             </div>
+
+            {/* Extended timeframes */}
+            <div className="mt-3">
+              <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">Extended</p>
+              <div className="grid grid-cols-3 gap-3">
+                {(['NINETY_DAYS', 'ONE_YEAR', 'PERPETUAL'] as TimeframeOption[]).map((timeframeKey) => {
+                  const isSelected = config.timeframe === timeframeKey;
+                  const isPerpetual = timeframeKey === 'PERPETUAL';
+                  return (
+                    <button
+                      key={timeframeKey}
+                      onClick={() => setConfig(prev => ({ ...prev, timeframe: timeframeKey }))}
+                      className={`p-3 rounded-lg border-2 text-left transition-all ${
+                        isSelected
+                          ? isPerpetual
+                            ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20 dark:border-purple-400'
+                            : 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-400'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                      }`}
+                      disabled={isLoading}
+                    >
+                      <div className={`font-medium text-sm ${isPerpetual ? 'text-purple-700 dark:text-purple-300' : 'text-gray-900 dark:text-white'}`}>
+                        {TIMEFRAME_LABELS[timeframeKey]}
+                      </div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        {TIMEFRAME_DESCRIPTIONS[timeframeKey]}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-              Gift will be automatically returned to you after {getTimeRemainingText(config.timeframe)} if not claimed
+              {config.timeframe === 'PERPETUAL'
+                ? 'Gift never expires. You can cancel and recover it after 90 days if unclaimed.'
+                : `Gift will be automatically returned to you after ${getTimeRemainingText(config.timeframe)} if not claimed`
+              }
             </p>
           </div>
 

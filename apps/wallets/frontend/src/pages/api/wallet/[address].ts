@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createThirdwebClient, getContract, readContract } from "thirdweb";
-import { baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 
 // Helper function to get real wallet data
 async function getWalletData(client: any, address: string) {
@@ -8,7 +8,7 @@ async function getWalletData(client: any, address: string) {
     // Get USDC contract
     const usdcContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: process.env.NEXT_PUBLIC_USDC_ADDRESS!,
     });
 
@@ -32,7 +32,7 @@ async function getWalletData(client: any, address: string) {
       const balance = await readContract({
         contract: getContract({
           client,
-          chain: baseSepolia,
+          chain: base,
           address: "0x0000000000000000000000000000000000000000" // Native ETH
         }),
         method: "function balanceOf(address) view returns (uint256)",
@@ -120,7 +120,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       address,
       ...walletData,
       network: "Base Sepolia",
-      chainId: 84532,
+      chainId: 8453,
       primaryToken: process.env.NEXT_PUBLIC_USDC_ADDRESS || "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
     };
 

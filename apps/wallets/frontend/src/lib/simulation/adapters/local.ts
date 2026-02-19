@@ -12,7 +12,7 @@ import {
   decodeFunctionData,
   formatEther,
 } from 'viem';
-import { mainnet, sepolia, base, baseSepolia } from 'viem/chains';
+import { mainnet, sepolia, base } from 'viem/chains';
 import { SimulationAdapter, type SimulationRequest } from './base';
 import type { SimulationResult, BalanceChange, TokenChange, ApprovalDetection, Risk } from '../config';
 import { identifySpender } from '@/lib/approvals/config';
@@ -56,7 +56,6 @@ export class LocalSimulationAdapter extends SimulationAdapter {
       { id: 1, chain: mainnet, rpc: 'https://eth.llamarpc.com' },
       { id: 11155111, chain: sepolia, rpc: 'https://sepolia.gateway.tenderly.co' },
       { id: 8453, chain: base, rpc: 'https://mainnet.base.org' },
-      { id: 84532, chain: baseSepolia, rpc: process.env.NEXT_PUBLIC_RPC_URL || 'https://base-sepolia.g.alchemy.com/v2/GJfW9U_S-o-boMw93As3e' },
     ];
     
     chains.forEach(({ id, chain, rpc }) => {

@@ -77,7 +77,7 @@ async function scanForMappingIssues(maxGiftsToCheck: number = 50): Promise<FixMa
           // Missing mapping - add it
           console.log(`❌ MISSING: tokenId ${tokenId} has no mapping, fixing...`);
           
-          await storeGiftMapping(tokenId, giftId, nftContract, 84532);
+          await storeGiftMapping(tokenId, giftId, nftContract, 8453);
           
           // Validate the fix
           const validation = await validateMappingWithRetry(tokenId, giftId, creator, nftContract);
@@ -105,7 +105,7 @@ async function scanForMappingIssues(maxGiftsToCheck: number = 50): Promise<FixMa
           // Incorrect mapping - fix it
           console.log(`❌ INCORRECT: tokenId ${tokenId} maps to ${existingMapping.giftId}, should be ${giftId}`);
           
-          await storeGiftMapping(tokenId, giftId, nftContract, 84532);
+          await storeGiftMapping(tokenId, giftId, nftContract, 8453);
           
           // Validate the fix
           const validation = await validateMappingWithRetry(tokenId, giftId, creator, nftContract);

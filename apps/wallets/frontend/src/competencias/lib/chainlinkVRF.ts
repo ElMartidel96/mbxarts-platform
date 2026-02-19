@@ -24,7 +24,7 @@ import { Competition, APIResponse, TransparencyEvent } from '../types';
  */
 export const CHAINLINK_CONFIG = {
   // Base Sepolia VRF v2.5
-  baseSepolia: {
+  base: {
     vrfCoordinator: '0xd691f04bc0C9a24Edb78af9E005Cf85768F694C9',
     linkToken: '0xE4aB69C077896252FAFBD49EFD26B5D171A32410',
     keyHash: '0x9e1344a1247c8a1785d0a4681a27152bffdb43666ae5bf7d14d24a5efd44bf71',
@@ -50,8 +50,8 @@ export function getChainlinkConfig(chainId: number = 8453) {
   switch (chainId) {
     case 8453:
       return CHAINLINK_CONFIG.baseMainnet;
-    case 84532:
-      return CHAINLINK_CONFIG.baseSepolia;
+    case 8453:
+      return CHAINLINK_CONFIG.base;
     default:
       return CHAINLINK_CONFIG.baseMainnet; // Default to mainnet
   }

@@ -7,7 +7,7 @@
 import { readContract } from 'thirdweb';
 import { decodeEventLog } from 'viem';
 import { client } from '../app/client';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { 
   ESCROW_ABI_V2, 
   ESCROW_CONTRACT_ADDRESS_V2,
@@ -21,7 +21,7 @@ import {
 // Contract instance for event parsing
 const escrowContract = {
   client,
-  chain: baseSepolia,
+  chain: base,
   address: ESCROW_CONTRACT_ADDRESS_V2 as `0x${string}`,
 } as const;
 

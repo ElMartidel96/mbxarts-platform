@@ -7,7 +7,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ethers } from 'ethers';
 import { createThirdwebClient, readContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { privateKeyToAccount } from 'thirdweb/wallets';
 import { sendTransaction, waitForReceipt } from 'thirdweb/transaction';
 import { 
@@ -156,7 +156,7 @@ async function returnExpiredGiftGasless(
     
     const receipt = await waitForReceipt({
       client,
-      chain: baseSepolia,
+      chain: base,
       transactionHash: result.transactionHash
     });
     console.log('✅ Return successful, transaction hash:', result.transactionHash);
@@ -205,7 +205,7 @@ async function returnExpiredGiftGasPaid(
     
     const receipt = await waitForReceipt({
       client,
-      chain: baseSepolia,
+      chain: base,
       transactionHash: result.transactionHash
     });
     

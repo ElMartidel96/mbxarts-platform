@@ -11,7 +11,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ethers } from 'ethers';
 import { createThirdwebClient, getContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { readContract, sendTransaction, waitForReceipt } from 'thirdweb';
 import { privateKeyToAccount } from 'thirdweb/wallets';
 import { 
@@ -186,7 +186,7 @@ async function validateClaimRequest(
     // CRITICAL FIX: Generate password hash EXACTLY as contract does
     // Contract: keccak256(abi.encodePacked(password, salt, giftId, address(this), block.chainid))
     const contractAddress = ESCROW_CONTRACT_ADDRESS;
-    const chainId = 84532; // Base Sepolia
+    const chainId = 8453; // Base Sepolia
     const providedPasswordHash = generatePasswordHash(password, salt, giftId, contractAddress, chainId);
     
     // SECURITY: Log validation status without exposing hash data

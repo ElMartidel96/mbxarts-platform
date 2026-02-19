@@ -33,7 +33,7 @@ export function useWalletDashboard() {
     isReady: false,
     isConnected: false,
     account: null,
-    chainId: 84532,
+    chainId: 8453,
     error: null,
     features: {
       mevProtection: false,
@@ -46,14 +46,14 @@ export function useWalletDashboard() {
   });
 
   // Feature hooks
-  const walletManager = useWalletManager(84532);
+  const walletManager = useWalletManager(8453);
   const mevProtection = useMEVProtection();
   const approvals = useApprovals();
 
   useEffect(() => {
     // Check connection
     const isConnected = !!account?.address;
-    const chainId = chain?.id || 84532;
+    const chainId = chain?.id || 8453;
 
     // Verify features
     const features = {
@@ -61,7 +61,7 @@ export function useWalletDashboard() {
       approvals: approvals.isEnabled,
       networkManager: walletManager.isEnabled,
       transactionHistory: true, // Always available
-      swaps: chainId === 84532 || chainId === 8453, // Base networks only
+      swaps: chainId === 8453 || chainId === 8453, // Base networks only
       gasless: !!process.env.NEXT_PUBLIC_BICONOMY_MEE_API_KEY,
     };
 
@@ -93,7 +93,7 @@ export function useWalletDashboard() {
       
       // If chain doesn't exist, try to add it
       if (error.code === 4902) {
-        if (targetChainId === 84532) {
+        if (targetChainId === 8453) {
           // Add Base Sepolia
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
@@ -151,7 +151,7 @@ export function useWalletDashboard() {
   const checkFeatureStatus = useCallback(() => {
     const statusReport = {
       connection: state.isConnected ? '✅ Connected' : '❌ Not connected',
-      network: state.chainId === 84532 ? '✅ Base Sepolia' : `⚠️ Wrong network (${state.chainId})`,
+      network: state.chainId === 8453 ? '✅ Base Sepolia' : `⚠️ Wrong network (${state.chainId})`,
       mevProtection: state.features.mevProtection ? '✅ Available' : '⚠️ Not available on this network',
       approvals: state.features.approvals ? '✅ Enabled' : '❌ Disabled',
       networkManager: state.features.networkManager ? '✅ Enabled' : '❌ Disabled',

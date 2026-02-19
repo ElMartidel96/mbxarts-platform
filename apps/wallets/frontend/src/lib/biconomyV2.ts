@@ -5,14 +5,14 @@
  */
 
 import { createWalletClient, http, parseEther } from "viem";
-import { baseSepolia } from "viem/chains";
+import { base } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import type { Account, Chain, Transport, WalletClient } from "viem";
 
 // Biconomy configuration for Base Sepolia - SERVER-SIDE ONLY
 export const biconomyConfig = {
-  chainId: 84532, // Base Sepolia
-  rpcUrl: process.env.NEXT_PUBLIC_RPC_URL || 'https://sepolia.base.org',
+  chainId: 8453, // Base Sepolia
+  rpcUrl: process.env.NEXT_PUBLIC_RPC_URL || 'https://mainnet.base.org',
   
   // MEE CONFIGURATION - SERVER ONLY (NEVER EXPOSE TO CLIENT)
   meeApiKey: process.env.BICONOMY_MEE_API_KEY,
@@ -66,7 +66,7 @@ export function createGasPaidWallet(privateKey: string): WalletClient<Transport,
   
   const client = createWalletClient({
     account,
-    chain: baseSepolia,
+    chain: base,
     transport: http(biconomyConfig.rpcUrl),
   });
   
@@ -261,7 +261,7 @@ async function sendGasPaidTransaction(
     // Wait for confirmation using publicClient
     const { createPublicClient } = await import('viem');
     const publicClient = createPublicClient({
-      chain: baseSepolia,
+      chain: base,
       transport: http(biconomyConfig.rpcUrl),
     });
     

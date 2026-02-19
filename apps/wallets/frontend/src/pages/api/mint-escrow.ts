@@ -11,7 +11,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ethers } from 'ethers';
 import { createThirdwebClient, getContract, prepareContractCall, sendTransaction, waitForReceipt, readContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { privateKeyToAccount } from 'thirdweb/wallets';
 import { 
   generateSalt,
@@ -982,7 +982,7 @@ async function mintNFTEscrowGasless(
     // Step 7: Get NFT contract
     const nftContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!
     });
     
@@ -1014,7 +1014,7 @@ async function mintNFTEscrowGasless(
     // Step 8: Extract token ID from mint transaction
     const mintReceipt = await waitForReceipt({
       client,
-      chain: baseSepolia,
+      chain: base,
       transactionHash: mintResult.transactionHash as `0x${string}`
     });
     
@@ -1182,7 +1182,7 @@ async function mintNFTEscrowGasless(
       
       const escrowReceipt = await waitForReceipt({
         client,
-        chain: baseSepolia,
+        chain: base,
         transactionHash: escrowResult.transactionHash as `0x${string}`
       });
       
@@ -1275,7 +1275,7 @@ async function mintNFTEscrowGasless(
         salt,
         actualGiftId,
         ESCROW_CONTRACT_ADDRESS!,
-        84532 // Base Sepolia chain ID
+        8453 // Base Mainnet chain ID
       );
       
       // Store the mapping deterministically with education metadata
@@ -1547,7 +1547,7 @@ async function mintNFTDirectly(
     // Get NFT contract
     const nftContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!
     });
     
@@ -1574,7 +1574,7 @@ async function mintNFTDirectly(
     // Wait for transaction confirmation
     const mintReceipt = await waitForReceipt({
       client,
-      chain: baseSepolia,
+      chain: base,
       transactionHash: mintResult.transactionHash as `0x${string}`
     });
     
@@ -1730,7 +1730,7 @@ async function mintNFTEscrowGasPaid(
     // Step 6: Get NFT contract
     const nftContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!
     });
     
@@ -1767,7 +1767,7 @@ async function mintNFTEscrowGasPaid(
     // Step 9: Wait for mint confirmation
     const mintReceipt = await waitForReceipt({
       client,
-      chain: baseSepolia,
+      chain: base,
       transactionHash: mintResult.transactionHash
     });
     
@@ -1933,23 +1933,31 @@ async function mintNFTEscrowGasPaid(
       
       if (isEscrowMint) {
         // Create escrow-specific metadata
-        const timeConstantsMap = {
+        const timeConstantsMap: Record<number, string> = {
           [TIMEFRAME_OPTIONS.FIFTEEN_MINUTES]: 'FIFTEEN_MINUTES',
-          [TIMEFRAME_OPTIONS.SEVEN_DAYS]: 'SEVEN_DAYS', 
+          [TIMEFRAME_OPTIONS.SEVEN_DAYS]: 'SEVEN_DAYS',
           [TIMEFRAME_OPTIONS.FIFTEEN_DAYS]: 'FIFTEEN_DAYS',
-          [TIMEFRAME_OPTIONS.THIRTY_DAYS]: 'THIRTY_DAYS'
+          [TIMEFRAME_OPTIONS.THIRTY_DAYS]: 'THIRTY_DAYS',
+          [TIMEFRAME_OPTIONS.NINETY_DAYS]: 'NINETY_DAYS',
+          [TIMEFRAME_OPTIONS.ONE_YEAR]: 'ONE_YEAR',
+          [TIMEFRAME_OPTIONS.PERPETUAL]: 'PERPETUAL'
         };
-        
+
         // Calculate expiration time for metadata
-        const timeConstants = {
+        const timeConstants: Record<number, number> = {
           [TIMEFRAME_OPTIONS.FIFTEEN_MINUTES]: 900,
           [TIMEFRAME_OPTIONS.SEVEN_DAYS]: 604800,
           [TIMEFRAME_OPTIONS.FIFTEEN_DAYS]: 1296000,
-          [TIMEFRAME_OPTIONS.THIRTY_DAYS]: 2592000
+          [TIMEFRAME_OPTIONS.THIRTY_DAYS]: 2592000,
+          [TIMEFRAME_OPTIONS.NINETY_DAYS]: 7776000,
+          [TIMEFRAME_OPTIONS.ONE_YEAR]: 31536000,
+          [TIMEFRAME_OPTIONS.PERPETUAL]: 0 // Perpetual: no expiration
         };
         
         const currentTime = Math.floor(Date.now() / 1000);
-        const expirationTime = currentTime + timeConstants[timeframeDays];
+        // Perpetual gifts use sentinel value (type(uint40).max = 1099511627775)
+        const isPerpetual = timeframeDays === TIMEFRAME_OPTIONS.PERPETUAL;
+        const expirationTime = isPerpetual ? 1099511627775 : currentTime + timeConstants[timeframeDays];
         
         console.log('🔒 Creating escrow metadata with real tokenId and image CID');
         
@@ -2000,7 +2008,7 @@ async function mintNFTEscrowGasPaid(
         // Get NFT contract (moved outside try for retry access)
         const nftContract = getContract({
           client,
-          chain: baseSepolia,
+          chain: base,
           address: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!
         });
         
@@ -2160,7 +2168,7 @@ async function mintNFTEscrowGasPaid(
           // Wait for update confirmation with fail-fast
           const updateReceipt = await waitForReceipt({
             client,
-            chain: baseSepolia,
+            chain: base,
             transactionHash: updateResult.transactionHash
           });
           
@@ -2191,7 +2199,7 @@ async function mintNFTEscrowGasPaid(
               // Optional: wait for event confirmation (non-blocking)
               waitForReceipt({
                 client,
-                chain: baseSepolia,
+                chain: base,
                 transactionHash: eventResult.transactionHash
               }).then(eventReceipt => {
                 console.log('✅ MetadataUpdate event confirmed:', eventReceipt.status);
@@ -2241,7 +2249,7 @@ async function mintNFTEscrowGasPaid(
             
             const retryReceipt = await waitForReceipt({
               client,
-              chain: baseSepolia,
+              chain: base,
               transactionHash: retryResult.transactionHash
             });
             
@@ -2518,7 +2526,7 @@ async function mintNFTEscrowGasPaid(
       
       const escrowReceipt = await waitForReceipt({
         client,
-        chain: baseSepolia,
+        chain: base,
         transactionHash: escrowResult.transactionHash
       });
       
@@ -2631,7 +2639,7 @@ async function mintNFTEscrowGasPaid(
         salt,
         actualGiftIdGasPaid,
         ESCROW_CONTRACT_ADDRESS!,
-        84532 // Base Sepolia chain ID
+        8453 // Base Mainnet chain ID
       );
       
       // Store the mapping deterministically (gas-paid) with education metadata

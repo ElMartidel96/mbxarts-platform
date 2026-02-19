@@ -107,7 +107,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
         action: {
           label: 'View on Explorer',
           onClick: () => {
-            const baseUrl = details.metadata?.chainId === 84532 
+            const baseUrl = details.metadata?.chainId === 8453 
               ? 'https://sepolia.basescan.org/tx/' 
               : 'https://sepolia.etherscan.io/tx/';
             window.open(`${baseUrl}${txHash}`, '_blank');

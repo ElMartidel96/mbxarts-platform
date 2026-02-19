@@ -186,7 +186,7 @@ export function useSessionKeys(): UseSessionKeysReturn {
         dailyLimit: preset.dailyLimit,
         expiresAt,
         validAfter: Date.now(),
-        chainId: (account as any)?.chain?.id || 84532,
+        chainId: (account as any)?.chain?.id || 8453,
       };
       
       // Create session

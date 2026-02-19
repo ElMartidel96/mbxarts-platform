@@ -65,7 +65,7 @@ export default async function handler(
     }
 
     // Parse and validate request
-    const { address, signature, nonce, chainId = 84532, domain }: VerifyRequest = req.body;
+    const { address, signature, nonce, chainId = 8453, domain }: VerifyRequest = req.body;
     
     console.log('🔗 Verify API using Chain ID:', chainId, '(from client wallet)');
     

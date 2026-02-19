@@ -54,7 +54,7 @@ export default async function handler(
     });
 
     // Parse and validate request  
-    const { address, chainId = 84532, domain }: ChallengeRequest = req.body;
+    const { address, chainId = 8453, domain }: ChallengeRequest = req.body;
     
     console.log('🔗 Challenge API using Chain ID:', chainId, '(from client wallet)');
     

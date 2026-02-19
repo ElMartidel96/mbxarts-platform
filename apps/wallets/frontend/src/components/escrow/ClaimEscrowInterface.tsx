@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useActiveAccount } from 'thirdweb/react';
 import { sendTransaction, waitForReceipt, createThirdwebClient } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import Image from 'next/image';
 import { 
   validatePassword,
@@ -254,7 +254,7 @@ export const ClaimEscrowInterface: React.FC<ClaimEscrowInterfaceProps> = ({
           try {
             const chainId = await window.ethereum.request({ method: 'eth_chainId' });
             const currentChainId = parseInt(chainId, 16);
-            if (currentChainId !== 84532) {
+            if (currentChainId !== 8453) {
               console.warn('⚠️ Wrong chain detected:', currentChainId);
               throw new Error('Por favor cambia a Base Sepolia en tu wallet');
             }
@@ -350,7 +350,7 @@ export const ClaimEscrowInterface: React.FC<ClaimEscrowInterfaceProps> = ({
           client: createThirdwebClient({
             clientId: process.env.NEXT_PUBLIC_TW_CLIENT_ID!
           }),
-          chain: baseSepolia,
+          chain: base,
           transactionHash: txResult.transactionHash
         });
         
@@ -396,7 +396,7 @@ export const ClaimEscrowInterface: React.FC<ClaimEscrowInterfaceProps> = ({
           client: createThirdwebClient({
             clientId: process.env.NEXT_PUBLIC_TW_CLIENT_ID!
           }),
-          chain: baseSepolia,
+          chain: base,
           transactionHash: txResult.transactionHash
         });
       }
@@ -1008,7 +1008,7 @@ La transacción puede tomar más tiempo en móvil.`;
                       if (window.ethereum) {
                         const chainId = await window.ethereum.request({ method: 'eth_chainId' });
                         const currentChainId = parseInt(chainId, 16);
-                        const requiredChainId = 84532; // Base Sepolia
+                        const requiredChainId = 8453; // Base Sepolia
                         
                         if (currentChainId !== requiredChainId) {
                           setShowNetworkPrompt(true);
@@ -1290,8 +1290,8 @@ La transacción puede tomar más tiempo en móvil.`;
       <NetworkOptimizationPrompt
         isOpen={showNetworkPrompt}
         onClose={() => setShowNetworkPrompt(false)}
-        currentChainId={84532}
-        requiredChainId={84532} // Base Sepolia
+        currentChainId={8453}
+        requiredChainId={8453} // Base Sepolia
         context="claim"
       />
     </div>

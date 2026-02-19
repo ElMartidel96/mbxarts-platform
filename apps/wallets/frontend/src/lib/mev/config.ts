@@ -83,7 +83,7 @@ export const getChainName = (chainId: number): string => {
     case 1: return 'Ethereum';
     case 11155111: return 'Sepolia';
     case 8453: return 'Base';
-    case 84532: return 'Base Sepolia';
+    case 84532: return 'Base Sepolia (Testnet)';
     default: return `Chain ${chainId}`;
   }
 };

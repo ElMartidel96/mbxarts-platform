@@ -319,7 +319,7 @@ export async function addBaseNetwork(): Promise<WalletManagerResult> {
 }
 
 export async function addBaseSepoliaNetwork(): Promise<WalletManagerResult> {
-  return getWalletManager().addNetwork(84532);
+  return getWalletManager().addNetwork(8453);
 }
 
 export async function addUSDCToken(): Promise<WalletManagerResult> {

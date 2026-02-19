@@ -7,7 +7,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ethers } from 'ethers';
 import { createThirdwebClient, getContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { readContract } from 'thirdweb';
 import { ESCROW_ABI, ESCROW_CONTRACT_ADDRESS } from '../../../lib/escrowABI';
 import { getEscrowContract } from '../../../lib/escrowUtils';
@@ -78,7 +78,7 @@ async function testContractDeployment(): Promise<TestResult> {
         address: ESCROW_CONTRACT_ADDRESS,
         hasCode: true,
         codeSize,
-        network: 'base-sepolia'
+        network: 'base'
       },
       duration: Date.now() - startTime
     };

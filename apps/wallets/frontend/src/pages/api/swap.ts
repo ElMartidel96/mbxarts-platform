@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createBiconomySmartAccount, sendGaslessTransaction, validateBiconomyConfig } from "../../lib/biconomy";
 import { createThirdwebClient, getContract, prepareContractCall } from "thirdweb";
-import { baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 import { verifyJWT, extractTokenFromHeaders } from "../../lib/siweAuth";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -55,17 +55,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       amount, 
       tbaAddress, 
       executeSwap = false,
-      chainId = 84532 // Base Sepolia for testing
+      chainId = 8453 // Base Sepolia for testing
     } = req.body;
 
     if (!from || !to || !amount) {
       return res.status(400).json({ error: 'Missing required parameters: from, to, amount' });
     }
 
-    // Get quote from 0x Protocol
-    const apiUrl = chainId === 84532 
-      ? `https://base-sepolia.api.0x.org/swap/v2/quote` // Base Sepolia
-      : `https://base.api.0x.org/swap/v2/quote`; // Base Mainnet
+    // Get quote from 0x Protocol (Base Mainnet)
+    const apiUrl = `https://base.api.0x.org/swap/v2/quote`;
 
     const url = new URL(apiUrl);
     url.searchParams.append('buyToken', to);

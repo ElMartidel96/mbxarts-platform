@@ -143,7 +143,6 @@ export function getExplorerUrl(hash: string, chainId: number): string {
     1: 'https://etherscan.io/tx/',
     11155111: 'https://sepolia.etherscan.io/tx/',
     8453: 'https://basescan.org/tx/',
-    84532: 'https://sepolia.basescan.org/tx/',
   };
   
   const base = explorers[chainId];

@@ -170,7 +170,7 @@ export function ProfileExpanded() {
         return <BaseNetworkLogo size={24} />;
       case 1:
         return <EthereumLogo size={24} />;
-      case 84532:
+      case 8453:
         return <BaseNetworkLogo size={24} />;
       default:
         return <UnknownNetworkIndicator size={24} />;

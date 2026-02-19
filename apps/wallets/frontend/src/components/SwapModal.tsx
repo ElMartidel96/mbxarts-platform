@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { TransactionButton } from 'thirdweb/react';
 import { prepareContractCall, getContract } from 'thirdweb';
-import { baseSepolia, base } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { client } from '../app/client';
 import { PERMIT2_ADDRESS, COMMON_TOKENS } from '../lib/constants';
 
@@ -72,7 +72,7 @@ export const SwapModal: React.FC<SwapModalProps> = ({
           amount: currentBalance,
           tbaAddress: tbaAddress,
           executeSwap: false, // Just get quote first
-          chainId: baseSepolia.id,
+          chainId: base.id,
         }),
       });
 
@@ -105,7 +105,7 @@ export const SwapModal: React.FC<SwapModalProps> = ({
           amount: currentBalance,
           tbaAddress: tbaAddress,
           executeSwap: true, // Execute the swap gaslessly
-          chainId: baseSepolia.id,
+          chainId: base.id,
         }),
       });
 
@@ -134,7 +134,7 @@ export const SwapModal: React.FC<SwapModalProps> = ({
 
     const contract = getContract({
       client,
-      chain: process.env.NEXT_PUBLIC_CHAIN_ID === '84532' ? baseSepolia : base,
+      chain: process.env.NEXT_PUBLIC_CHAIN_ID === '8453' ? base : base,
       address: tbaAddress,
     });
 
@@ -152,7 +152,7 @@ export const SwapModal: React.FC<SwapModalProps> = ({
   const handleApprovePermit2 = () => {
     const contract = getContract({
       client,
-      chain: process.env.NEXT_PUBLIC_CHAIN_ID === '84532' ? baseSepolia : base,
+      chain: process.env.NEXT_PUBLIC_CHAIN_ID === '8453' ? base : base,
       address: currentToken,
     });
 

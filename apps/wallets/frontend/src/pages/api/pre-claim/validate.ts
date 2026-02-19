@@ -12,7 +12,7 @@ import { ethers } from 'ethers';
 import { validateRedisForCriticalOps } from '../../../lib/redisConfig';
 // Removed @vercel/kv import - using unified redisConfig instead
 import { createThirdwebClient, getContract, readContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { 
   generatePasswordHash,
   getEscrowContract,
@@ -276,8 +276,8 @@ async function validatePasswordWithContract(
       giftIdType: typeof giftId,
       contractAddress: ESCROW_CONTRACT_ADDRESS!,
       contractAddressType: typeof ESCROW_CONTRACT_ADDRESS!,
-      chainId: 84532,
-      chainIdType: typeof 84532,
+      chainId: 8453,
+      chainIdType: typeof 8453,
       saltSelection: originalSalt ? 'ORIGINAL_MINT_SALT' : 'FALLBACK_PROVIDED_SALT',
       timestamp: new Date().toISOString()
     };
@@ -290,7 +290,7 @@ async function validatePasswordWithContract(
       saltToUse, // Use the correct salt (original or fallback)
       giftId,
       ESCROW_CONTRACT_ADDRESS!,
-      84532 // Base Sepolia chain ID
+      8453 // Base Sepolia chain ID
     );
     
     console.log('🔐 HASH GENERATION RESULT:', {
@@ -318,7 +318,7 @@ async function validatePasswordWithContract(
       saltUsedPrefix: saltToUse.substring(0, 10),
       saltSelection: originalSalt ? 'ORIGINAL_MINT_SALT' : 'FALLBACK_PROVIDED_SALT',
       contractAddress: ESCROW_CONTRACT_ADDRESS,
-      chainId: 84532,
+      chainId: 8453,
       providedHash: providedHash,
       expectedHash: gift.passwordHash,
       hashesMatchExact: providedHash === gift.passwordHash,
@@ -363,7 +363,7 @@ async function validatePasswordWithContract(
     
     console.log('SOLIDITY HASH GENERATION DETAILS:');
     console.log(`  • Types: ['string', 'bytes32', 'uint256', 'address', 'uint256']`);
-    console.log(`  • Values: ['[REDACTED]', '${saltToUse}', ${giftId}, '${ESCROW_CONTRACT_ADDRESS}', 84532]`);
+    console.log(`  • Values: ['[REDACTED]', '${saltToUse}', ${giftId}, '${ESCROW_CONTRACT_ADDRESS}', 8453]`);
     console.log(`  • Password Length: ${password.length} chars`);
     console.log(`  • ARCHITECTURAL FIX: ${originalSalt ? 'Using original mint salt' : 'Using provided salt (fallback)'}`);
     

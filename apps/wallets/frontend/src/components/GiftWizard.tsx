@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { ConnectButton, useActiveAccount } from 'thirdweb/react';
 import { createThirdwebClient, getContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { client } from '../app/client';
 import { ImageUpload } from './ImageUpload';
 import { FilterSelector } from './FilterSelector';

@@ -5,7 +5,7 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createThirdwebClient, getContract, readContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { getMemoryStats, addMemoryGift, clearMemoryData } from '../../../lib/memoryAnalytics';
 
 // Contract addresses
@@ -30,7 +30,7 @@ export default async function handler(
 
     const nftContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: NFT_CONTRACT,
     });
 

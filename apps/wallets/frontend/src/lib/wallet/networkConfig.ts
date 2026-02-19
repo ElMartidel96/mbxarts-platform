@@ -42,7 +42,6 @@ export const NETWORK_CONFIGS: Record<number, NetworkConfig> = {
       decimals: 18,
     },
     rpcUrls: [
-      process.env.NEXT_PUBLIC_RPC_URL || 'https://base-sepolia.g.alchemy.com/v2/GJfW9U_S-o-boMw93As3e',
       'https://sepolia.base.org',
     ],
     blockExplorerUrls: ['https://sepolia.basescan.org'],

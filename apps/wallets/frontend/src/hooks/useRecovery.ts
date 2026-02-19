@@ -31,7 +31,7 @@ import {
 export function useRecovery() {
   const account = useActiveAccount();
   const address = account?.address;
-  const chainId = (account as any)?.chain?.id || 84532; // Base Sepolia default
+  const chainId = (account as any)?.chain?.id || 8453; // Base Sepolia default
   
   const [enabled] = useState(() => RECOVERY_CONFIG.enabled);
   const [guardians, setGuardians] = useState<Guardian[]>([]);

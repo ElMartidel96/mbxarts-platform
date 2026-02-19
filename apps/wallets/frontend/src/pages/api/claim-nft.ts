@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createThirdwebClient, getContract, prepareContractCall, sendTransaction, waitForReceipt, readContract } from "thirdweb";
-import { baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 import { privateKeyToAccount } from "thirdweb/wallets";
 import { createBiconomySmartAccount, sendGaslessTransaction, validateBiconomyConfig } from "../../lib/biconomy";
 import { generateNeutralGiftAddressServer, isNeutralGiftAddressServer } from "../../lib/serverConstants";
@@ -84,7 +84,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Get NFT contract
     const nftContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: contractAddress,
     });
 
@@ -162,7 +162,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Step 5: Wait for confirmation
       const receipt = await waitForReceipt({
         client,
-        chain: baseSepolia,
+        chain: base,
         transactionHash: transferResult.transactionHash,
       });
       

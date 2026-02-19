@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useActiveAccount, useSwitchActiveWalletChain } from 'thirdweb/react';
 import { isMobileDevice } from '../lib/mobileRpcHandler';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 
 interface ChainSwitcherProps {
   className?: string;
@@ -12,7 +12,7 @@ interface ChainSwitcherProps {
 
 /**
  * ChainSwitcher Component - Handles network switching for mobile wallets
- * Detects wrong networks and prompts users to switch to Base Sepolia
+ * Detects wrong networks and prompts users to switch to Base
  * Simplified version without event listeners to avoid TypeScript conflicts
  */
 export const ChainSwitcher: React.FC<ChainSwitcherProps> = ({
@@ -25,7 +25,7 @@ export const ChainSwitcher: React.FC<ChainSwitcherProps> = ({
   const [isSwitching, setIsSwitching] = useState(false);
   const [switchError, setSwitchError] = useState<string | null>(null);
 
-  const targetChainId = baseSepolia.id; // 84532
+  const targetChainId = base.id; // 8453
 
   useEffect(() => {
     const detectChain = async () => {
@@ -78,7 +78,7 @@ export const ChainSwitcher: React.FC<ChainSwitcherProps> = ({
     setSwitchError(null);
 
     try {
-      console.log('🔄 Switching to Base Sepolia (84532)...');
+      console.log('🔄 Switching to Base (8453)...');
       
       // 🚨 MOBILE FIX: Don't use switchChain on mobile to avoid wallet_switchEthereumChain issues
       if (isMobileDevice()) {
@@ -87,7 +87,7 @@ export const ChainSwitcher: React.FC<ChainSwitcherProps> = ({
         return; // ✅ NON-DISRUPTIVE: allows other flows to continue
       }
       
-      await switchChain(baseSepolia);
+      await switchChain(base);
       
       console.log('✅ Chain switched successfully');
       setCurrentChainId(targetChainId);
@@ -115,7 +115,7 @@ export const ChainSwitcher: React.FC<ChainSwitcherProps> = ({
             Wrong Network Detected
           </h3>
           <p className="text-yellow-700 text-sm mb-3">
-            You&apos;re currently on chain {currentChainId}. This app requires Base Sepolia (84532) to function properly.
+            You&apos;re currently on chain {currentChainId}. This app requires Base (8453) to function properly.
           </p>
           
           {switchError && (
@@ -135,12 +135,12 @@ export const ChainSwitcher: React.FC<ChainSwitcherProps> = ({
                 <span>Switching...</span>
               </div>
             ) : (
-              `Switch to Base Sepolia`
+              `Switch to Base`
             )}
           </button>
           
           <p className="text-yellow-600 text-xs mt-2">
-            If switching fails, please manually change to Base Sepolia in your wallet settings.
+            If switching fails, please manually change to Base in your wallet settings.
           </p>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createThirdwebClient, getContract, readContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { storeNFTMetadata, createNFTMetadata } from '../../../lib/nftMetadataStore';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const nftContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: contractAddress as `0x${string}`,
     });
 

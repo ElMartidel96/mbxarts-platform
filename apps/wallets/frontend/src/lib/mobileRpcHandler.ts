@@ -1,15 +1,15 @@
 "use client";
 
 import { createThirdwebClient } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 
-// Mobile-optimized RPC endpoints with fallbacks
+// Mobile-optimized RPC endpoints with fallbacks (Base Mainnet)
 const MOBILE_RPC_ENDPOINTS = [
-  process.env.NEXT_PUBLIC_RPC_URL || 'https://base-sepolia.g.alchemy.com/v2/demo', // Primary Alchemy
-  'https://sepolia.base.org',       // Base official
-  'https://base-sepolia.blockpi.network/v1/rpc/public', // BlockPI public
-  'https://base-sepolia.publicnode.com', // PublicNode
-  'https://endpoints.omniatech.io/v1/base/sepolia/public' // Omnia
+  process.env.NEXT_PUBLIC_RPC_URL || 'https://mainnet.base.org', // Primary
+  'https://mainnet.base.org',       // Base official
+  'https://base.blockpi.network/v1/rpc/public', // BlockPI public
+  'https://base.publicnode.com', // PublicNode
+  'https://base.meowrpc.com' // MeowRPC
 ];
 
 // Mobile detection utility
@@ -154,7 +154,7 @@ export const getMobileOptimizedChain = (fallbackIndex: number = 0) => {
   const rpcUrl = MOBILE_RPC_ENDPOINTS[fallbackIndex] || MOBILE_RPC_ENDPOINTS[0];
   
   return {
-    ...baseSepolia,
+    ...base,
     rpc: rpcUrl,
   };
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ConnectButton, useActiveAccount } from 'thirdweb/react';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { client } from '../app/client';
 import { authenticateWithSiwe, getAuthState, isAuthValid } from '../lib/siweClient';
 import { SafeThirdwebWrapper } from './SafeThirdwebWrapper';
@@ -149,7 +149,7 @@ const ConnectAndAuthButtonInner: React.FC<ConnectAndAuthButtonProps> = ({
         if (isMobile) {
           // Check current network for logging purposes only
           const currentChainId = (account as any)?.chainId;
-          const requiredChainId = 84532; // Base Sepolia
+          const requiredChainId = 8453; // Base Sepolia
           
           if (currentChainId && currentChainId !== requiredChainId) {
             console.log('🔗 User on different network:', currentChainId, 'vs required:', requiredChainId);
@@ -193,8 +193,8 @@ const ConnectAndAuthButtonInner: React.FC<ConnectAndAuthButtonProps> = ({
       <div className={className}>
         <ConnectButton
           client={client}
-          chain={baseSepolia}
-          chains={[baseSepolia]}
+          chain={base}
+          chains={[base]}
           walletConnect={{ 
             projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID || "2f05a7ebd3f6e1ecd18aae02cc766e34" 
           }}
@@ -315,8 +315,8 @@ const ConnectAndAuthButtonInner: React.FC<ConnectAndAuthButtonProps> = ({
             {client ? (
               <ConnectButton
                 client={client}
-              chain={baseSepolia}
-              chains={[baseSepolia]}
+              chain={base}
+              chains={[base]}
               walletConnect={{ 
             projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID || "2f05a7ebd3f6e1ecd18aae02cc766e34" 
           }}
@@ -412,8 +412,8 @@ const ConnectAndAuthButtonInner: React.FC<ConnectAndAuthButtonProps> = ({
           {client ? (
             <ConnectButton
               client={client}
-            chain={baseSepolia}
-            chains={[baseSepolia]}
+            chain={base}
+            chains={[base]}
             walletConnect={{ 
             projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID || "2f05a7ebd3f6e1ecd18aae02cc766e34" 
           }}

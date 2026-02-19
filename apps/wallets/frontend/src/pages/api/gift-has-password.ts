@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getContract, readContract } from 'thirdweb';
 import { client } from '../../app/client';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { getGiftIdFromMapping } from '../../lib/giftMappingStore';
 import { getGiftFromBlockchain, checkEducationRequirements } from '../../lib/giftEventReader';
 import { getRedisConnection } from '../../lib/redisConfig';

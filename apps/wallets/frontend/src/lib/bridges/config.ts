@@ -35,19 +35,12 @@ export const BRIDGE_CONFIG = {
       rpcUrl: 'https://mainnet.base.org',
       explorerUrl: 'https://basescan.org',
     },
-    baseSepolia: {
-      id: 84532,
-      name: 'Base Sepolia',
-      nativeCurrency: 'ETH',
-      rpcUrl: 'https://sepolia.base.org',
-      explorerUrl: 'https://sepolia.basescan.org',
-    },
-    sepolia: {
-      id: 11155111,
-      name: 'Sepolia',
-      nativeCurrency: 'ETH',
-      rpcUrl: 'https://rpc.sepolia.org',
-      explorerUrl: 'https://sepolia.etherscan.io',
+    polygon: {
+      id: 137,
+      name: 'Polygon',
+      nativeCurrency: 'MATIC',
+      rpcUrl: 'https://polygon-rpc.com',
+      explorerUrl: 'https://polygonscan.com',
     },
   },
   
@@ -70,15 +63,11 @@ export const BRIDGE_CONFIG = {
       USDC: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
       USDT: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2',
     },
-    // Base Sepolia
-    84532: {
+    // Polygon
+    137: {
       ETH: '0x0000000000000000000000000000000000000000',
-      USDC: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
-    },
-    // Sepolia
-    11155111: {
-      ETH: '0x0000000000000000000000000000000000000000',
-      USDC: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
+      USDC: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
+      USDT: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
     },
   },
   

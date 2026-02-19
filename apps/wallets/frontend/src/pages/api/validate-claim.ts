@@ -8,7 +8,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ethers } from 'ethers';
 import { createThirdwebClient, getContract, readContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { 
   generatePasswordHash,
   getEscrowContract,
@@ -189,7 +189,7 @@ async function validateClaimParameters(
       salt,
       giftId,
       ESCROW_CONTRACT_ADDRESS!,
-      84532 // Base Sepolia chain ID
+      8453 // Base Sepolia chain ID
     );
     
     if (providedPasswordHash.toLowerCase() !== gift.passwordHash.toLowerCase()) {

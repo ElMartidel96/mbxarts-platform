@@ -34,7 +34,7 @@ interface MEVProtectionState {
 export function useMEVProtection() {
   const account = useActiveAccount();
   const chain = useActiveWalletChain();
-  const chainId = chain?.id || 84532; // Default to Base Sepolia
+  const chainId = chain?.id || 8453; // Default to Base Sepolia
   
   const [preferences, setPreferences] = useState<MEVPreferences>(() => {
     // Load preferences from localStorage

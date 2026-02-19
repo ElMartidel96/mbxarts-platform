@@ -269,7 +269,7 @@ export default function MyWalletsPage() {
     // Telemetry
     try { 
       window.dispatchEvent(new CustomEvent('telemetry', { 
-        detail: { ev: 'dashboard.open', chainId: 84532 } 
+        detail: { ev: 'dashboard.open', chainId: 8453 } 
       })); 
     } catch {}
     

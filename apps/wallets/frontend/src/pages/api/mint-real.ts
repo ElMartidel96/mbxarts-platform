@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createThirdwebClient, getContract, prepareContractCall, sendTransaction, waitForReceipt, readContract } from "thirdweb";
-import { baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 import { privateKeyToAccount } from "thirdweb/wallets";
 import { uploadMetadata } from "../../lib/ipfs";
 import { addMintLog } from "../../lib/mintLogger";
@@ -73,7 +73,7 @@ async function calculateTBAAddress(tokenId: string, nftContract: string): Promis
     // CRITICAL FIX: Use environment variables instead of hard-coded addresses  
     const REGISTRY_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758";
     const IMPLEMENTATION_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358";
-    const chainIdStr = process.env.NEXT_PUBLIC_CHAIN_ID || "84532";
+    const chainIdStr = process.env.NEXT_PUBLIC_CHAIN_ID || "8453";
     const CHAIN_ID = parseInt(chainIdStr);
     if (isNaN(CHAIN_ID)) {
       console.error(`❌ INVALID CHAIN_ID: "${chainIdStr}"`);
@@ -206,7 +206,7 @@ async function mintNFTReal(to: string, metadataUri: string): Promise<{
 
     // Get NFT contract with custom RPC
     const customChain = {
-      ...baseSepolia,
+      ...base,
       rpc: process.env.NEXT_PUBLIC_RPC_URL!
     };
     
@@ -246,7 +246,7 @@ async function mintNFTReal(to: string, metadataUri: string): Promise<{
     
     const receipt = await waitForReceipt({
       client,
-      chain: baseSepolia,
+      chain: base,
       transactionHash: result.transactionHash,
     });
 

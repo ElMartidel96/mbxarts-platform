@@ -90,14 +90,6 @@ export const CHAIN_CONFIGS: Record<number, {
       maxLogs: 10000,
     },
   },
-  // Base Sepolia
-  84532: {
-    startBlock: 5000000,
-    rpcLimits: {
-      maxBlockRange: 10000,
-      maxLogs: 10000,
-    },
-  },
 };
 
 /**

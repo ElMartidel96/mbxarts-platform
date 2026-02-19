@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getNFTMetadata, storeNFTMetadata, createNFTMetadata } from '../../../../lib/nftMetadataStore';
 import { readContract, createThirdwebClient, getContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { getAuthState, isAuthValid } from '../../../../lib/siweClient';
 
 /**
@@ -83,7 +83,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const nftContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: contractAddress
     });
 

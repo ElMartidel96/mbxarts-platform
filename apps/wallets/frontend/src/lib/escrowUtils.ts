@@ -6,8 +6,8 @@
 import { ethers } from 'ethers';
 import { createThirdwebClient, getContract, prepareContractCall, readContract, sendTransaction, waitForReceipt } from 'thirdweb';
 import { privateKeyToAccount } from 'thirdweb/wallets';
-import { baseSepolia } from 'thirdweb/chains';
-import { ESCROW_ABI, ESCROW_CONTRACT_ADDRESS, type EscrowGift } from './escrowABI';
+import { base } from 'thirdweb/chains';
+import { ESCROW_ABI, ESCROW_CONTRACT_ADDRESS, PERPETUAL_EXPIRY_VALUE, type EscrowGift } from './escrowABI';
 import { getGiftIdFromMapping, getGiftIdFromMappingLegacy, storeGiftMapping, batchStoreGiftMappings } from './giftMappingStore';
 
 // Initialize ThirdWeb client lazily to avoid build-time issues
@@ -36,14 +36,14 @@ export function generateSalt(): `0x${string}` {
  * @param salt - 32-byte salt  
  * @param giftId - Gift ID from contract
  * @param contractAddress - Escrow contract address
- * @param chainId - Blockchain chain ID (84532 for Base Sepolia)
+ * @param chainId - Blockchain chain ID (8453 for Base Mainnet)
  */
 export function generatePasswordHash(
-  password: string, 
-  salt: string, 
+  password: string,
+  salt: string,
   giftId: number | string | bigint,
   contractAddress: string,
-  chainId: number = 84532
+  chainId: number = 8453
 ): `0x${string}` {
   // Use solidityPackedKeccak256 to replicate abi.encodePacked exactly
   return ethers.solidityPackedKeccak256(
@@ -70,7 +70,10 @@ export const TIMEFRAME_OPTIONS = {
   FIFTEEN_MINUTES: 0,
   SEVEN_DAYS: 1,
   FIFTEEN_DAYS: 2,
-  THIRTY_DAYS: 3
+  THIRTY_DAYS: 3,
+  NINETY_DAYS: 4,
+  ONE_YEAR: 5,
+  PERPETUAL: 6
 } as const;
 
 export type TimeframeOption = keyof typeof TIMEFRAME_OPTIONS;
@@ -79,14 +82,20 @@ export const TIMEFRAME_LABELS: Record<TimeframeOption, string> = {
   FIFTEEN_MINUTES: '15 Minutes (Testing)',
   SEVEN_DAYS: '7 Days',
   FIFTEEN_DAYS: '15 Days',
-  THIRTY_DAYS: '30 Days'
+  THIRTY_DAYS: '30 Days',
+  NINETY_DAYS: '90 Days',
+  ONE_YEAR: '1 Year',
+  PERPETUAL: 'Never Expires'
 };
 
 export const TIMEFRAME_DESCRIPTIONS: Record<TimeframeOption, string> = {
   FIFTEEN_MINUTES: 'Perfect for testing the escrow system quickly',
   SEVEN_DAYS: 'Standard gift timeframe for most occasions',
   FIFTEEN_DAYS: 'Extended timeframe for special gifts',
-  THIRTY_DAYS: 'Maximum timeframe for important occasions'
+  THIRTY_DAYS: 'Maximum timeframe for important occasions',
+  NINETY_DAYS: 'Long-term gift for quarterly milestones',
+  ONE_YEAR: 'Annual gift with extended claim window',
+  PERPETUAL: 'Gift never expires. Creator can cancel after 90 days'
 };
 
 /**
@@ -99,7 +108,7 @@ export function getEscrowContract() {
   
   return getContract({
     client: getThirdwebClient(),
-    chain: baseSepolia,
+    chain: base,
     address: ESCROW_CONTRACT_ADDRESS,
     abi: ESCROW_ABI
   });
@@ -246,7 +255,7 @@ export async function getGiftIdFromTokenId(tokenId: string | number): Promise<nu
         // Fallback: individual stores
         for (const [tokenId, giftId] of mappings.entries()) {
           try {
-            await storeGiftMapping(tokenId, giftId, process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!, 84532);
+            await storeGiftMapping(tokenId, giftId, process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!, 8453);
             tokenIdToGiftIdCache.set(tokenId, giftId);
           } catch (individualError) {
             console.warn(`⚠️ Failed to store mapping ${tokenId}→${giftId}:`, individualError.message);
@@ -343,7 +352,7 @@ async function systematicGiftSearch(tokenId: string | number): Promise<number | 
             
             // Store in persistent storage if available
             try {
-              await storeGiftMapping(tokenIdStr, giftId, process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!, 84532);
+              await storeGiftMapping(tokenIdStr, giftId, process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!, 8453);
               console.log(`💾 STORED MAPPING: tokenId ${tokenIdStr} → giftId ${giftId}`);
             } catch (storeError) {
               console.warn(`⚠️ Failed to store mapping: ${storeError.message}`);
@@ -654,7 +663,7 @@ export async function returnExpiredGifts(): Promise<{
           
           await waitForReceipt({
             client: createThirdwebClient({ clientId: process.env.NEXT_PUBLIC_TW_CLIENT_ID! }),
-            chain: baseSepolia,
+            chain: base,
             transactionHash: result.transactionHash
           });
           
@@ -690,12 +699,16 @@ export async function returnExpiredGifts(): Promise<{
  */
 export function formatTimeRemaining(seconds: number): string {
   if (seconds <= 0) return 'Expired';
-  
+
+  // Perpetual: timeRemaining will be type(uint256).max or very large (>100 years)
+  const hundredYearsInSeconds = 100 * 365 * 24 * 60 * 60;
+  if (seconds > hundredYearsInSeconds) return 'Never Expires';
+
   const days = Math.floor(seconds / (24 * 60 * 60));
   const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
   const minutes = Math.floor((seconds % (60 * 60)) / 60);
   const remainingSeconds = seconds % 60;
-  
+
   if (days > 0) {
     return `${days}d ${hours}h ${minutes}m`;
   } else if (hours > 0) {
@@ -708,8 +721,14 @@ export function formatTimeRemaining(seconds: number): string {
 }
 
 export function isGiftExpired(expirationTime: bigint): boolean {
+  // Perpetual gifts (expiresAt == type(uint40).max) never expire
+  if (expirationTime === PERPETUAL_EXPIRY_VALUE) return false;
   const currentTime = Math.floor(Date.now() / 1000);
   return Number(expirationTime) <= currentTime;
+}
+
+export function isGiftPerpetual(expirationTime: bigint): boolean {
+  return expirationTime === PERPETUAL_EXPIRY_VALUE;
 }
 
 export function getGiftStatus(gift: EscrowGift): 'active' | 'expired' | 'claimed' | 'returned' {
@@ -913,9 +932,12 @@ export async function getTimeConstants(): Promise<Record<string, number>> {
       FIFTEEN_MINUTES: Number(fifteenMin),
       SEVEN_DAYS: Number(sevenDays),
       FIFTEEN_DAYS: Number(fifteenDays),
-      THIRTY_DAYS: Number(thirtyDays)
+      THIRTY_DAYS: Number(thirtyDays),
+      NINETY_DAYS: 7776000,
+      ONE_YEAR: 31536000,
+      PERPETUAL: 0
     };
-    
+
     return timeConstantsCache;
   } catch (error) {
     console.error('Failed to get time constants:', error);
@@ -924,7 +946,10 @@ export async function getTimeConstants(): Promise<Record<string, number>> {
       FIFTEEN_MINUTES: 900,    // 15 minutes
       SEVEN_DAYS: 604800,      // 7 days
       FIFTEEN_DAYS: 1296000,   // 15 days
-      THIRTY_DAYS: 2592000     // 30 days
+      THIRTY_DAYS: 2592000,    // 30 days
+      NINETY_DAYS: 7776000,    // 90 days
+      ONE_YEAR: 31536000,      // 1 year
+      PERPETUAL: 0             // never expires
     };
   }
 }

@@ -1,18 +1,21 @@
 /**
- * CRYPTOGIFT ESCROW CONTRACT ABI V2 - ZERO CUSTODY ARCHITECTURE
- * Contract: 0x46175CfC233500DA803841DEef7f2816e7A129E0
- * Network: Base Sepolia
- * Version: 2.0.0
- * Updated: 2025-07-27 - ZERO CUSTODY WITH registerGiftMinted
+ * CRYPTOGIFT ESCROW CONTRACT ABI V3 - PERPETUAL MODE + EXTENDED TIMEFRAMES
+ * Network: Base Mainnet (8453)
+ * Version: 3.0.0
+ *
+ * Made by mbxarts.com The Moon in a Box property
+ * Co-Author: Godez22
  */
 
-// Import V2 ABI and exports
-export { 
-  ESCROW_ABI_V2 as ESCROW_ABI, 
-  ESCROW_CONTRACT_ADDRESS_V2 as ESCROW_CONTRACT_ADDRESS 
-} from './escrowABIV2';
+// Import V3 ABI and re-export as canonical names
+export {
+  ESCROW_ABI_V3 as ESCROW_ABI,
+  ESCROW_CONTRACT_ADDRESS_V3 as ESCROW_CONTRACT_ADDRESS,
+  PERPETUAL_EXPIRY_VALUE
+} from './escrowABIV3';
 
-export type { 
+// Re-export types from V2 (still compatible - same struct shape)
+export type {
   EscrowGift,
   GiftRegisteredFromMintEvent,
   GiftCreatedEvent,

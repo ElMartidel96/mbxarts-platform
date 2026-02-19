@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createThirdwebClient, getContract, readContract } from "thirdweb";
-import { baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 import { kvReferralDB } from "../../lib/referralDatabaseKV";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

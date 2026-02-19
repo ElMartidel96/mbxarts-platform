@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createThirdwebClient, getContract, readContract } from "thirdweb";
-import { baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 import { getNFTMetadata, resolveIPFSUrl } from "../../../lib/nftMetadataStore";
 import { getBestGatewayForCid, normalizeCidPath } from "../../../utils/ipfs";
 
@@ -59,7 +59,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Get NFT contract
     const nftContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: contractAddress,
     });
     
@@ -136,7 +136,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                   const { ethers } = await import("ethers");
                   const REGISTRY_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758";
                   const IMPLEMENTATION_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358";
-                  const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "84532");
+                  const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "8453");
                   
                   const salt = ethers.solidityPackedKeccak256(
                     ['uint256', 'address', 'uint256'],
@@ -185,7 +185,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     tbaBalance: "0",
                     tbaDeployed: false,
                     network: "Base Sepolia",
-                    chainId: 84532,
+                    chainId: 8453,
                     source: 'direct_image_ipfs',
                     gateway: gateway
                   });
@@ -225,7 +225,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                   const { ethers } = await import("ethers");
                   const REGISTRY_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758";
                   const IMPLEMENTATION_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358";
-                  const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "84532");
+                  const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "8453");
                   
                   const salt = ethers.solidityPackedKeccak256(
                     ['uint256', 'address', 'uint256'],
@@ -261,7 +261,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     tbaBalance: "0",
                     tbaDeployed: false,
                     network: "Base Sepolia",
-                    chainId: 84532,
+                    chainId: 8453,
                     source: 'direct_ipfs_metadata',
                     gateway: gateway
                   });
@@ -519,7 +519,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { ethers } = await import("ethers");
     const REGISTRY_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758";
     const IMPLEMENTATION_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358";
-    const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "84532"); // Base Sepolia
+    const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "8453"); // Base Sepolia
     
     const salt = ethers.solidityPackedKeccak256(
       ['uint256', 'address', 'uint256'],
@@ -558,7 +558,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       contractAddress,
       tokenId: tokenId, // Keep as string - no parseInt()
       network: "Base Sepolia",
-      chainId: 84532,
+      chainId: 8453,
     });
 
   } catch (error) {

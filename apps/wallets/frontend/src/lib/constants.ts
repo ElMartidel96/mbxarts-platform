@@ -1,7 +1,6 @@
-import { base, baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 
 // PRODUCTION: Use Base Mainnet (8453) as default chain
-// Fallback to Base Sepolia for testing if needed
 export const ACTIVE_CHAIN = base;
 
 // CRITICAL: Environment validation function - FAIL FAST if required vars missing
@@ -20,9 +19,9 @@ const getOptionalEnvVar = (key: string, fallback: string): string => {
   return process.env[key] || fallback;
 };
 
-// HOTFIX: Temporary fallbacks until env vars are updated in production
+// Production addresses - Base Mainnet (deployed Feb 19, 2026)
 export const THIRDWEB_KEY = process.env.NEXT_PUBLIC_TW_CLIENT_ID || '9183b572b02ec88dd4d8f20c3ed847d3';
-export const NFT_DROP_ADDRESS = process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS || process.env.NEXT_PUBLIC_NFT_DROP_ADDRESS || '0x8DfCAfB320cBB7bcdbF4cc83A62bccA08B30F5D3';
+export const NFT_DROP_ADDRESS = process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS || process.env.NEXT_PUBLIC_NFT_DROP_ADDRESS || '0x2d46342E320Ad73874636dD613ee92Ba462ff2e2';
 export const ERC6551_REGISTRY = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || '0x000000006551c19487814612e58FE06813775758';
 export const TBA_IMPLEMENTATION = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || '0x2d25602551487c3f3354dd80d76d54383a243358';
 

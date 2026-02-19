@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createThirdwebClient, getContract, prepareContractCall, sendTransaction, readContract, waitForReceipt } from "thirdweb";
-import { baseSepolia } from "thirdweb/chains";
+import { base } from "thirdweb/chains";
 import { privateKeyToAccount } from "thirdweb/wallets";
 import { createBiconomySmartAccount, sendGaslessTransaction, validateBiconomyConfig, isGaslessAvailable } from "../../lib/biconomy";
 import { addMintLog } from "../../lib/mintLogger";
@@ -237,7 +237,7 @@ async function mintNFTGasless(to: string, tokenURI: string, client: any) {
     });
     
     const customChain = {
-      ...baseSepolia,
+      ...base,
       rpc: process.env.NEXT_PUBLIC_RPC_URL!
     };
     
@@ -437,7 +437,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     const contract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
     });
     
@@ -630,7 +630,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
               const receipt = await waitForReceipt({
                 client,
-                chain: baseSepolia,
+                chain: base,
                 transactionHash: gaslessUserOpHash as `0x${string}`
               });
               
@@ -659,7 +659,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
               const receipt = await waitForReceipt({
                 client,
-                chain: baseSepolia,
+                chain: base,
                 transactionHash: gaslessTransactionHash as `0x${string}`
               });
               
@@ -723,7 +723,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // Get NFT contract
       const customChain = {
-        ...baseSepolia,
+        ...base,
         rpc: process.env.NEXT_PUBLIC_RPC_URL!
       };
 
@@ -804,7 +804,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Wait for transaction to be confirmed and get receipt
         const receipt = await waitForReceipt({
           client,
-          chain: baseSepolia,
+          chain: base,
           transactionHash: nftResult.transactionHash
         });
         

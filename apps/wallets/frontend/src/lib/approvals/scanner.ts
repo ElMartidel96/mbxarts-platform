@@ -12,7 +12,7 @@ import {
   type PublicClient,
   type Log,
 } from 'viem';
-import { mainnet, sepolia, base, baseSepolia } from 'viem/chains';
+import { mainnet, sepolia, base } from 'viem/chains';
 import { getChainConfig } from './config';
 
 // Event signatures
@@ -105,7 +105,7 @@ export class ApprovalScanner {
       case 1: return mainnet;
       case 11155111: return sepolia;
       case 8453: return base;
-      case 84532: return baseSepolia;
+      case 84532: return base; // Legacy testnet fallback
       default: throw new Error(`Unsupported chain ID: ${chainId}`);
     }
   }

@@ -8,7 +8,7 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createThirdwebClient, getContract, readContract, prepareEvent } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { ethers } from 'ethers';
 import { recordGiftEvent, initializeCampaign } from '../../../lib/giftAnalytics';
 import { verifyJWT, extractTokenFromHeaders } from '../../../lib/siweAuth';
@@ -96,7 +96,7 @@ async function handler(
     // Get escrow contract
     const escrowContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS!
     });
 

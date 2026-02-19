@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { TransactionButton } from 'thirdweb/react';
 import { prepareContractCall, getContract } from 'thirdweb';
-import { baseSepolia, base } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { client } from '../app/client';
 import { SwapModal } from './SwapModal';
 import { GuardiansModal } from './GuardiansModal';
@@ -54,7 +54,7 @@ export const WalletInterface: React.FC<WalletInterfaceProps> = ({
   const handleWithdraw = () => {
     const contract = getContract({
       client,
-      chain: process.env.NEXT_PUBLIC_CHAIN_ID === '84532' ? baseSepolia : base,
+      chain: base,
       address: tbaAddress,
     });
 

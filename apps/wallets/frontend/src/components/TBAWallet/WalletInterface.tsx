@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { useActiveAccount } from 'thirdweb/react';
 import { createThirdwebClient, getContract, readContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { ethers } from 'ethers';
 import { ImageDebugger } from '../ImageDebugger';
 import { fetchGiftDetails, parseGiftTransactionEvents } from '../../lib/contractEventParser';
@@ -65,7 +65,7 @@ export const TBAWalletInterface: React.FC<WalletInterfaceProps> = ({
       // CRITICAL FIX: Use environment variables instead of hard-coded addresses
       const REGISTRY_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758";
       const IMPLEMENTATION_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358";
-      const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "84532");
+      const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "8453");
       
       // Security: Input sanitization
       const sanitizedContract = ethers.getAddress(nftContract);
@@ -179,7 +179,7 @@ export const TBAWalletInterface: React.FC<WalletInterfaceProps> = ({
         // Get USDC balance
         const usdcContract = getContract({
           client,
-          chain: baseSepolia,
+          chain: base,
           address: process.env.NEXT_PUBLIC_USDC_ADDRESS!,
         });
 

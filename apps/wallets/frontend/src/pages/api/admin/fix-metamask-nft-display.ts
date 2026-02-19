@@ -4,7 +4,7 @@
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createThirdwebClient, getContract, prepareContractCall, sendTransaction, waitForReceipt, readContract } from 'thirdweb';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { privateKeyToAccount } from 'thirdweb/wallets';
 import { getAllStoredMetadata } from '../../../lib/nftMetadataStore';
 import { getPublicBaseUrl } from '../../../lib/publicBaseUrl';
@@ -59,7 +59,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     // Get NFT contract
     const nftContract = getContract({
       client,
-      chain: baseSepolia,
+      chain: base,
       address: contractAddress as `0x${string}`,
     });
 
@@ -123,7 +123,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         // Wait for transaction confirmation
         const receipt = await waitForReceipt({
           client,
-          chain: baseSepolia,
+          chain: base,
           transactionHash: txResult.transactionHash,
         });
 

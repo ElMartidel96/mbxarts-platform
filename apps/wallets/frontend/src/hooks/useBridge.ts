@@ -10,7 +10,7 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useActiveAccount } from 'thirdweb/react';
 import { prepareTransaction, sendTransaction } from 'thirdweb';
 import { client } from '@/app/client';
-import { baseSepolia, base, mainnet, optimism, arbitrum, polygon } from 'thirdweb/chains';
+import { base, mainnet, optimism, arbitrum, polygon } from 'thirdweb/chains';
 import { BRIDGE_CONFIG, calculateSlippage } from '@/lib/bridges/config';
 import { lifiClient, type Route, type QuoteRequest } from '@/lib/bridges/lifi-client';
 
@@ -30,7 +30,7 @@ function getDynamicChain(router?: ReturnType<typeof useRouter>, searchParams?: R
   if (chainParam) {
     switch (chainParam) {
       case 'base': return base;
-      case 'base-sepolia': return baseSepolia;
+      case 'base-mainnet': return base;
       case 'mainnet': return mainnet;
       case 'optimism': return optimism;
       case 'arbitrum': return arbitrum;
@@ -47,7 +47,7 @@ function getDynamicChain(router?: ReturnType<typeof useRouter>, searchParams?: R
   if (pathname.includes('/polygon')) return polygon;
   
   // Default fallback to base sepolia for development
-  return baseSepolia;
+  return base;
 }
 
 export function useBridge() {
