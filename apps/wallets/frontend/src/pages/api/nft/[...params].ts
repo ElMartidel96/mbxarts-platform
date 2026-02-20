@@ -134,15 +134,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                   
                   // Calculate TBA address
                   const { ethers } = await import("ethers");
-                  const REGISTRY_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758";
-                  const IMPLEMENTATION_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358";
+                  const REGISTRY_ADDRESS = (process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758").trim();
+                  const IMPLEMENTATION_ADDRESS = (process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358").trim();
                   const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "8453");
-                  
+
                   const salt = ethers.solidityPackedKeccak256(
                     ['uint256', 'address', 'uint256'],
                     [CHAIN_ID, contractAddress, tokenId]
                   );
-                  
+
                   const packed = ethers.solidityPacked(
                     ['bytes1', 'address', 'bytes32', 'address', 'bytes32'],
                     [
@@ -153,10 +153,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                       '0x0000000000000000000000000000000000000000000000000000000000000000'
                     ]
                   );
-                  
+
                   const hash = ethers.keccak256(packed);
                   const tbaAddress = ethers.getAddress('0x' + hash.slice(-40));
-                  
+
                   // Return metadata for direct image NFT
                   return res.status(200).json({
                     success: true,
@@ -223,15 +223,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                   
                   // Calculate TBA address for completeness
                   const { ethers } = await import("ethers");
-                  const REGISTRY_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758";
-                  const IMPLEMENTATION_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358";
+                  const REGISTRY_ADDRESS = (process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758").trim();
+                  const IMPLEMENTATION_ADDRESS = (process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358").trim();
                   const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "8453");
-                  
+
                   const salt = ethers.solidityPackedKeccak256(
                     ['uint256', 'address', 'uint256'],
                     [CHAIN_ID, contractAddress, tokenId]
                   );
-                  
+
                   const packed = ethers.solidityPacked(
                     ['bytes1', 'address', 'bytes32', 'address', 'bytes32'],
                     [
@@ -242,10 +242,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                       '0x0000000000000000000000000000000000000000000000000000000000000000'
                     ]
                   );
-                  
+
                   const hash = ethers.keccak256(packed);
                   const tbaAddress = ethers.getAddress('0x' + hash.slice(-40));
-                  
+
                   // Return the real metadata with processed image URL
                   return res.status(200).json({
                     success: true,
@@ -517,8 +517,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     // Calculate REAL TBA address using ERC-6551 standard
     const { ethers } = await import("ethers");
-    const REGISTRY_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758";
-    const IMPLEMENTATION_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358";
+    const REGISTRY_ADDRESS = (process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758").trim();
+    const IMPLEMENTATION_ADDRESS = (process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358").trim();
     const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "8453"); // Base Mainnet
     
     const salt = ethers.solidityPackedKeccak256(

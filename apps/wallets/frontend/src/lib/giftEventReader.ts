@@ -37,7 +37,7 @@ export async function getGiftFromBlockchain(tokenId: string | number): Promise<{
   try {
     console.log(`🔍 BLOCKCHAIN FALLBACK: Reading events for tokenId ${tokenId}...`);
     
-    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS;
+    const escrowAddress = (process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS || '').trim();
     if (!escrowAddress) {
       console.error('❌ ESCROW_CONTRACT_ADDRESS not configured');
       return null;

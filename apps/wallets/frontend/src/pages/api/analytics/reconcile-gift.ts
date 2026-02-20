@@ -42,7 +42,7 @@ async function handler(
       token: process.env.UPSTASH_REDIS_REST_TOKEN!
     });
 
-    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL!);
+    const provider = new ethers.JsonRpcProvider((process.env.NEXT_PUBLIC_RPC_URL || '').trim());
     const escrowContract = new ethers.Contract(
       ESCROW_CONTRACT,
       [

@@ -69,7 +69,7 @@ async function getQuickBalances(client: any, address: string): Promise<{ eth: st
     
     // Get ETH balance using RPC provider (faster for native token)
     try {
-      const provider = new (await import('ethers')).ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+      const provider = new (await import('ethers')).ethers.JsonRpcProvider((process.env.NEXT_PUBLIC_RPC_URL || '').trim());
       const ethBalance = await provider.getBalance(address);
       balances.eth = (Number(ethBalance) / 1000000000000000000).toString();
     } catch (ethError) {

@@ -312,8 +312,8 @@ export async function verifyGaslessTransaction(
   error?: string;
 }> {
   try {
-    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
-    
+    const provider = new ethers.JsonRpcProvider((process.env.NEXT_PUBLIC_RPC_URL || '').trim());
+
     // Get transaction receipt with retry logic
     let receipt = null;
     for (let i = 0; i < 3; i++) {
@@ -441,7 +441,7 @@ export async function checkGaslessTransactionActuallySucceeded(
   blockNumber?: number;
 }> {
   try {
-    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+    const provider = new ethers.JsonRpcProvider((process.env.NEXT_PUBLIC_RPC_URL || '').trim());
     const currentBlock = await provider.getBlockNumber();
     
     console.log(`🔍 Checking last ${maxBlocksToCheck} blocks for potential gasless success...`);

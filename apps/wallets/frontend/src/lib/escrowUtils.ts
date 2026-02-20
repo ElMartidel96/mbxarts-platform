@@ -153,8 +153,8 @@ export async function getGiftIdFromTokenId(tokenId: string | number): Promise<nu
     console.log(`🔍 MAPPING FALLBACK: Searching blockchain events for tokenId ${tokenId} (last resort)`);
     
     // Use ethers for event querying (more reliable than ThirdWeb for this)
-    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL!);
-    
+    const provider = new ethers.JsonRpcProvider((process.env.NEXT_PUBLIC_RPC_URL || '').trim());
+
     // Event signature for GiftRegisteredFromMint
     const eventSignature = "GiftRegisteredFromMint(uint256,address,address,uint256,uint40,address,string,address)";
     const eventTopic = ethers.id(eventSignature);
@@ -296,8 +296,8 @@ async function systematicGiftSearch(tokenId: string | number): Promise<number | 
   try {
     console.log(`🔍 SYSTEMATIC SEARCH: Starting search for tokenId ${tokenIdStr}`);
     
-    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL!);
-    
+    const provider = new ethers.JsonRpcProvider((process.env.NEXT_PUBLIC_RPC_URL || '').trim());
+
     // Get total gift count from contract
     const giftCounterData = await provider.call({
       to: ESCROW_CONTRACT_ADDRESS,
@@ -397,7 +397,7 @@ export async function verifyNFTOwnership(
   let currentOwner: string | undefined;
   let lastError: string | undefined;
   
-  const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL!);
+  const provider = new ethers.JsonRpcProvider((process.env.NEXT_PUBLIC_RPC_URL || '').trim());
   const nftContractABI = ["function ownerOf(uint256 tokenId) view returns (address)"];
   const nftContractCheck = new ethers.Contract(nftContract, nftContractABI, provider);
   

@@ -79,7 +79,7 @@ async function getExpiredGifts(): Promise<{
   error?: string;
 }> {
   try {
-    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+    const provider = new ethers.JsonRpcProvider((process.env.NEXT_PUBLIC_RPC_URL || '').trim());
     const escrowContract = getEscrowContract();
     
     console.log('🔍 CRON AUTO-RETURN: Scanning for expired gifts...');

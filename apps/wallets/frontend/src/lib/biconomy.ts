@@ -7,7 +7,7 @@ import { privateKeyToAccount } from "viem/accounts";
 // Biconomy configuration for Base Mainnet - SERVER-SIDE ONLY
 export const biconomyConfig = {
   chainId: 8453, // Base Mainnet
-  rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
+  rpcUrl: (process.env.NEXT_PUBLIC_RPC_URL || '').trim(),
   
   // MEE CONFIGURATION - SERVER ONLY (NEVER EXPOSE TO CLIENT)
   meeApiKey: process.env.BICONOMY_MEE_API_KEY,

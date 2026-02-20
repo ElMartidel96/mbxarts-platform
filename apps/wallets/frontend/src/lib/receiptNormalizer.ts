@@ -52,7 +52,7 @@ export type ReceiptNormalizationResult = NormalizedReceipt | ReceiptNormalizatio
  * Create ethers provider for direct RPC access
  */
 function createProvider(): ethers.JsonRpcProvider {
-  const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL;
+  const rpcUrl = (process.env.NEXT_PUBLIC_RPC_URL || '').trim();
   
   if (!rpcUrl) {
     throw new Error('NEXT_PUBLIC_RPC_URL not configured - required for receipt normalization');

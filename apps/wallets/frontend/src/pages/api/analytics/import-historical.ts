@@ -328,7 +328,7 @@ export default withAdminAuth(handler);
 // Helper to get latest block number
 async function getLatestBlockNumber(): Promise<number> {
   try {
-    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+    const provider = new ethers.JsonRpcProvider((process.env.NEXT_PUBLIC_RPC_URL || '').trim());
     const blockNumber = await provider.getBlockNumber();
     return blockNumber;
   } catch (error) {

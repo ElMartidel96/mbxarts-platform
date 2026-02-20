@@ -206,10 +206,10 @@ async function fallbackGetLogsByBlock(
     console.log(`🔍 FALLBACK: Scanning block ${blockNumber} for GiftRegisteredFromMint event...`);
     
     // Create provider for direct RPC access
-    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
-    
+    const provider = new ethers.JsonRpcProvider((process.env.NEXT_PUBLIC_RPC_URL || '').trim());
+
     // Create event filter for GiftRegisteredFromMint
-    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS;
+    const escrowAddress = (process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS || '').trim();
     if (!escrowAddress) {
       return {
         success: false,
@@ -314,10 +314,10 @@ export async function fallbackGetLogsByRange(
     console.log('🔍 ENHANCED FALLBACK: Starting range scan for missing events...');
     
     // Create provider for direct RPC access
-    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
-    
+    const provider = new ethers.JsonRpcProvider((process.env.NEXT_PUBLIC_RPC_URL || '').trim());
+
     // Get escrow contract address
-    const escrowAddress = process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS;
+    const escrowAddress = (process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS || '').trim();
     if (!escrowAddress) {
       return {
         success: false,
@@ -513,7 +513,7 @@ export async function parseGiftRegisteredFromMintEvent(
           console.log(`📋 Log ${i}: Found GiftRegisteredFromMint event, applying strict filters...`);
           
           // FILTER 2: Contract address must match escrow contract (MANDATORY)
-          const expectedEscrowAddress = process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS;
+          const expectedEscrowAddress = (process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS || '').trim();
           if (!expectedEscrowAddress) {
             console.error('❌ CRITICAL: NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS not configured');
             return {

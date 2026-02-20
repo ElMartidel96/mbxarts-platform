@@ -12,7 +12,7 @@ import type { Account, Chain, Transport, WalletClient } from "viem";
 // Biconomy configuration for Base Mainnet - SERVER-SIDE ONLY
 export const biconomyConfig = {
   chainId: 8453, // Base Mainnet
-  rpcUrl: process.env.NEXT_PUBLIC_RPC_URL || 'https://mainnet.base.org',
+  rpcUrl: (process.env.NEXT_PUBLIC_RPC_URL || 'https://mainnet.base.org').trim(),
   
   // MEE CONFIGURATION - SERVER ONLY (NEVER EXPOSE TO CLIENT)
   meeApiKey: process.env.BICONOMY_MEE_API_KEY,

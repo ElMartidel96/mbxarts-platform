@@ -42,7 +42,7 @@ async function getWalletData(client: any, address: string) {
     } catch (ethError) {
       // Alternative method for native balance using RPC
       try {
-        const provider = new (await import('ethers')).ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+        const provider = new (await import('ethers')).ethers.JsonRpcProvider((process.env.NEXT_PUBLIC_RPC_URL || '').trim());
         const balance = await provider.getBalance(address);
         ethBalance = (Number(balance) / 1000000000000000000).toString();
       } catch (rpcError) {

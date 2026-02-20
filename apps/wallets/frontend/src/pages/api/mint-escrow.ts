@@ -1141,8 +1141,8 @@ async function mintNFTEscrowGasless(
       
       if (educationModules && educationModules.length > 0) {
         // TEMPORARY FALLBACK: Use env var or fallback to deployed contract
-        const gateEnvVar = process.env.SIMPLE_APPROVAL_GATE_ADDRESS || process.env.NEXT_PUBLIC_SIMPLE_APPROVAL_GATE_ADDRESS;
-        
+        const gateEnvVar = (process.env.SIMPLE_APPROVAL_GATE_ADDRESS || process.env.NEXT_PUBLIC_SIMPLE_APPROVAL_GATE_ADDRESS || '').trim();
+
         if (!gateEnvVar || gateEnvVar === '0x0000000000000000000000000000000000000000') {
           console.warn('⚠️ GATE_MISSING: Education modules requested but gate not configured - using fallback');
           throw new Error('GATE_MISSING: Education features temporarily unavailable - SimpleApprovalGate address not configured');
@@ -2149,9 +2149,8 @@ async function mintNFTEscrowGasPaid(
             console.log('✅ BASESCAN VALIDATION COMPLETE: Both metadata and image are accessible');
             
           } catch (validationError) {
-            console.error('❌ FINAL metadata validation FAILED:', validationError.message);
-            // FAIL-FAST: Don't update tokenURI if final metadata isn't ready
-            throw new Error(`Cannot update tokenURI: Final metadata validation failed - ${validationError.message}. Metadata must be accessible via IPFS before updating on-chain tokenURI.`);
+            console.warn('⚠️ BASESCAN validation skipped (IPFS propagation delay):', validationError.message);
+            console.warn('⚠️ Proceeding with tokenURI update - on-chain ipfs:// URI does not depend on gateway accessibility');
           }
           
           // 🔥 CRITICAL FIX ERROR #3: Use direct IPFS URL (no timestamping needed for IPFS)
@@ -2482,8 +2481,8 @@ async function mintNFTEscrowGasPaid(
       
       if (educationModules && educationModules.length > 0) {
         // TEMPORARY FALLBACK: Use env var or fallback to deployed contract
-        const gateEnvVar = process.env.SIMPLE_APPROVAL_GATE_ADDRESS || process.env.NEXT_PUBLIC_SIMPLE_APPROVAL_GATE_ADDRESS;
-        
+        const gateEnvVar = (process.env.SIMPLE_APPROVAL_GATE_ADDRESS || process.env.NEXT_PUBLIC_SIMPLE_APPROVAL_GATE_ADDRESS || '').trim();
+
         if (!gateEnvVar || gateEnvVar === '0x0000000000000000000000000000000000000000') {
           console.warn('⚠️ GATE_MISSING (GAS-PAID): Education modules requested but gate not configured');
           

@@ -210,8 +210,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 async function calculateTBAAddress(tokenId: string, nftContract: string): Promise<string> {
   try {
     // CRITICAL FIX: Use environment variables instead of hard-coded addresses
-    const REGISTRY_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758";
-    const IMPLEMENTATION_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358";
+    const REGISTRY_ADDRESS = (process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758").trim();
+    const IMPLEMENTATION_ADDRESS = (process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358").trim();
     const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "8453");
     
     // Generate salt
