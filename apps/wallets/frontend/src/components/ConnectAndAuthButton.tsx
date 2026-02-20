@@ -6,8 +6,45 @@ import { authenticateWithSiwe, getAuthState, isAuthValid } from '../lib/siweClie
 import { SafeThirdwebWrapper } from './SafeThirdwebWrapper';
 import { MobileWalletRedirect } from './ui/MobileWalletRedirect';
 import { useTranslations } from 'next-intl';
-
 import { isMobileDevice } from '../lib/mobileRpcHandler';
+
+// Fallback English translations for Pages Router (no NextIntlClientProvider)
+const CONNECT_AUTH_FALLBACK: Record<string, string> = {
+  'configPending': 'Wallet configuration pending. Please contact administrator.',
+  'connectModal.title': 'Connect Wallet',
+  'connectModal.welcome': 'CryptoGift Wallets',
+  'connectModal.subtitle': 'Connect your wallet to get started',
+  'switchNetwork': 'Switch Network',
+  'securitySignature.title': 'Security Signature Required',
+  'securitySignature.description': 'Generate your temporary authentication token to protect your transactions',
+  'authenticate.button': 'Sign Authentication Message',
+  'authenticate.authenticating': 'Authenticating... (a few seconds)',
+  'tokenActivation.title': 'Your Security Token is being Activated',
+  'tokenActivation.description': 'We are creating an authentication token that will expire in 30 minutes to protect all your transactions.',
+  'tokenActivation.benefit1': 'Prevents malicious attacks',
+  'tokenActivation.benefit2': 'Protects your funds',
+  'tokenActivation.benefit3': 'Expires automatically for security',
+  'tokenActivation.mobileTitle': 'On mobile:',
+  'tokenActivation.mobileHint': "If it doesn't appear automatically, open your wallet app and look for the pending signature message.",
+  'tokenActivation.desktopHint': 'Please sign the message in your wallet when it appears.',
+  'whySign.title': 'Why do we need this signature?',
+  'whySign.description': 'This signature generates a temporary security token that acts as an additional layer of protection against threats.',
+  'whySign.tokenInfo': 'Temporary Token: Expires in 30 minutes',
+  'whySign.securityInfo': 'Maximum Security: Protects against malicious attacks',
+  'whySign.standardInfo': 'SIWE Standard: Certified Sign-In With Ethereum',
+  'whySign.transactionInfo': 'Secure Transactions: All operations will be signed with this token',
+  'whySign.footer': 'This advanced security measure ensures maximum protection of your funds.',
+  'authenticated.authenticating': 'Authenticating...',
+  'authenticated.authenticated': 'Authenticated',
+  'authenticated.success': 'Authentication Successful!',
+  'authenticated.continue': 'You can continue with your operation',
+  'tokenStatus.title': 'Your Security Token is Active',
+  'tokenStatus.description': 'Your temporary token is protecting all transactions. It will automatically expire in 30 minutes for security.',
+  'securityInfo.siwe': 'Your wallet will connect securely using the SIWE standard (Sign-In With Ethereum)',
+  'securityInfo.privacy': 'All data remains private and secure',
+  'walletUnavailable': 'Wallet unavailable',
+  'reAuth': 'Re-authenticate',
+};
 
 // R1: Smart deeplink handler - POST authentication only
 // No longer interferes with ThirdWeb v5 wallet connection flow
@@ -49,7 +86,15 @@ const ConnectAndAuthButtonInner: React.FC<ConnectAndAuthButtonProps> = ({
   className = "",
   showAuthStatus = false
 }) => {
-  const t = useTranslations('connectAuth');
+  // Safe translations: try next-intl first, fall back to English strings for Pages Router
+  let t: (key: string) => string;
+  try {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    t = useTranslations('connectAuth');
+  } catch {
+    // NextIntlClientProvider not available (Pages Router) - use fallback English strings
+    t = (key: string) => CONNECT_AUTH_FALLBACK[key] || key;
+  }
   // Always call useActiveAccount - Error Boundary will handle context errors
   const account = useActiveAccount();
   const [isAuthenticated, setIsAuthenticated] = useState(false);

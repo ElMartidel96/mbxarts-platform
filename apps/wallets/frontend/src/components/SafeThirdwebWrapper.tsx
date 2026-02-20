@@ -23,17 +23,12 @@ export class SafeThirdwebWrapper extends Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
-    // Check if it's a ThirdwebProvider context error
-    if (error.message.includes('useActiveAccount must be used within <ThirdwebProvider>')) {
-      return { hasError: true, error };
-    }
-    
-    // For other errors, don't catch them
-    throw error;
+    // Catch all rendering errors (ThirdwebProvider context, next-intl missing provider, etc.)
+    return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.warn('⚠️ ThirdwebProvider context error caught:', error.message);
+    console.warn('⚠️ ConnectAndAuthButton rendering error caught:', error.message);
     console.warn('Error info:', errorInfo);
   }
 
