@@ -793,6 +793,11 @@ const client = createThirdwebClient({
   clientId: process.env.NEXT_PUBLIC_TW_CLIENT_ID!
 });
 
+// Resolve contract addresses with mainnet fallbacks
+// CRITICAL: Ensures correct addresses even if Vercel env vars are stale/missing
+const NFT_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS || '0x2d46342E320Ad73874636dD613ee92Ba462ff2e2';
+const BASE_MAINNET_RPC = process.env.NEXT_PUBLIC_RPC_URL || 'https://mainnet.base.org';
+
 // Initialize Redis client for salt persistence
 let redis: any = null;
 try {
@@ -983,7 +988,7 @@ async function mintNFTEscrowGasless(
     const nftContract = getContract({
       client,
       chain: base,
-      address: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!
+      address: NFT_CONTRACT_ADDRESS
     });
     
     // Step 8: HOTFIX - Mint to target address (creator for escrow, direct recipient for direct mints)
@@ -1034,44 +1039,45 @@ async function mintNFTEscrowGasless(
     console.log('🔍 Starting robust token ID extraction...');
     
     try {
-      const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
-      const receipt = await provider.getTransactionReceipt(mintResult.transactionHash);
-      
-      if (!receipt) {
-        throw new Error(`No transaction receipt found for hash: ${mintResult.transactionHash}`);
+      // Use the already-confirmed ThirdWeb receipt instead of re-fetching via ethers
+      // This avoids chain mismatch if NEXT_PUBLIC_RPC_URL points to wrong network
+      const receipt = mintReceipt;
+
+      if (!receipt || !receipt.logs) {
+        throw new Error(`No logs in confirmed receipt for hash: ${mintResult.transactionHash}`);
       }
-      
+
       console.log(`🔍 Examining ${receipt.logs.length} logs for Transfer event...`);
-      
+
       // Find Transfer event with strict validation
-      const transferLog = receipt.logs.find(log => {
-        const isCorrectContract = log.address.toLowerCase() === process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!.toLowerCase();
+      const transferLog = receipt.logs.find((log: any) => {
+        const isCorrectContract = log.address.toLowerCase() === NFT_CONTRACT_ADDRESS.toLowerCase();
         const isTransferEvent = log.topics[0] === transferEventSignature;
         const hasEnoughTopics = log.topics.length >= 4;
-        
+
         console.log(`🔍 Log check - Contract: ${isCorrectContract}, Event: ${isTransferEvent}, Topics: ${hasEnoughTopics} (${log.topics.length})`);
-        
+
         return isCorrectContract && isTransferEvent && hasEnoughTopics;
       });
-      
+
       if (!transferLog) {
         throw new Error(`No valid Transfer event found in transaction ${mintResult.transactionHash}. Found ${receipt.logs.length} logs but none matched Transfer pattern.`);
       }
-      
+
       // Use enhanced tokenId extraction with comprehensive validation
       const tokenIdValidation = extractTokenIdFromTransferEvent(transferLog);
-      
+
       if (!tokenIdValidation.success) {
         console.error('❌ ENHANCED TOKEN ID EXTRACTION FAILED:', tokenIdValidation.error);
-        
+
         // Run diagnostic to understand the issue
         const diagnostic = await diagnoseTokenIdZeroIssue(
           Array.from(receipt.logs || []),
-          process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!
+          NFT_CONTRACT_ADDRESS
         );
-        
+
         console.error('🔍 DIAGNOSTIC RESULTS:', diagnostic);
-        
+
         throw new TokenIdZeroError(
           `Enhanced tokenId extraction failed: ${tokenIdValidation.error}`,
           tokenIdValidation.source,
@@ -1079,10 +1085,10 @@ async function mintNFTEscrowGasless(
           diagnostic
         );
       }
-      
+
       tokenId = tokenIdValidation.tokenId!;
       console.log('✅ ENHANCED TOKEN ID EXTRACTION SUCCESS:', tokenId);
-      
+
     } catch (error) {
       console.error('❌ Transfer event extraction failed:', error);
       // NO FALLBACK - Fail fast and clear
@@ -1113,7 +1119,7 @@ async function mintNFTEscrowGasless(
       console.log('🔍 PRE-CHECK: Verifying NFT is owned by escrow before registration...');
       
       const ownershipResult = await verifyNFTOwnership(
-        process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
+        NFT_CONTRACT_ADDRESS,
         tokenId,
         ESCROW_CONTRACT_ADDRESS!,
         10, // Increased max attempts from 5 to 10
@@ -1158,7 +1164,7 @@ async function mintNFTEscrowGasless(
         tokenId: tokenId,
         tokenIdType: typeof tokenId,
         tokenIdBigInt: BigInt(tokenId).toString(),
-        contract: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!.slice(0,10) + '...',
+        contract: NFT_CONTRACT_ADDRESS.slice(0,10) + '...',
         creator: creatorAddress.slice(0,10) + '...',
         timeframeDays,
         giftMessageLength: giftMessage.length,
@@ -1168,7 +1174,7 @@ async function mintNFTEscrowGasless(
       
       const registerGiftTransaction = prepareRegisterGiftMintedCall(
         tokenId,
-        process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
+        NFT_CONTRACT_ADDRESS,
         creatorAddress, // ← NEW: Pass original creator address
         password,
         salt,
@@ -1258,7 +1264,7 @@ async function mintNFTEscrowGasless(
       const eventResult = await parseGiftEventWithRetry(
         receiptForParsing,
         tokenId,
-        process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!
+        NFT_CONTRACT_ADDRESS
       );
       
       if (!eventResult.success) {
@@ -1283,7 +1289,7 @@ async function mintNFTEscrowGasless(
         await storeGiftMapping(
           tokenId, 
           actualGiftId, 
-          process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
+          NFT_CONTRACT_ADDRESS,
           parseInt(process.env.NEXT_PUBLIC_CHAIN_ID!),
           {
             educationModules: educationModules || [],
@@ -1316,7 +1322,7 @@ async function mintNFTEscrowGasless(
           tokenId,
           actualGiftId,
           creatorAddress,
-          process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
+          NFT_CONTRACT_ADDRESS,
           6 // Increased from 3 to 6 retries for race condition recovery
         );
         
@@ -1404,10 +1410,10 @@ async function mintNFTEscrowGasless(
       
       // Step 11: Verify NFT is in escrow contract (should already be there from direct mint)
       console.log('🔍 Verifying NFT is in escrow contract (V2 direct mint)...');
-      const providerPostGasless = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+      const providerPostGasless = new ethers.JsonRpcProvider(BASE_MAINNET_RPC);
       const nftContractABIPostGasless = ["function ownerOf(uint256 tokenId) view returns (address)"];
       const nftContractCheckPostGasless = new ethers.Contract(
-        process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
+        NFT_CONTRACT_ADDRESS,
         nftContractABIPostGasless,
         providerPostGasless
       );
@@ -1548,7 +1554,7 @@ async function mintNFTDirectly(
     const nftContract = getContract({
       client,
       chain: base,
-      address: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!
+      address: NFT_CONTRACT_ADDRESS
     });
     
     // Prepare mint transaction for gasless execution
@@ -1590,13 +1596,13 @@ async function mintNFTDirectly(
     const transferEventSignature = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
     
     try {
-      const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
-      const receipt = await provider.getTransactionReceipt(mintResult.transactionHash);
-      
-      if (receipt) {
+      // Use the already-confirmed ThirdWeb receipt instead of re-fetching via ethers
+      const receipt = mintReceipt;
+
+      if (receipt && receipt.logs) {
         for (const log of receipt.logs) {
           if (
-            log.address.toLowerCase() === process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!.toLowerCase() &&
+            log.address.toLowerCase() === NFT_CONTRACT_ADDRESS.toLowerCase() &&
             log.topics[0] === transferEventSignature &&
             log.topics.length >= 4
           ) {
@@ -1731,7 +1737,7 @@ async function mintNFTEscrowGasPaid(
     const nftContract = getContract({
       client,
       chain: base,
-      address: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!
+      address: NFT_CONTRACT_ADDRESS
     });
     
     // Determine if this is an escrow mint (password provided) or direct mint (no password)
@@ -1787,44 +1793,45 @@ async function mintNFTEscrowGasPaid(
     console.log('🔍 Starting robust token ID extraction...');
     
     try {
-      const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
-      const receipt = await provider.getTransactionReceipt(mintResult.transactionHash);
-      
-      if (!receipt) {
-        throw new Error(`No transaction receipt found for hash: ${mintResult.transactionHash}`);
+      // Use the already-confirmed ThirdWeb receipt instead of re-fetching via ethers
+      // This avoids chain mismatch if NEXT_PUBLIC_RPC_URL points to wrong network
+      const receipt = mintReceipt;
+
+      if (!receipt || !receipt.logs) {
+        throw new Error(`No logs in confirmed receipt for hash: ${mintResult.transactionHash}`);
       }
-      
+
       console.log(`🔍 Examining ${receipt.logs.length} logs for Transfer event...`);
-      
+
       // Find Transfer event with strict validation
-      const transferLog = receipt.logs.find(log => {
-        const isCorrectContract = log.address.toLowerCase() === process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!.toLowerCase();
+      const transferLog = receipt.logs.find((log: any) => {
+        const isCorrectContract = log.address.toLowerCase() === NFT_CONTRACT_ADDRESS.toLowerCase();
         const isTransferEvent = log.topics[0] === transferEventSignature;
         const hasEnoughTopics = log.topics.length >= 4;
-        
+
         console.log(`🔍 Log check - Contract: ${isCorrectContract}, Event: ${isTransferEvent}, Topics: ${hasEnoughTopics} (${log.topics.length})`);
-        
+
         return isCorrectContract && isTransferEvent && hasEnoughTopics;
       });
-      
+
       if (!transferLog) {
         throw new Error(`No valid Transfer event found in transaction ${mintResult.transactionHash}. Found ${receipt.logs.length} logs but none matched Transfer pattern.`);
       }
-      
+
       // Use enhanced tokenId extraction with comprehensive validation
       const tokenIdValidation = extractTokenIdFromTransferEvent(transferLog);
-      
+
       if (!tokenIdValidation.success) {
         console.error('❌ ENHANCED TOKEN ID EXTRACTION FAILED:', tokenIdValidation.error);
-        
+
         // Run diagnostic to understand the issue
         const diagnostic = await diagnoseTokenIdZeroIssue(
           Array.from(receipt.logs || []),
-          process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!
+          NFT_CONTRACT_ADDRESS
         );
-        
+
         console.error('🔍 DIAGNOSTIC RESULTS:', diagnostic);
-        
+
         throw new TokenIdZeroError(
           `Enhanced tokenId extraction failed: ${tokenIdValidation.error}`,
           tokenIdValidation.source,
@@ -1832,20 +1839,20 @@ async function mintNFTEscrowGasPaid(
           diagnostic
         );
       }
-      
+
       tokenId = tokenIdValidation.tokenId!;
       console.log('✅ ENHANCED TOKEN ID EXTRACTION SUCCESS:', tokenId);
-      
+
     } catch (error) {
       console.error('❌ Transfer event extraction failed:', error);
       // NO FALLBACK - Fail fast and clear
       throw new Error(`Token ID extraction failed: ${error.message}. This prevents double minting and ensures data integrity.`);
     }
-    
+
     if (!tokenId) {
       throw new Error('Failed to extract token ID from mint transaction');
     }
-    
+
     // CRITICAL FIX: Update metadata with real tokenId (ERROR 3 SOLUTION)
     console.log('📝 METADATA UPDATE (GAS-PAID): Creating final metadata with real tokenId:', tokenId);
     
@@ -2009,7 +2016,7 @@ async function mintNFTEscrowGasPaid(
         const nftContract = getContract({
           client,
           chain: base,
-          address: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!
+          address: NFT_CONTRACT_ADDRESS
         });
         
         // Get deployer account for contract update (moved outside try for retry access)
@@ -2019,7 +2026,7 @@ async function mintNFTEscrowGasPaid(
         });
         
         // UNIVERSAL COMPATIBILITY FIX: Use BaseScan-optimized endpoint for maximum compatibility
-        const contractAddress = process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!;
+        const contractAddress = NFT_CONTRACT_ADDRESS;
         
         // CRITICAL VALIDATION: Ensure publicBaseUrl is safe for tokenURI generation
         if (!publicBaseUrl || publicBaseUrl.includes('localhost') || publicBaseUrl.includes('127.0.0.1')) {
@@ -2405,7 +2412,7 @@ async function mintNFTEscrowGasPaid(
           }
           
           const finalNftMetadata = createNFTMetadata({
-            contractAddress: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
+            contractAddress: NFT_CONTRACT_ADDRESS,
             tokenId: tokenId,
             name: `CryptoGift NFT #${tokenId}`,
             description: giftMessage || "Un regalo cripto único creado con amor",
@@ -2450,7 +2457,7 @@ async function mintNFTEscrowGasPaid(
       console.log('🔍 PRE-CHECK: Verifying NFT is owned by escrow before registration...');
       
       const ownershipResult = await verifyNFTOwnership(
-        process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
+        NFT_CONTRACT_ADDRESS,
         tokenId,
         ESCROW_CONTRACT_ADDRESS!,
         10, // Increased max attempts from 5 to 10
@@ -2499,7 +2506,7 @@ async function mintNFTEscrowGasPaid(
         tokenId: tokenId,
         tokenIdType: typeof tokenId,
         tokenIdBigInt: BigInt(tokenId).toString(),
-        contract: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!.slice(0,10) + '...',
+        contract: NFT_CONTRACT_ADDRESS.slice(0,10) + '...',
         creator: creatorAddress.slice(0,10) + '...',
         timeframeDays,
         giftMessageLength: giftMessage.length,
@@ -2509,7 +2516,7 @@ async function mintNFTEscrowGasPaid(
       
       const registerGiftTransaction = prepareRegisterGiftMintedCall(
         tokenId,
-        process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
+        NFT_CONTRACT_ADDRESS,
         creatorAddress, // Original creator
         password,
         salt,
@@ -2585,10 +2592,10 @@ async function mintNFTEscrowGasPaid(
       
       // Step: Verify NFT is in escrow contract (should already be there from direct mint)
       console.log('🔍 Verifying NFT is in escrow contract (V2 direct mint)...');
-      const providerPostGasPaid = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+      const providerPostGasPaid = new ethers.JsonRpcProvider(BASE_MAINNET_RPC);
       const nftContractABIPostGasPaid = ["function ownerOf(uint256 tokenId) view returns (address)"];
       const nftContractCheckPostGasPaid = new ethers.Contract(
-        process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
+        NFT_CONTRACT_ADDRESS,
         nftContractABIPostGasPaid,
         providerPostGasPaid
       );
@@ -2622,7 +2629,7 @@ async function mintNFTEscrowGasPaid(
       const eventResultGasPaid = await parseGiftEventWithRetry(
         normalizedGasPaidReceipt,
         tokenId,
-        process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!
+        NFT_CONTRACT_ADDRESS
       );
       
       if (!eventResultGasPaid.success) {
@@ -2647,7 +2654,7 @@ async function mintNFTEscrowGasPaid(
         await storeGiftMapping(
           tokenId, 
           actualGiftIdGasPaid, 
-          process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
+          NFT_CONTRACT_ADDRESS,
           parseInt(process.env.NEXT_PUBLIC_CHAIN_ID!),
           {
             educationModules: educationModules || [],
@@ -2680,7 +2687,7 @@ async function mintNFTEscrowGasPaid(
           tokenId,
           actualGiftIdGasPaid,
           creatorAddress,
-          process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
+          NFT_CONTRACT_ADDRESS,
           6 // Increased from 3 to 6 retries for race condition recovery
         );
         
@@ -3348,7 +3355,7 @@ async function storeMetadataInRedisEarly(
     }
     
     const finalNftMetadata = createNFTMetadata({
-      contractAddress: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS!,
+      contractAddress: NFT_CONTRACT_ADDRESS,
       tokenId: tokenId,
       name: `CryptoGift NFT #${tokenId}`,
       description: giftMessage || "Un regalo cripto único creado con amor",
