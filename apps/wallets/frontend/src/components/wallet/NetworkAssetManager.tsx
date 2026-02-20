@@ -33,7 +33,7 @@ interface NetworkAssetManagerProps {
 export function NetworkAssetManager({
   className = '',
   compactMode = false,
-  requiredChainId = 8453, // Base Sepolia default
+  requiredChainId = 8453, // Base Mainnet default
 }: NetworkAssetManagerProps) {
   const chain = useActiveWalletChain();
   const currentChainId = chain?.id;
@@ -230,7 +230,7 @@ export function NetworkAssetManager({
               )}
             </button>
             
-            {/* Base Sepolia */}
+            {/* Base Mainnet */}
             <button
               onClick={addBaseSepolia}
               disabled={pendingNetwork === 8453}
@@ -263,8 +263,8 @@ export function NetworkAssetManager({
                   <span style={{ color: 'white', fontWeight: 'bold', fontSize: '14px' }}>B</span>
                 </div>
                 <div style={{ textAlign: 'left' }}>
-                  <p style={{ fontWeight: 500, fontSize: '14px' }}>Base Sepolia</p>
-                  <p style={{ fontSize: '12px', color: '#6b7280' }}>Testnet</p>
+                  <p style={{ fontWeight: 500, fontSize: '14px' }}>Base</p>
+                  <p style={{ fontSize: '12px', color: '#6b7280' }}>Mainnet</p>
                 </div>
               </div>
               {pendingNetwork === 8453 ? (

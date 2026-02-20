@@ -274,7 +274,7 @@ export async function trackGiftClaimed(params: {
         totalTimeToClaimMinutes: params.totalTimeToClaimMinutes,
         modulesCompleted: params.modulesCompleted,
         gasUsed: params.gasUsed || 0,
-        networkUsed: params.networkUsed || 'Base Sepolia',
+        networkUsed: params.networkUsed || 'Base',
         tbaAddress: params.tbaAddress,
         value: params.value,
         currency: params.currency || 'USD',

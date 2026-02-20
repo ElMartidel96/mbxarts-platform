@@ -482,7 +482,7 @@ export const TBAWalletInterface: React.FC<WalletInterfaceProps> = ({
                 </div>
                 <div className="flex justify-between">
                   <span>Network</span>
-                  <span className="text-gray-600">Base Sepolia</span>
+                  <span className="text-gray-600">Base</span>
                 </div>
               </div>
             </div>

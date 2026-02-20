@@ -94,7 +94,7 @@ export default function NetworkAssetsPage() {
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-blue-500"></span>
-              <span><strong>USDC:</strong> Stablecoin on Base Sepolia</span>
+              <span><strong>USDC:</strong> Stablecoin on Base</span>
             </li>
             <li className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-purple-500"></span>

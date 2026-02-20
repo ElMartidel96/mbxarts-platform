@@ -207,7 +207,7 @@ export async function trackReferralActivation(
     }
     
     // Add gift record with realistic pending status (testnet = pending blockchain confirmation)
-    const isTestnet = process.env.NEXT_PUBLIC_CHAIN_ID === '8453'; // Base Sepolia
+    const isTestnet = process.env.NEXT_PUBLIC_CHAIN_ID === '8453'; // Base Mainnet
     const giftRecord: GiftRecord = {
       id: `gift_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       tokenId: giftData.tokenId,

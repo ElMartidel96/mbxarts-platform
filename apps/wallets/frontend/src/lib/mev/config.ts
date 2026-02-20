@@ -2,7 +2,7 @@
  * MEV Protection Configuration
  * Chain-aware settings for Flashbots Protect RPC
  * 
- * IMPORTANT: Base and Base Sepolia are NOT supported yet
+ * IMPORTANT: Base Mainnet and Base Sepolia are NOT supported yet
  * Only Ethereum mainnet (1) and Sepolia (11155111) have Protect RPC
  */
 

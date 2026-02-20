@@ -1341,7 +1341,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
           {
             trait_type: "Network",
-            value: "Base Sepolia"
+            value: "Base"
           },
           {
             trait_type: "Wallet Type",

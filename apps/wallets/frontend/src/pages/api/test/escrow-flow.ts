@@ -550,7 +550,7 @@ function analyzeCriticalIssues(results: TestResult[]): {
   }
   
   if (!contractTest?.success) {
-    recommendations.push('Verify escrow contract deployment on Base Sepolia network');
+    recommendations.push('Verify escrow contract deployment on Base network');
   }
   
   if (!cronTest?.success) {

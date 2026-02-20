@@ -19,11 +19,11 @@ import { Competition, APIResponse, TransparencyEvent } from '../types';
 // =============================================================================
 
 /**
- * Chainlink VRF v2.5 Configuration for Base Sepolia
+ * Chainlink VRF v2.5 Configuration for Base Mainnet
  * @see https://docs.chain.link/vrf/v2-5/supported-networks
  */
 export const CHAINLINK_CONFIG = {
-  // Base Sepolia VRF v2.5
+  // Base Mainnet VRF v2.5
   base: {
     vrfCoordinator: '0xd691f04bc0C9a24Edb78af9E005Cf85768F694C9',
     linkToken: '0xE4aB69C077896252FAFBD49EFD26B5D171A32410',

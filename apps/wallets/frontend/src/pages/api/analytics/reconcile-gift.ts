@@ -101,7 +101,7 @@ async function handler(
       giftId,
       tokenId,
       NFT_CONTRACT,
-      8453, // Base Sepolia
+      8453, // Base Mainnet
       {
         creator,
         createdAt: blockTimestamp

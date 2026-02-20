@@ -55,7 +55,7 @@ export const PUSH_CONFIG = {
     },
   },
   
-  // Chain configuration (Base Sepolia for staging)
+  // Chain configuration (Base Mainnet)
   chain: {
     staging: {
       id: 11155111, // Sepolia (Push staging uses Sepolia)

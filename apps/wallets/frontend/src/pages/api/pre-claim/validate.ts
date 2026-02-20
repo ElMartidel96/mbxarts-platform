@@ -290,7 +290,7 @@ async function validatePasswordWithContract(
       saltToUse, // Use the correct salt (original or fallback)
       giftId,
       ESCROW_CONTRACT_ADDRESS!,
-      8453 // Base Sepolia chain ID
+      8453 // Base Mainnet chain ID
     );
     
     console.log('🔐 HASH GENERATION RESULT:', {

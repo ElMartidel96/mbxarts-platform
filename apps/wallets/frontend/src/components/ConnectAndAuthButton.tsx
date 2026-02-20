@@ -149,11 +149,11 @@ const ConnectAndAuthButtonInner: React.FC<ConnectAndAuthButtonProps> = ({
         if (isMobile) {
           // Check current network for logging purposes only
           const currentChainId = (account as any)?.chainId;
-          const requiredChainId = 8453; // Base Sepolia
+          const requiredChainId = 8453; // Base Mainnet
           
           if (currentChainId && currentChainId !== requiredChainId) {
             console.log('🔗 User on different network:', currentChainId, 'vs required:', requiredChainId);
-            console.log('📱 On mainnet, this will auto-resolve. On testnet, user must configure Base Sepolia manually.');
+            console.log('📱 On mainnet, this will auto-resolve. On testnet, user must configure Base manually.');
           } else {
             console.log('✅ User on correct network:', currentChainId);
           }

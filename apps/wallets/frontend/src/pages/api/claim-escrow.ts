@@ -186,7 +186,7 @@ async function validateClaimRequest(
     // CRITICAL FIX: Generate password hash EXACTLY as contract does
     // Contract: keccak256(abi.encodePacked(password, salt, giftId, address(this), block.chainid))
     const contractAddress = ESCROW_CONTRACT_ADDRESS;
-    const chainId = 8453; // Base Sepolia
+    const chainId = 8453; // Base Mainnet
     const providedPasswordHash = generatePasswordHash(password, salt, giftId, contractAddress, chainId);
     
     // SECURITY: Log validation status without exposing hash data

@@ -48,7 +48,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
         {
           trait_type: "Network",
-          value: "Base Sepolia"
+          value: "Base"
         }
       ]
     };
@@ -107,7 +107,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         method: "function createAccount(address implementation, uint256 chainId, address tokenContract, uint256 tokenId, uint256 salt, bytes calldata initData) external returns (address)",
         params: [
           "0x2d25602551487c3f3354dd80d76d54383a243358", // Implementation ERC-6551
-          BigInt(8453), // Base Sepolia chain ID
+          BigInt(8453), // Base Mainnet chain ID
           process.env.NEXT_PUBLIC_FACTORY_6551_ADDRESS!, // Token contract (self-reference)
           BigInt(tokenId), // Unique token ID
           BigInt(0), // Salt

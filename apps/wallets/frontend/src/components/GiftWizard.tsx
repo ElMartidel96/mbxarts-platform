@@ -188,7 +188,7 @@ export const GiftWizard: React.FC<GiftWizardProps> = ({ isOpen, onClose, referre
     estimatedGas: '21000',
     gasPrice: '0.1',
     totalCost: '0.0021',
-    networkName: 'Base Sepolia'
+    networkName: 'Base'
   });
 
   // Calculate fees
@@ -451,14 +451,14 @@ export const GiftWizard: React.FC<GiftWizardProps> = ({ isOpen, onClose, referre
         estimatedGas,
         gasPrice,
         totalCost,
-        networkName: 'Base Sepolia'
+        networkName: 'Base'
       });
       
       addStep('GIFT_WIZARD', 'GAS_MODAL_SHOWN', {
         estimatedGas,
         gasPrice,
         totalCost,
-        networkName: 'Base Sepolia'
+        networkName: 'Base'
       }, 'success');
       
       setShowGasModal(true);
@@ -509,7 +509,7 @@ export const GiftWizard: React.FC<GiftWizardProps> = ({ isOpen, onClose, referre
     formData.append('file', imageFileToUpload);
     formData.append('filteredUrl', wizardData.filteredImageUrl);
     
-    const uploadResponse = await fetch('/api/upload', {
+    const uploadResponse = await makeAuthenticatedRequest('/api/upload', {
       method: 'POST',
       body: formData,
     });
@@ -847,11 +847,11 @@ export const GiftWizard: React.FC<GiftWizardProps> = ({ isOpen, onClose, referre
         hasFilteredUrl: !!wizardData.filteredImageUrl
       });
       
-      const uploadResponse = await fetch('/api/upload', {
+      const uploadResponse = await makeAuthenticatedRequest('/api/upload', {
         method: 'POST',
         body: formData,
       });
-      
+
       console.log('📤 GAS PAID: Upload response received:', {
         status: uploadResponse.status,
         ok: uploadResponse.ok,

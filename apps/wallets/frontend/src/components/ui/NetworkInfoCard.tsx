@@ -18,7 +18,7 @@ export function NetworkInfoCard() {
       description: 'Red principal de Base para transacciones reales'
     },
     sepolia: {
-      name: 'Base Sepolia Testnet',
+      name: 'Base',
       chainId: '8453',
       rpcUrl: 'https://sepolia.base.org',
       symbol: 'ETH',

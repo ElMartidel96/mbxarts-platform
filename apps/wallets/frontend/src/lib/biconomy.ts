@@ -4,9 +4,9 @@ import { createWalletClient, http } from "viem";
 import { base } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
 
-// Biconomy configuration for Base Sepolia - SERVER-SIDE ONLY
+// Biconomy configuration for Base Mainnet - SERVER-SIDE ONLY
 export const biconomyConfig = {
-  chainId: 8453, // Base Sepolia
+  chainId: 8453, // Base Mainnet
   rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
   
   // MEE CONFIGURATION - SERVER ONLY (NEVER EXPOSE TO CLIENT)

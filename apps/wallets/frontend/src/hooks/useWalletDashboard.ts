@@ -94,12 +94,12 @@ export function useWalletDashboard() {
       // If chain doesn't exist, try to add it
       if (error.code === 4902) {
         if (targetChainId === 8453) {
-          // Add Base Sepolia
+          // Add Base
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [{
               chainId: '0x14a34',
-              chainName: 'Base Sepolia',
+              chainName: 'Base',
               nativeCurrency: {
                 name: 'Ethereum',
                 symbol: 'ETH',
@@ -151,7 +151,7 @@ export function useWalletDashboard() {
   const checkFeatureStatus = useCallback(() => {
     const statusReport = {
       connection: state.isConnected ? '✅ Connected' : '❌ Not connected',
-      network: state.chainId === 8453 ? '✅ Base Sepolia' : `⚠️ Wrong network (${state.chainId})`,
+      network: state.chainId === 8453 ? '✅ Base' : `⚠️ Wrong network (${state.chainId})`,
       mevProtection: state.features.mevProtection ? '✅ Available' : '⚠️ Not available on this network',
       approvals: state.features.approvals ? '✅ Enabled' : '❌ Disabled',
       networkManager: state.features.networkManager ? '✅ Enabled' : '❌ Disabled',

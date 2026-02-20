@@ -55,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       amount, 
       tbaAddress, 
       executeSwap = false,
-      chainId = 8453 // Base Sepolia for testing
+      chainId = 8453 // Base Mainnet
     } = req.body;
 
     if (!from || !to || !amount) {

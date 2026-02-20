@@ -216,7 +216,7 @@ export const SendModal: React.FC<SendModalProps> = ({
                 </div>
                 <div className="flex justify-between">
                   <span>Network:</span>
-                  <span>Base Sepolia</span>
+                  <span>Base</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Gas:</span>

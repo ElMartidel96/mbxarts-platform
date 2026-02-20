@@ -16,11 +16,11 @@ interface NetworkOptimizationPromptProps {
 const getSafeNetworkSwitchInstructions = (requiredChainId: number) => {
   const networks: Record<number, { name: string; chainId: string; rpcUrl: string; symbol: string; explorer: string }> = {
     8453: {
-      name: 'Base Sepolia',
-      chainId: '0x14a34',
-      rpcUrl: 'https://sepolia.base.org',
+      name: 'Base',
+      chainId: '0x2105',
+      rpcUrl: 'https://mainnet.base.org',
       symbol: 'ETH',
-      explorer: 'https://sepolia.basescan.org'
+      explorer: 'https://basescan.org'
     },
     8453: {
       name: 'Base Mainnet',

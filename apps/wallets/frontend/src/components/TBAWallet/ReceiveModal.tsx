@@ -134,12 +134,8 @@ export const ReceiveModal: React.FC<ReceiveModalProps> = ({
             <h4 className="text-sm font-medium text-blue-800 mb-2">📡 Supported Networks</h4>
             <div className="space-y-1 text-xs text-blue-700">
               <div className="flex justify-between">
-                <span>• Base Sepolia (Testnet)</span>
+                <span>• Base</span>
                 <span className="text-green-600">✓ Active</span>
-              </div>
-              <div className="flex justify-between">
-                <span>• Base Mainnet</span>
-                <span className="text-gray-500">Coming Soon</span>
               </div>
             </div>
           </div>

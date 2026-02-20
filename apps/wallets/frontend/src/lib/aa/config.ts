@@ -56,7 +56,7 @@ export const AA_CONFIG = {
       [CHAIN_IDS.BASE_SEPOLIA]: [
         {
           symbol: 'USDC',
-          address: '0x036CbD53842c5426634e7929541eC2318f3dCF7e', // USDC on Base Sepolia
+          address: '0x036CbD53842c5426634e7929541eC2318f3dCF7e', // USDC on Base Mainnet
           decimals: 6,
           icon: '💵',
         },

@@ -127,7 +127,7 @@ const KLEROS_ADDRESSES: Record<number, {
     arbitrable: '0x0000000000000000000000000000000000000000',
     evidenceModule: '0x0000000000000000000000000000000000000000'
   },
-  // Base Sepolia (testnet - legacy)
+  // Base Mainnet (duplicate entry - legacy)
   8453: {
     court: '0x0000000000000000000000000000000000000000',  // Not deployed
     arbitrable: '0x0000000000000000000000000000000000000000',

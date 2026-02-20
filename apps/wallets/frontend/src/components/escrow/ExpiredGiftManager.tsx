@@ -430,7 +430,7 @@ export const ExpiredGiftManager: React.FC<ExpiredGiftManagerProps> = ({
           description: "An expired NFT gift that can be returned to the creator's wallet.",
           attributes: [
             { trait_type: "Status", value: "Expired" },
-            { trait_type: "Network", value: "Base Sepolia" },
+            { trait_type: "Network", value: "Base" },
             { trait_type: "Type", value: "CryptoGift NFT" }
           ]
         }}

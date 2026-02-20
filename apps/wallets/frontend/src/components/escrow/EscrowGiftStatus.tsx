@@ -391,7 +391,7 @@ export const EscrowGiftStatus: React.FC<EscrowGiftStatusProps> = ({
             description: nftMetadata.description,
             attributes: [
               { trait_type: "Wallet Type", value: "ERC-6551 Token Bound Account" },
-              { trait_type: "Network", value: "Base Sepolia" },
+              { trait_type: "Network", value: "Base" },
               { trait_type: "Status", value: giftInfo?.status.toUpperCase() || "UNKNOWN" },
               { trait_type: "Creator", value: giftInfo?.creator || "Unknown" }
             ]

@@ -1,7 +1,7 @@
 /**
  * CRYPTOGIFT ESCROW CONTRACT ABI V2 - ZERO CUSTODY ARCHITECTURE
  * Contract: 0x46175CfC233500DA803841DEef7f2816e7A129E0
- * Network: Base Sepolia
+ * Network: Base Sepolia (legacy V2)
  * Version: 2.0.0
  * Updated: 2025-07-27 - NEW DEPLOYMENT WITH registerGiftMinted
  */

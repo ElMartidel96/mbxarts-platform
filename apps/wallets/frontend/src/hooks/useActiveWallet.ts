@@ -40,7 +40,7 @@ export function useActiveWallet() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           address,
-          chainId: 8453, // Base Sepolia default
+          chainId: 8453, // Base Mainnet default
           syncBalances: false, // Quick sync without heavy balance calls
           syncTransactions: false,
         }),

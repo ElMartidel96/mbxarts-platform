@@ -170,8 +170,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         value: "ERC-6551 Token Bound Account"
                       },
                       {
-                        trait_type: "Network", 
-                        value: "Base Sepolia"
+                        trait_type: "Network",
+                        value: "Base"
                       },
                       {
                         trait_type: "Content Type",
@@ -184,7 +184,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     tbaAddress,
                     tbaBalance: "0",
                     tbaDeployed: false,
-                    network: "Base Sepolia",
+                    network: "Base",
                     chainId: 8453,
                     source: 'direct_image_ipfs',
                     gateway: gateway
@@ -260,7 +260,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     tbaAddress,
                     tbaBalance: "0",
                     tbaDeployed: false,
-                    network: "Base Sepolia",
+                    network: "Base",
                     chainId: 8453,
                     source: 'direct_ipfs_metadata',
                     gateway: gateway
@@ -459,7 +459,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
             {
               trait_type: "Network",
-              value: "Base Sepolia"
+              value: "Base"
             },
             {
               trait_type: "Debug Info",
@@ -519,7 +519,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { ethers } = await import("ethers");
     const REGISTRY_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || "0x000000006551c19487814612e58FE06813775758";
     const IMPLEMENTATION_ADDRESS = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || "0x2d25602551487c3f3354dd80d76d54383a243358";
-    const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "8453"); // Base Sepolia
+    const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "8453"); // Base Mainnet
     
     const salt = ethers.solidityPackedKeccak256(
       ['uint256', 'address', 'uint256'],
@@ -557,7 +557,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       tbaDeployed: isDeployed,
       contractAddress,
       tokenId: tokenId, // Keep as string - no parseInt()
-      network: "Base Sepolia",
+      network: "Base",
       chainId: 8453,
     });
 

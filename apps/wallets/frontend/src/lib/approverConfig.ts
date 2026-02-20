@@ -20,7 +20,7 @@ import { ethers } from 'ethers';
 // The deployed contract's immutable approver address (loaded from environment)
 export const DEPLOYED_APPROVER_ADDRESS = process.env.NEXT_PUBLIC_SIMPLE_APPROVAL_GATE_APPROVER || process.env.APPROVER_ADDRESS;
 
-// SimpleApprovalGate contract address on Base Sepolia (loaded from environment)  
+// SimpleApprovalGate contract address on Base Mainnet (loaded from environment)  
 export const APPROVAL_GATE_ADDRESS = process.env.NEXT_PUBLIC_SIMPLE_APPROVAL_GATE_ADDRESS;
 
 /**

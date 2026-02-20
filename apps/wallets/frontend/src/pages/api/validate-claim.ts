@@ -189,7 +189,7 @@ async function validateClaimParameters(
       salt,
       giftId,
       ESCROW_CONTRACT_ADDRESS!,
-      8453 // Base Sepolia chain ID
+      8453 // Base Mainnet chain ID
     );
     
     if (providedPasswordHash.toLowerCase() !== gift.passwordHash.toLowerCase()) {

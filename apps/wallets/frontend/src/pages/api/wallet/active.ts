@@ -109,7 +109,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         isActive,
         lastSeen: cachedData?.lastSeen,
         metadata: isActive ? {
-          network: "Base Sepolia",
+          network: "Base",
           primaryToken: process.env.NEXT_PUBLIC_USDC_ADDRESS || "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
           lastSynced: Date.now(),
         } : undefined,
@@ -140,7 +140,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         isActive: true,
         lastSeen: now,
         metadata: {
-          network: chainId === 8453 ? "Base Mainnet" : "Base Sepolia",
+          network: chainId === 8453 ? "Base" : "Unknown",
           primaryToken: process.env.NEXT_PUBLIC_USDC_ADDRESS || "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
           lastSynced: now,
         },

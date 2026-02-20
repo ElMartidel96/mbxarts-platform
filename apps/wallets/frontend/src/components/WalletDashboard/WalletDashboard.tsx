@@ -403,7 +403,7 @@ const SettingsTab: React.FC<{ wallet: any }> = ({ wallet }) => {
               <Globe className="w-5 h-5 text-blue-500" />
               <div>
                 <p className="font-medium">Network</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Base Sepolia</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Base</p>
               </div>
             </div>
             <button className="px-3 py-1 rounded-lg bg-blue-500/20 text-blue-600 dark:text-blue-400 text-sm">

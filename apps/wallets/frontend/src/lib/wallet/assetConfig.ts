@@ -16,7 +16,7 @@ export interface AssetConfig {
 
 // Production token configurations from your .env.local
 export const ASSET_CONFIGS: Record<string, AssetConfig> = {
-  // USDC on Base Sepolia
+  // USDC on Base Mainnet
   'USDC_BASE_SEPOLIA': {
     type: 'ERC20',
     options: {

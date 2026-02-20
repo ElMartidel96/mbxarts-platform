@@ -256,7 +256,7 @@ export const ClaimEscrowInterface: React.FC<ClaimEscrowInterfaceProps> = ({
             const currentChainId = parseInt(chainId, 16);
             if (currentChainId !== 8453) {
               console.warn('⚠️ Wrong chain detected:', currentChainId);
-              throw new Error('Por favor cambia a Base Sepolia en tu wallet');
+              throw new Error('Por favor cambia a Base en tu wallet');
             }
           } catch (chainError) {
             console.error('Chain verification failed:', chainError);
@@ -549,17 +549,17 @@ La transacción puede tomar más tiempo en móvil.`;
           if (err.message?.includes('User rejected') || err.message?.includes('User denied')) {
             errorMessage = 'Transacción rechazada. Por favor acepta la transacción en MetaMask.';
           } else if (err.message?.includes('insufficient funds')) {
-            errorMessage = 'Fondos insuficientes para pagar el gas. Necesitas ETH en Base Sepolia.';
+            errorMessage = 'Fondos insuficientes para pagar el gas. Necesitas ETH en Base.';
           } else if (err.message?.includes('nonce')) {
             errorMessage = 'Error de sincronización. Por favor:\n1. Abre MetaMask\n2. Ve a Configuración > Avanzado\n3. Presiona "Restablecer cuenta"\n4. Intenta de nuevo';
           } else {
-            errorMessage = 'Error de conexión. Por favor:\n1. Verifica estar en Base Sepolia\n2. Cierra y abre MetaMask completamente\n3. Espera 10 segundos\n4. Intenta de nuevo';
+            errorMessage = 'Error de conexión. Por favor:\n1. Verifica estar en Base\n2. Cierra y abre MetaMask completamente\n3. Espera 10 segundos\n4. Intenta de nuevo';
           
             // Try to add more context
             addNotification({
               type: 'warning',
               title: '⚠️ Error de red detectado',
-              message: 'Cambia a Base Sepolia en tu wallet',
+              message: 'Cambia a Base en tu wallet',
               duration: 10000,
               action: {
                 label: 'Ver instrucciones',
@@ -1008,7 +1008,7 @@ La transacción puede tomar más tiempo en móvil.`;
                       if (window.ethereum) {
                         const chainId = await window.ethereum.request({ method: 'eth_chainId' });
                         const currentChainId = parseInt(chainId, 16);
-                        const requiredChainId = 8453; // Base Sepolia
+                        const requiredChainId = 8453; // Base Mainnet
                         
                         if (currentChainId !== requiredChainId) {
                           setShowNetworkPrompt(true);
@@ -1016,7 +1016,7 @@ La transacción puede tomar más tiempo en móvil.`;
                           addNotification({
                             type: 'success',
                             title: '✅ Red Óptima',
-                            message: 'Ya estás en Base Sepolia - configuración perfecta!',
+                            message: 'Ya estás en Base - configuración perfecta!',
                             duration: 3000
                           });
                         }
@@ -1278,7 +1278,7 @@ La transacción puede tomar más tiempo en móvil.`;
           description: nftMetadata?.description || "A special NFT gift waiting to be claimed.",
           attributes: [
             { trait_type: "Status", value: giftInfo?.status.toUpperCase() || "ACTIVE" },
-            { trait_type: "Network", value: "Base Sepolia" },
+            { trait_type: "Network", value: "Base" },
             { trait_type: "Type", value: "CryptoGift NFT" }
           ]
         }}
@@ -1291,7 +1291,7 @@ La transacción puede tomar más tiempo en móvil.`;
         isOpen={showNetworkPrompt}
         onClose={() => setShowNetworkPrompt(false)}
         currentChainId={8453}
-        requiredChainId={8453} // Base Sepolia
+        requiredChainId={8453} // Base Mainnet
         context="claim"
       />
     </div>

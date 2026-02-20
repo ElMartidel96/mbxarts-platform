@@ -127,7 +127,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         { trait_type: "Token ID", value: String(tokenId) },
         { trait_type: "Status", value: "Recovered" },
         { trait_type: "Recovery Date", value: new Date().toISOString() },
-        { trait_type: "Network", value: "Base Sepolia" },
+        { trait_type: "Network", value: "Base" },
         { trait_type: "Recovery Method", value: "Automated" }
       ];
 

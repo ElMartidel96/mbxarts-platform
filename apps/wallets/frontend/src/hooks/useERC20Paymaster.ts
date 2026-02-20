@@ -44,7 +44,7 @@ export function useERC20Paymaster(chainId?: number): UseERC20PaymasterReturn {
   const address = account?.address;
   
   // Get chain ID from account or parameter
-  const currentChainId = chainId || (account as any)?.chain?.id || 8453; // Default to Base Sepolia
+  const currentChainId = chainId || (account as any)?.chain?.id || 8453; // Default to Base Mainnet
   
   const [tokens, setTokens] = useState<PaymasterToken[]>([]);
   const [selectedToken, setSelectedToken] = useState<PaymasterToken | null>(null);

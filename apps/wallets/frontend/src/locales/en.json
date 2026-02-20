@@ -734,7 +734,7 @@
       "title": "NFT Details",
       "tokenId": "Token ID:",
       "blockchain": "Blockchain:",
-      "blockchainValue": "Base Sepolia",
+      "blockchainValue": "Base",
       "standard": "Standard:",
       "standardValue": "ERC-6551 (Token Bound Account)",
       "status": "Status:",
@@ -852,7 +852,7 @@
       },
       "contract": {
         "step1": "Verify that your wallet is connected",
-        "step2": "Make sure you're on the Base Sepolia network",
+        "step2": "Make sure you're on the Base network",
         "step3": "Confirm you have enough balance",
         "step4": "Try reducing the gift amount"
       },

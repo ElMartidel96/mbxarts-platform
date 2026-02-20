@@ -192,7 +192,7 @@ export default async function handler(
               event.transactionHash,
               event.logIndex,
               event.blockNumber,
-              Number(event.blockNumber) * 2, // Base Sepolia ~2s blocks
+              Number(event.blockNumber) * 2, // Base ~2s blocks
               processArgs(event),
               'reconciliation'
             );
@@ -343,15 +343,15 @@ export default async function handler(
 async function getCurrentBlock(client: any): Promise<bigint> {
   try {
     // Get actual block number from RPC
-    // For Base Sepolia, blocks are ~2 seconds
+    // For Base, blocks are ~2 seconds
     // This is a fallback estimation until we implement proper RPC call
     const currentTimestamp = Math.floor(Date.now() / 1000);
-    const genesisTimestamp = 1695768288; // Base Sepolia genesis
+    const genesisTimestamp = 1695768288; // Base Sepolia genesis (historical reference for block estimation)
     const blocksSinceGenesis = Math.floor((currentTimestamp - genesisTimestamp) / 2);
     return BigInt(blocksSinceGenesis);
   } catch (error) {
     console.error('Failed to get current block:', error);
-    // Reasonable fallback for Base Sepolia
+    // Reasonable fallback for Base
     return BigInt(15000000);
   }
 }

@@ -291,11 +291,11 @@ export async function authenticateWithSiwe(address: string, account: any): Promi
         chainId = detectedChainId;
         console.log('✅ Using detected chain ID:', chainId);
       } else {
-        console.log('🔄 Using default Base Sepolia chain ID:', chainId);
+        console.log('🔄 Using default Base chain ID:', chainId);
       }
       
     } catch (error) {
-      console.warn('⚠️ All chain detection methods failed, using Base Sepolia default:', chainId);
+      console.warn('⚠️ All chain detection methods failed, using Base default:', chainId);
     }
     
     // CRITICAL: Ensure chainId is always a number before API calls

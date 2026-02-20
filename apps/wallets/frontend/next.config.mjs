@@ -33,7 +33,13 @@ const nextConfig = {
   },
   serverExternalPackages: [
     'thirdweb',
-    'ethers'
+    'ethers',
+    '@noble/hashes',
+    '@noble/curves',
+    '@scure/bip32',
+    '@scure/bip39',
+    '@adraffy/ens-normalize',
+    'ox',
   ],
   productionBrowserSourceMaps: false,
   

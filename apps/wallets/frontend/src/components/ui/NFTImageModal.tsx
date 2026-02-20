@@ -696,7 +696,7 @@ export function NFTImageModal({
                           </div>
                           <div className="flex justify-between items-center px-0.5 py-0 bg-slate-50 dark:bg-slate-800 rounded-lg">
                             <span className="text-[10px] font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wide">Network</span>
-                            <span className="text-[11px] font-semibold text-slate-900 dark:text-white">Base Sepolia</span>
+                            <span className="text-[11px] font-semibold text-slate-900 dark:text-white">Base</span>
                           </div>
                           <div className="flex justify-between items-center px-0.5 py-0 bg-slate-50 dark:bg-slate-800 rounded-lg">
                             <span className="text-[10px] font-medium text-slate-600 dark:text-slate-400 uppercase tracking-wide">Status</span>
@@ -756,7 +756,7 @@ export function NFTImageModal({
                         <h3 className="text-[11px] font-medium text-slate-900 dark:text-white mb-0.5">Technical Details</h3>
                         <div className="space-y-0.5 text-[10px] text-slate-600 dark:text-slate-400">
                           <div>Standard: ERC-721</div>
-                          <div>Network: Base Sepolia</div>
+                          <div>Network: Base</div>
                           <div>Token Bound Account: ✅</div>
                           {imageAspectRatio && (
                             <div className="flex items-center gap-0.5">

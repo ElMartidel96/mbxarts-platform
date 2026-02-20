@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    // Connect to Base Sepolia RPC
+    // Connect to Base RPC
     const provider = new ethers.JsonRpcProvider('https://sepolia.base.org');
     
     // Create contract instance

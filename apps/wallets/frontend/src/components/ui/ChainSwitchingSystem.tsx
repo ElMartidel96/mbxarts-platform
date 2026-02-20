@@ -36,7 +36,7 @@ const SUPPORTED_CHAINS = {
     chain: sepolia
   },
   8453: {
-    name: 'Base Sepolia',
+    name: 'Base',
     shortName: 'Base',
     icon: '🔵', 
     color: 'blue',
@@ -45,7 +45,7 @@ const SUPPORTED_CHAINS = {
 } as const;
 
 export function ChainSwitchingSystem({
-  requiredChainId = 8453, // Default to Base Sepolia
+  requiredChainId = 8453, // Default to Base Mainnet
   onChainSwitched,
   showPersistentIndicator = true,
   autoPrompt = true,

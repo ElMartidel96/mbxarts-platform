@@ -668,7 +668,7 @@ export default function MyWalletsPage() {
           description: "NFT-Wallet único con funciones de billetera integradas usando ERC-6551 Token Bound Accounts.",
           attributes: [
             { trait_type: "Wallet Type", value: "ERC-6551 Token Bound Account" },
-            { trait_type: "Network", value: "Base Sepolia" },
+            { trait_type: "Network", value: "Base" },
             { trait_type: "Status", value: "Active" }
           ]
         }}

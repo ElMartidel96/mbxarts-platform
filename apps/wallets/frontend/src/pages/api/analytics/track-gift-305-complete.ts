@@ -151,7 +151,7 @@ async function handler(
         totalTimeToClaimMinutes: 15,
         modulesCompleted: ['sales-masterclass'],
         gasUsed: 0, // Gasless transaction
-        networkUsed: 'Base Sepolia',
+        networkUsed: 'Base',
         tbaAddress: '0x1234567890abcdef...',
         value: 100,
         currency: 'USD'

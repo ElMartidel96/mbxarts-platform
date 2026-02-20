@@ -119,7 +119,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       success: true,
       address,
       ...walletData,
-      network: "Base Sepolia",
+      network: "Base",
       chainId: 8453,
       primaryToken: process.env.NEXT_PUBLIC_USDC_ADDRESS || "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
     };

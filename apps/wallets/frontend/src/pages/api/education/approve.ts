@@ -46,7 +46,7 @@ interface ApprovalResponse {
 const EIP712_DOMAIN = {
   name: 'SimpleApprovalGate',
   version: '1',
-  chainId: 8453, // Base Sepolia
+  chainId: 8453, // Base Mainnet
   verifyingContract: APPROVAL_GATE_ADDRESS // Always use the deployed contract address
 };
 

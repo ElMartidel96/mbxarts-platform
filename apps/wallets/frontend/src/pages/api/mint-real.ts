@@ -165,7 +165,7 @@ function createMetadata(request: MintRequest): any {
       },
       {
         trait_type: "Network",
-        value: "Base Sepolia"
+        value: "Base"
       },
       {
         trait_type: "Creator",

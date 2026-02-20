@@ -149,7 +149,7 @@ export default function MEVSettingsPage() {
 
           <div className="p-4 rounded-lg border">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-medium">Base Sepolia</span>
+              <span className="font-medium">Base</span>
               <span className="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300 text-xs rounded-full">
                 Coming Soon
               </span>
