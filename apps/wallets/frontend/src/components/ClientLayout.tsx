@@ -12,8 +12,17 @@ const StaticBackground = dynamic(() => import("./ui/StaticBackground").then(mod 
   loading: () => null
 });
 
-// CRITICAL FIX: Remove dynamic import that's causing infinite loading
-import { ThirdwebWrapper } from "./ThirdwebWrapper";
+// Dynamic import ThirdwebWrapper - MUST be ssr:false to prevent EMFILE/ESM errors
+// thirdweb's dependency chain (viem→ox→@noble/hashes) cannot resolve in Vercel's
+// serverless ESM environment. Client-only loading avoids all server-side module issues.
+const ThirdwebWrapper = dynamic(() => import("./ThirdwebWrapper").then(mod => ({ default: mod.ThirdwebWrapper })), {
+  ssr: false,
+  loading: () => (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+    </div>
+  )
+});
 
 const Navbar = dynamic(() => import("./Navbar").then(mod => ({ default: mod.Navbar })), {
   ssr: false,

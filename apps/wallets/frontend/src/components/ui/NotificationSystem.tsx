@@ -373,11 +373,21 @@ function NotificationItem({ notification, onDismiss }: NotificationItemProps) {
   );
 }
 
-// Hook to use notifications
+// Hook to use notifications (safe to use outside NotificationProvider - returns no-ops)
+const noopNotification: NotificationContextType = {
+  notifications: [],
+  addNotification: () => '',
+  showNotification: () => '',
+  removeNotification: () => {},
+  clearAll: () => {},
+  notifyTransaction: () => '',
+  notifyWalletAction: () => '',
+};
+
 export function useNotifications() {
   const context = useContext(NotificationContext);
   if (!context) {
-    throw new Error('useNotifications must be used within NotificationProvider');
+    return noopNotification;
   }
   return context;
 }

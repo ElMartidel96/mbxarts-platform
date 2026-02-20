@@ -77,7 +77,7 @@ ${shareUrl || (typeof window !== 'undefined' ? window.location.origin : '')}
 
 ${t('shareMessage.closing')} 💎✨`;
 
-  const shortUrl = shareUrl ? shareUrl.replace('https://', '').replace('http://', '') : (typeof window !== 'undefined' ? window.location.host : (() => { throw new Error('shareUrl is required for QR sharing'); })());
+  const shortUrl = shareUrl ? shareUrl.replace('https://', '').replace('http://', '') : (typeof window !== 'undefined' ? window.location.host : 'gifts.mbxarts.com');
 
   const handleSocialShare = (platform: string) => {
     const text = encodeURIComponent(shareMessage);
