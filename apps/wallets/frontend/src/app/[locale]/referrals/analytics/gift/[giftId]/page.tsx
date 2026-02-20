@@ -410,7 +410,7 @@ export default function GiftDetailsPage() {
                     )}
                     {gift.creator.txHash && (
                       <a
-                        href={`https://sepolia.basescan.org/tx/${gift.creator.txHash}`}
+                        href={`https://basescan.org/tx/${gift.creator.txHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 dark:text-blue-400 hover:underline"
@@ -534,7 +534,7 @@ export default function GiftDetailsPage() {
                       )}
                       {gift.claim.txHash && (
                         <a
-                          href={`https://sepolia.basescan.org/tx/${gift.claim.txHash}`}
+                          href={`https://basescan.org/tx/${gift.claim.txHash}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-600 dark:text-blue-400 hover:underline"
@@ -797,7 +797,7 @@ export default function GiftDetailsPage() {
                       {event.txHash && (
                         <div>
                           TX: <a
-                            href={`https://sepolia.basescan.org/tx/${event.txHash}`}
+                            href={`https://basescan.org/tx/${event.txHash}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-600 dark:text-blue-400 hover:underline font-mono"
@@ -1023,7 +1023,7 @@ export default function GiftDetailsPage() {
                         <div className="p-3 border rounded-lg">
                           <div className="text-sm font-medium mb-1">Create Transaction</div>
                           <a
-                            href={`https://sepolia.basescan.org/tx/${gift.creator.txHash}`}
+                            href={`https://basescan.org/tx/${gift.creator.txHash}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-xs font-mono text-blue-500 hover:underline break-all"
@@ -1039,7 +1039,7 @@ export default function GiftDetailsPage() {
                         <div className="p-3 border rounded-lg">
                           <div className="text-sm font-medium mb-1">Claim Transaction</div>
                           <a
-                            href={`https://sepolia.basescan.org/tx/${gift.claim.txHash}`}
+                            href={`https://basescan.org/tx/${gift.claim.txHash}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-xs font-mono text-blue-500 hover:underline break-all"
@@ -1326,7 +1326,7 @@ export default function GiftDetailsPage() {
 
               {gift.creator.txHash && (
                 <a
-                  href={`https://sepolia.basescan.org/tx/${gift.creator.txHash}`}
+                  href={`https://basescan.org/tx/${gift.creator.txHash}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm text-center transition-colors"
@@ -1337,7 +1337,7 @@ export default function GiftDetailsPage() {
 
               {gift.claim?.txHash && (
                 <a
-                  href={`https://sepolia.basescan.org/tx/${gift.claim.txHash}`}
+                  href={`https://basescan.org/tx/${gift.claim.txHash}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 text-sm text-center transition-colors"
@@ -1347,7 +1347,7 @@ export default function GiftDetailsPage() {
               )}
 
               <a
-                href={`https://sepolia.basescan.org/token/${gift.metadata.escrowAddress || '0xeFCba1D72B8f053d93BA44b7b15a1BeED515C89b'}?a=${gift.tokenId}`}
+                href={`https://basescan.org/token/${gift.metadata.escrowAddress || '0xeFCba1D72B8f053d93BA44b7b15a1BeED515C89b'}?a=${gift.tokenId}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm text-center transition-colors"

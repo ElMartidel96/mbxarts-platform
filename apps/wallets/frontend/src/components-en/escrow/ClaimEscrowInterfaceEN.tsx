@@ -373,7 +373,7 @@ export const ClaimEscrowInterfaceEN: React.FC<ClaimEscrowInterfaceProps> = ({
             action: {
               label: 'Ver en BaseScan',
               onClick: () => {
-                window.open(`https://sepolia.basescan.org/tx/${txResult.transactionHash}`, '_blank');
+                window.open(`https://basescan.org/tx/${txResult.transactionHash}`, '_blank');
               }
             }
           });
@@ -528,7 +528,7 @@ The transaction may take longer on mobile.`;
           action: {
             label: 'Ver en BaseScan',
             onClick: () => {
-              window.open(`https://sepolia.basescan.org/address/${account?.address}`, '_blank');
+              window.open(`https://basescan.org/address/${account?.address}`, '_blank');
             }
           }
         });
@@ -760,7 +760,7 @@ The transaction may take longer on mobile.`;
                 action: {
                   label: 'Ver en BaseScan',
                   onClick: () => {
-                    window.open(`https://sepolia.basescan.org/token/${contractAddress}?a=${account?.address}`, '_blank');
+                    window.open(`https://basescan.org/token/${contractAddress}?a=${account?.address}`, '_blank');
                   }
                 }
               });
@@ -775,7 +775,7 @@ The transaction may take longer on mobile.`;
                   label: 'View transaction',
                   onClick: () => {
                     if (txResult?.transactionHash) {
-                      window.open(`https://sepolia.basescan.org/tx/${txResult.transactionHash}`, '_blank');
+                      window.open(`https://basescan.org/tx/${txResult.transactionHash}`, '_blank');
                     }
                   }
                 }

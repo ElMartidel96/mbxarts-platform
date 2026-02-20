@@ -308,7 +308,7 @@ export function NFTImageModal({
                     <button
                       onClick={() => {
                         if (contractAddress) {
-                          const url = `https://sepolia.basescan.org/nft/${contractAddress}/${tokenId}`;
+                          const url = `https://basescan.org/nft/${contractAddress}/${tokenId}`;
                           window.open(url, '_blank');
                         }
                       }}
@@ -611,7 +611,7 @@ export function NFTImageModal({
                           <button
                             onClick={() => {
                               if (contractAddress) {
-                                const url = `https://sepolia.basescan.org/nft/${contractAddress}/${tokenId}`;
+                                const url = `https://basescan.org/nft/${contractAddress}/${tokenId}`;
                                 window.open(url, '_blank');
                               }
                             }}
@@ -776,7 +776,7 @@ export function NFTImageModal({
                         <button
                           onClick={() => {
                             if (contractAddress) {
-                              const url = `https://sepolia.basescan.org/nft/${contractAddress}/${tokenId}`;
+                              const url = `https://basescan.org/nft/${contractAddress}/${tokenId}`;
                               window.open(url, '_blank');
                             }
                           }}

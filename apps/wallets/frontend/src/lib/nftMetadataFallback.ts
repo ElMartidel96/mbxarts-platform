@@ -251,7 +251,7 @@ const generatePlaceholderMetadata = (contractAddress: string, tokenId: string, p
 // TRY tokenURI() FIRST, only check ownerOf() if tokenURI fails (avoids race conditions)
 const fetchOnChainTokenURI = async (contractAddress: string, tokenId: string, signal: AbortSignal): Promise<string | null> => {
   try {
-    const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL || process.env.BASE_SEPOLIA_RPC || 'https://sepolia.base.org';
+    const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL || 'https://mainnet.base.org';
     const provider = new ethers.JsonRpcProvider(rpcUrl);
     
     const tokenContract = new ethers.Contract(contractAddress, [

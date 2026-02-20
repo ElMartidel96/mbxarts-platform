@@ -18,8 +18,8 @@ export function NetworkInfoCard() {
       description: 'Red principal de Base para transacciones reales'
     },
     sepolia: {
-      name: 'Base',
-      chainId: '8453',
+      name: 'Base Sepolia',
+      chainId: '84532',
       rpcUrl: 'https://sepolia.base.org',
       symbol: 'ETH',
       explorer: 'https://sepolia.basescan.org',

@@ -46,7 +46,7 @@ const ENV_VALIDATION_RULES = {
       required: true,
       pattern: /^https?:\/\/.+/,
       description: 'URL del RPC endpoint de blockchain',
-      example: 'https://sepolia.base.org'
+      example: 'https://mainnet.base.org'
     },
     NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS: {
       required: true,
