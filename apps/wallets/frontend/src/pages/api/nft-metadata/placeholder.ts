@@ -41,7 +41,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         value: "CryptoGift Wallets"
       }
     ],
-    external_url: process.env.NEXT_PUBLIC_SITE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : (() => { throw new Error('NEXT_PUBLIC_SITE_URL or VERCEL_URL is required for external_url'); })())
+    external_url: process.env.NEXT_PUBLIC_SITE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://gifts.mbxarts.com')
   };
 
   res.setHeader('Content-Type', 'application/json; charset=utf-8');

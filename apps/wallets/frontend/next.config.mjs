@@ -33,6 +33,7 @@ const nextConfig = {
   },
   serverExternalPackages: [
     'thirdweb',
+    'viem',
     'ethers',
     '@noble/hashes',
     '@noble/curves',

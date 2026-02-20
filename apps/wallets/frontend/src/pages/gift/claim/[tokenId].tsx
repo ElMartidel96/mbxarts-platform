@@ -555,7 +555,7 @@ export default function ClaimGiftPage() {
                     client={client}
                     appMetadata={{
                       name: "CryptoGift Wallets",
-                      url: typeof window !== 'undefined' ? window.location.origin : process.env.NEXT_PUBLIC_SITE_URL || (() => { throw new Error('NEXT_PUBLIC_SITE_URL is required'); })(),
+                      url: typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || 'https://gifts.mbxarts.com'),
                     }}
                   />
                 )}

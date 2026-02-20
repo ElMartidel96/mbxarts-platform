@@ -200,7 +200,7 @@ const ConnectAndAuthButtonInner: React.FC<ConnectAndAuthButtonProps> = ({
           }}
           appMetadata={{
             name: "CryptoGift Wallets",
-            url: typeof window !== 'undefined' ? window.location.origin : process.env.NEXT_PUBLIC_SITE_URL || (() => { throw new Error('NEXT_PUBLIC_SITE_URL is required for wallet connections'); })(),
+            url: typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || 'https://gifts.mbxarts.com'),
           }}
           connectModal={{
             size: "wide",
@@ -322,7 +322,7 @@ const ConnectAndAuthButtonInner: React.FC<ConnectAndAuthButtonProps> = ({
           }}
               appMetadata={{
                 name: "CryptoGift Wallets",
-                url: typeof window !== 'undefined' ? window.location.origin : process.env.NEXT_PUBLIC_SITE_URL || (() => { throw new Error('NEXT_PUBLIC_SITE_URL is required for wallet connections'); })(),
+                url: typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || 'https://gifts.mbxarts.com'),
               }}
             />
             ) : (
@@ -419,7 +419,7 @@ const ConnectAndAuthButtonInner: React.FC<ConnectAndAuthButtonProps> = ({
           }}
             appMetadata={{
               name: "CryptoGift Wallets",
-              url: typeof window !== 'undefined' ? window.location.origin : process.env.NEXT_PUBLIC_SITE_URL || (() => { throw new Error('NEXT_PUBLIC_SITE_URL is required for wallet connections'); })(),
+              url: typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || 'https://gifts.mbxarts.com'),
             }}
           />
           ) : (
