@@ -42,7 +42,7 @@ export const ASSET_CONFIGS: Record<string, AssetConfig> = {
   'CRYPTOGIFT_NFT': {
     type: 'ERC721',
     options: {
-      address: process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS || '0xE9F316159a0830114252a96a6B7CA6efD874650F',
+      address: (process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS || '0x2d46342E320Ad73874636dD613ee92Ba462ff2e2').trim(),
       symbol: 'CGIFT',
       decimals: 0,
       image: 'https://cryptogift-wallets.vercel.app/nft-placeholder.png',

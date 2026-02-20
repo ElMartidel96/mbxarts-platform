@@ -823,7 +823,7 @@ export const ESCROW_ABI_V2 = [
 ] as const;
 
 // Contract address constant
-export const ESCROW_CONTRACT_ADDRESS_V2 = process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS || process.env.ESCROW_CONTRACT_ADDRESS;
+export const ESCROW_CONTRACT_ADDRESS_V2 = (process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS || process.env.ESCROW_CONTRACT_ADDRESS || '0xb76D5b8672e3b1eD49423418a2EBC2D0A0be03Eb').trim();
 
 // Unified type definition for V2 (backward compatible)
 export interface EscrowGift {

@@ -18,10 +18,10 @@
 import { ethers } from 'ethers';
 
 // The deployed contract's immutable approver address (loaded from environment)
-export const DEPLOYED_APPROVER_ADDRESS = process.env.NEXT_PUBLIC_SIMPLE_APPROVAL_GATE_APPROVER || process.env.APPROVER_ADDRESS;
+export const DEPLOYED_APPROVER_ADDRESS = (process.env.NEXT_PUBLIC_SIMPLE_APPROVAL_GATE_APPROVER || process.env.APPROVER_ADDRESS || '').trim();
 
-// SimpleApprovalGate contract address on Base Mainnet (loaded from environment)  
-export const APPROVAL_GATE_ADDRESS = process.env.NEXT_PUBLIC_SIMPLE_APPROVAL_GATE_ADDRESS;
+// SimpleApprovalGate contract address on Base Mainnet (loaded from environment)
+export const APPROVAL_GATE_ADDRESS = (process.env.NEXT_PUBLIC_SIMPLE_APPROVAL_GATE_ADDRESS || '0x18Ef4c772cc98539C97Ad7D22Dfb4A488AAFC5E5').trim();
 
 /**
  * Get the approver wallet for signing education bypass signatures

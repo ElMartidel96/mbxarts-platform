@@ -928,7 +928,7 @@ export const ESCROW_ABI_V3 = [
 ] as const;
 
 // Contract address - Base Mainnet (deployed Feb 19, 2026)
-export const ESCROW_CONTRACT_ADDRESS_V3 = process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS || process.env.ESCROW_CONTRACT_ADDRESS || '0xb76D5b8672e3b1eD49423418a2EBC2D0A0be03Eb';
+export const ESCROW_CONTRACT_ADDRESS_V3 = (process.env.NEXT_PUBLIC_ESCROW_CONTRACT_ADDRESS || process.env.ESCROW_CONTRACT_ADDRESS || '0xb76D5b8672e3b1eD49423418a2EBC2D0A0be03Eb').trim();
 
 // Sentinel value for perpetual gifts
 export const PERPETUAL_EXPIRY_VALUE = 1099511627775n; // type(uint40).max

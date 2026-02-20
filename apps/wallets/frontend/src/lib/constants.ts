@@ -21,9 +21,9 @@ const getOptionalEnvVar = (key: string, fallback: string): string => {
 
 // Production addresses - Base Mainnet (deployed Feb 19, 2026)
 export const THIRDWEB_KEY = process.env.NEXT_PUBLIC_TW_CLIENT_ID || '9183b572b02ec88dd4d8f20c3ed847d3';
-export const NFT_DROP_ADDRESS = process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS || process.env.NEXT_PUBLIC_NFT_DROP_ADDRESS || '0x2d46342E320Ad73874636dD613ee92Ba462ff2e2';
-export const ERC6551_REGISTRY = process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || '0x000000006551c19487814612e58FE06813775758';
-export const TBA_IMPLEMENTATION = process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || '0x2d25602551487c3f3354dd80d76d54383a243358';
+export const NFT_DROP_ADDRESS = (process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS || process.env.NEXT_PUBLIC_NFT_DROP_ADDRESS || '0x2d46342E320Ad73874636dD613ee92Ba462ff2e2').trim();
+export const ERC6551_REGISTRY = (process.env.NEXT_PUBLIC_ERC6551_REGISTRY_ADDRESS || '0x000000006551c19487814612e58FE06813775758').trim();
+export const TBA_IMPLEMENTATION = (process.env.NEXT_PUBLIC_ERC6551_IMPLEMENTATION_ADDRESS || '0x2d25602551487c3f3354dd80d76d54383a243358').trim();
 
 // Chain Configuration - With fallback and validation
 // PRODUCTION: Default to Base Mainnet (8453)

@@ -795,8 +795,8 @@ const client = createThirdwebClient({
 
 // Resolve contract addresses with mainnet fallbacks
 // CRITICAL: Ensures correct addresses even if Vercel env vars are stale/missing
-const NFT_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS || '0x2d46342E320Ad73874636dD613ee92Ba462ff2e2';
-const BASE_MAINNET_RPC = process.env.NEXT_PUBLIC_RPC_URL || 'https://mainnet.base.org';
+const NFT_CONTRACT_ADDRESS = (process.env.NEXT_PUBLIC_CRYPTOGIFT_NFT_ADDRESS || '0x2d46342E320Ad73874636dD613ee92Ba462ff2e2').trim();
+const BASE_MAINNET_RPC = (process.env.NEXT_PUBLIC_RPC_URL || 'https://mainnet.base.org').trim();
 
 // Initialize Redis client for salt persistence
 let redis: any = null;
